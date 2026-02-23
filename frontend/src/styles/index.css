@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-surface-base text-text-primary antialiased;
+}
+
+@layer components {
+  .section-title {
+    @apply font-display text-4xl font-bold tracking-tight text-text-primary;
+  }
+
+  .section-subtitle {
+    @apply mt-2 text-base text-text-secondary;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg border border-accent-cyan bg-accent-cyan px-6 py-3 text-base font-semibold text-black transition-colors duration-200 hover:bg-accent-cyan-strong;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-border-subtle bg-transparent px-6 py-3 text-base font-semibold text-text-primary transition-colors duration-200 hover:border-accent-cyan hover:text-accent-cyan;
+  }
+}
