@@ -4,6 +4,39 @@
 
 :root {
   font-family: "Inter", system-ui, sans-serif;
+  --surface-base: 6 9 15;
+  --surface-card: 13 18 27;
+  --surface-muted: 19 26 37;
+  --text-primary: 244 247 255;
+  --text-secondary: 196 202 216;
+  --border-subtle: 30 41 59;
+  --accent-cyan: 16 217 229;
+  --accent-cyan-strong: 6 199 211;
+  --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+
+html.theme-light {
+  --surface-base: 242 248 255;
+  --surface-card: 255 255 255;
+  --surface-muted: 231 241 255;
+  --text-primary: 16 29 48;
+  --text-secondary: 58 76 104;
+  --border-subtle: 183 206 235;
+  --accent-cyan: 0 148 177;
+  --accent-cyan-strong: 0 128 153;
+  --shadow-card: 0 14px 34px rgba(29, 78, 126, 0.15);
+}
+
+.theme-icon-light {
+  display: none;
+}
+
+html.theme-light .theme-icon-light {
+  display: inline-block;
+}
+
+html.theme-light .theme-icon-dark {
+  display: none;
 }
 
 html,
@@ -14,6 +47,7 @@ body,
 
 body {
   @apply bg-surface-base text-text-primary antialiased;
+  transition: background-color 220ms ease, color 220ms ease;
 }
 
 @layer components {

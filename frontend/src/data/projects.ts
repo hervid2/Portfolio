@@ -18,7 +18,7 @@ export const projects: Project[] = [
     title: "Sushi Burrito Web App",
     description:
       "Single-page app for restaurant operations with real-time updates via WebSockets.",
-    stack: ["Vanilla.js", "Node.js", "Express", "WebSockets"],
+    stack: ["Vanilla.js", "Node.js", "Express", "WebSockets", "SQL"],
     category: "Web SPA",
     imageUrl:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
@@ -30,7 +30,7 @@ export const projects: Project[] = [
     title: "The Slicing Edge",
     description:
       "E-commerce platform for kitchen knives, built for scalability and conversion.",
-    stack: ["React", "TypeScript", "Node.js", "Express"],
+    stack: ["React", "TypeScript", "Node.js", "Express", "SQL"],
     category: "E-commerce",
     imageUrl:
       "https://images.unsplash.com/photo-1594385208974-2cbf7c5f2f1f?auto=format&fit=crop&w=1400&q=80",

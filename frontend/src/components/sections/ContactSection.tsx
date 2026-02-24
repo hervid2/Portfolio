@@ -1,4 +1,5 @@
 import type { FormEvent } from "react";
+import { ThemeIcon } from "@/components/ui/ThemeIcon";
 import { useContactForm } from "@/hooks/useContactForm";
 import { useLanguage } from "@/hooks/useLanguage";
 
@@ -37,10 +38,31 @@ export function ContactSection(): JSX.Element {
       <div className="mt-10 rounded-2xl border border-border-subtle bg-surface-card p-6">
         <h3 className="text-lg font-semibold text-text-primary">{dictionary.contact.altContactTitle}</h3>
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-text-secondary">
-          <a href="#" className="hover:text-accent-cyan" rel="noopener noreferrer" target="_blank">
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 rounded-md border border-border-subtle px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-cyan hover:text-accent-cyan"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <ThemeIcon
+              iconPath="/assets/icons/social/github.svg"
+              iconPathDark="/assets/icons/social/github-dark.svg"
+              alt="GitHub icon"
+              className="h-4 w-4 object-contain"
+            />
             GitHub
           </a>
-          <a href="#" className="hover:text-accent-cyan" rel="noopener noreferrer" target="_blank">
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 rounded-md border border-border-subtle px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-cyan hover:text-accent-cyan"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <ThemeIcon
+              iconPath="/assets/icons/social/linkedin.svg"
+              alt="LinkedIn icon"
+              className="h-4 w-4 object-contain"
+            />
             LinkedIn
           </a>
         </div>

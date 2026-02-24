@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Hernán David Cardona — Portfolio
 
 Full-stack portfolio built with React + TypeScript + Vite + Tailwind on frontend and
@@ -33,7 +32,3 @@ rules/     # Working rules and conventions
 - EN/ES switch with persistent language preference.
 - Portfolio cards driven by typed data arrays.
 - Contact API endpoint with Helmet, CORS, rate limit, and schema validation.
-=======
-# Portfolio
-Web portfolio
->>>>>>> 911a99546ba9ef8754986623407e785711e6f4d5

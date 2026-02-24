@@ -1,4 +1,5 @@
 import { skills } from "@/data/skills";
+import { ThemeIcon } from "@/components/ui/ThemeIcon";
 import { useLanguage } from "@/hooks/useLanguage";
 
 /**
@@ -14,7 +15,7 @@ export function AboutSection(): JSX.Element {
       <h2 className="section-title text-center">{dictionary.about.title}</h2>
       <div className="mt-12 grid items-start gap-10 md:grid-cols-[240px_1fr]">
         <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"
+          src="/assets/images/profile/profile-photo.webp"
           alt="Portrait of Hernán David Cardona"
           className="h-60 w-60 rounded-full border-2 border-accent-cyan object-cover"
           loading="lazy"
@@ -33,8 +34,14 @@ export function AboutSection(): JSX.Element {
         {skills.map((skill) => (
           <span
             key={skill.id}
-            className="rounded-full border border-border-subtle bg-surface-muted px-4 py-2 text-sm font-medium text-text-secondary"
+            className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-muted px-4 py-2 text-sm font-medium text-text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-cyan hover:text-accent-cyan"
           >
+            <ThemeIcon
+              iconPath={skill.iconPath}
+              iconPathDark={skill.iconPathDark}
+              alt={`${skill.label} icon`}
+              className="h-4 w-4 object-contain"
+            />
             {skill.label}
           </span>
         ))}

@@ -11,17 +11,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        "surface-base": "#06090f",
-        "surface-card": "#0d121b",
-        "surface-muted": "#131a25",
-        "text-primary": "#f4f7ff",
-        "text-secondary": "#c4cad8",
-        "border-subtle": "#1e293b",
-        "accent-cyan": "#10d9e5",
-        "accent-cyan-strong": "#06c7d3"
+        "surface-base": "rgb(var(--surface-base) / <alpha-value>)",
+        "surface-card": "rgb(var(--surface-card) / <alpha-value>)",
+        "surface-muted": "rgb(var(--surface-muted) / <alpha-value>)",
+        "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
+        "text-secondary": "rgb(var(--text-secondary) / <alpha-value>)",
+        "border-subtle": "rgb(var(--border-subtle) / <alpha-value>)",
+        "accent-cyan": "rgb(var(--accent-cyan) / <alpha-value>)",
+        "accent-cyan-strong": "rgb(var(--accent-cyan-strong) / <alpha-value>)"
       },
       boxShadow: {
-        card: "0 14px 40px rgba(0, 0, 0, 0.35)"
+        card: "var(--shadow-card)"
       },
       fontFamily: {
         display: ["Poppins", "system-ui", "sans-serif"],
