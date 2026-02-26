@@ -23,20 +23,27 @@ export const esDictionary: AppDictionary = {
   about: {
     title: "Sobre mí",
     bioParagraphOne:
-      "Soy Hernán David Cardona, desarrollador full-stack enfocado en crear productos digitales confiables y centrados en el usuario.",
+      "Soy Hernán David Cardona, desarrollador Full-Stack enfocado en la construcción de aplicaciones web escalables y mantenibles.",
     bioParagraphTwo:
-      "Disfruto diseñar experiencias frontend limpias y arquitecturas backend robustas, priorizando seguridad, rendimiento y mantenibilidad.",
+      "Me especializo en React y Node.js, diseñando experiencias de usuario limpias y arquitecturas backend robustas, con la seguridad y el rendimiento como prioridades.",
+    bioParagraphThree:
+      "Radicado en Colombia y abierto a oportunidades remotas en Estados Unidos y Canadá, me desenvuelvo mejor en entornos colaborativos donde la comunicación, la responsabilidad y la mejora continua impulsan productos de alto impacto.",
     skillsTitle: "Mis habilidades"
   },
   contact: {
-    title: "Ponte en contacto",
+    title: "Abierto a oportunidades remotas como Full-Stack Developer en Estados Unidos y Canadá",
     subtitle:
-      "¿Tienes un proyecto en mente o quieres colaborar? Envíame un mensaje y te responderé pronto.",
+      "Construyamos juntos software escalable y de alta calidad. Envíame un mensaje y te responderé pronto.",
     altContactTitle: "Otras formas de conectar",
     nameLabel: "Nombre",
+    namePlaceholder: "Tu nombre",
     emailLabel: "Correo",
+    emailPlaceholder: "nombre@correo.com",
     messageLabel: "Mensaje",
+    messagePlaceholder: "Escribe tu mensaje aquí...",
+    sendingLabel: "Enviando...",
     submitLabel: "Enviar mensaje",
+    requiredFieldsMessage: "Completa todos los campos antes de enviar.",
     successMessage: "Tu mensaje fue enviado correctamente.",
     errorMessage: "No se pudo enviar el mensaje. Intenta nuevamente."
   },

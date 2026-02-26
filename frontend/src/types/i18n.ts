@@ -24,6 +24,7 @@ export interface AppDictionary {
     title: string;
     bioParagraphOne: string;
     bioParagraphTwo: string;
+    bioParagraphThree: string;
     skillsTitle: string;
   };
   contact: {
@@ -31,9 +32,14 @@ export interface AppDictionary {
     subtitle: string;
     altContactTitle: string;
     nameLabel: string;
+    namePlaceholder: string;
     emailLabel: string;
+    emailPlaceholder: string;
     messageLabel: string;
+    messagePlaceholder: string;
+    sendingLabel: string;
     submitLabel: string;
+    requiredFieldsMessage: string;
     successMessage: string;
     errorMessage: string;
   };

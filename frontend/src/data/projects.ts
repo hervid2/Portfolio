@@ -3,37 +3,43 @@ import type { Project } from "@/types/project";
 export const projects: Project[] = [
   {
     id: "java-desktop-app",
-    title: "Java Desktop Application",
-    description:
-      "A desktop solution built with Java focused on workflow efficiency and consistent UX.",
+    title: "Sushi Burrito Desktop app",
+    description: {
+      en: "A desktop solution built with Java focused on workflow efficiency and consistent UX.",
+      es: "Una solución de escritorio en Java enfocada en la eficiencia de flujos de trabajo y una experiencia de usuario consistente."
+    },
     stack: ["Java", "Swing", "SQL"],
     category: "Desktop",
     imageUrl:
-      "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=1400&q=80",
+      "/assets/images/projects/java-desktop-app.webp",
     liveDemoUrl: null,
-    codeUrl: null
+    codeUrl: "https://github.com/hervid2/sushiBurritoJava"
   },
   {
     id: "sushi-burrito-spa",
     title: "Sushi Burrito Web App",
-    description:
-      "Single-page app for restaurant operations with real-time updates via WebSockets.",
+    description: {
+      en: "Single-page app for restaurant operations with real-time updates via WebSockets.",
+      es: "Aplicación web de una sola página para operaciones de restaurante con actualizaciones en tiempo real mediante WebSockets."
+    },
     stack: ["Vanilla.js", "Node.js", "Express", "WebSockets", "SQL"],
     category: "Web SPA",
     imageUrl:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
+      "/assets/images/projects/sushi-burrito-web-app.webp",
     liveDemoUrl: null,
-    codeUrl: null
+    codeUrl: "https://github.com/hervid2/SushiBurritoFinal"
   },
   {
     id: "the-slicing-edge",
     title: "The Slicing Edge",
-    description:
-      "E-commerce platform for kitchen knives, built for scalability and conversion.",
+    description: {
+      en: "E-commerce platform for kitchen knives, built for scalability and conversion.",
+      es: "Plataforma e-commerce para cuchillos de cocina, diseñada para escalar y convertir."
+    },
     stack: ["React", "TypeScript", "Node.js", "Express", "SQL"],
     category: "E-commerce",
     imageUrl:
-      "https://images.unsplash.com/photo-1594385208974-2cbf7c5f2f1f?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80",
     liveDemoUrl: null,
     codeUrl: null
   }

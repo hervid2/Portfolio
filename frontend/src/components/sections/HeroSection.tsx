@@ -49,7 +49,7 @@ export function HeroSection(): JSX.Element {
 
         <div className="mt-12 flex items-center justify-center gap-6 text-text-secondary">
           <a
-            href="#"
+            href="https://github.com/hervid2"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:text-accent-cyan"
             rel="noopener noreferrer"
             target="_blank"
@@ -64,7 +64,7 @@ export function HeroSection(): JSX.Element {
             GitHub
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/hern%C3%A1n-david-cardona-becerra/"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:text-accent-cyan"
             rel="noopener noreferrer"
             target="_blank"

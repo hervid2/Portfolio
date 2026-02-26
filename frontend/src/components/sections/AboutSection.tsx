@@ -24,6 +24,7 @@ export function AboutSection(): JSX.Element {
         <div>
           <p className="text-lg leading-relaxed text-text-secondary">{dictionary.about.bioParagraphOne}</p>
           <p className="mt-6 text-lg leading-relaxed text-text-secondary">{dictionary.about.bioParagraphTwo}</p>
+          <p className="mt-6 text-lg leading-relaxed text-text-secondary">{dictionary.about.bioParagraphThree}</p>
         </div>
       </div>
 

@@ -23,20 +23,27 @@ export const enDictionary: AppDictionary = {
   about: {
     title: "About Me",
     bioParagraphOne:
-      "I'm Hernán David Cardona, a full-stack developer focused on building reliable and user-centered digital products.",
+      "I’m Hernán David Cardona, a Full-Stack Developer focused on building scalable and maintainable web applications.",
     bioParagraphTwo:
-      "I enjoy designing clean frontend experiences and robust backend architecture with security, performance, and maintainability in mind.",
+      "I specialize in React and Node.js, designing clean user experiences and robust backend architectures with security and performance in mind.",
+    bioParagraphThree:
+      "Based in Colombia and open to remote opportunities across the U.S. and Canada, I thrive in collaborative environments where communication, ownership, and continuous improvement drive impactful products.",
     skillsTitle: "My Skills"
   },
   contact: {
-    title: "Get in Touch",
+    title: "Open to Remote Full-Stack Opportunities in the U.S. & Canada",
     subtitle:
-      "Have a project in mind or want to collaborate? Send me a message and I will get back to you soon.",
+      "Let’s build scalable, high-quality software together. Feel free to reach out, and I’ll respond as soon as possible.",
     altContactTitle: "Other ways to connect",
     nameLabel: "Name",
+    namePlaceholder: "Your name",
     emailLabel: "Email",
+    emailPlaceholder: "name@email.com",
     messageLabel: "Message",
+    messagePlaceholder: "Write your message here...",
+    sendingLabel: "Sending...",
     submitLabel: "Send Message",
+    requiredFieldsMessage: "Please complete all fields before sending.",
     successMessage: "Your message has been sent successfully.",
     errorMessage: "Could not send the message. Please try again."
   },

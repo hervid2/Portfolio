@@ -117,7 +117,7 @@ function renderProjectLink(
  * @returns Portfolio section element.
  */
 export function PortfolioSection(): JSX.Element {
-  const { dictionary } = useLanguage();
+  const { dictionary, language } = useLanguage();
 
   return (
     <section id="portfolio" className="mx-auto w-full max-w-6xl px-5 py-24 md:px-8">
@@ -132,15 +132,22 @@ export function PortfolioSection(): JSX.Element {
             key={project.id}
             className="overflow-hidden rounded-2xl border border-border-subtle bg-surface-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent-cyan hover:shadow-[0_20px_45px_rgba(16,217,229,0.2)]"
           >
-            <img
-              src={project.imageUrl}
-              alt={`${project.title} preview image`}
-              className="h-52 w-full object-cover"
-              loading="lazy"
-            />
+            <div className="relative">
+              <img
+                src={project.imageUrl}
+                alt={`${project.title} preview image`}
+                className="h-52 w-full object-cover"
+                loading="lazy"
+              />
+              {project.id === "the-slicing-edge" ? (
+                <span className="absolute left-3 top-3 inline-flex items-center rounded-full border border-warning-amber/50 bg-warning-amber/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-900 shadow-md">
+                  Under Construction
+                </span>
+              ) : null}
+            </div>
             <div className="space-y-4 p-5">
               <h3 className="text-xl font-bold text-text-primary">{project.title}</h3>
-              <p className="text-sm text-text-secondary">{project.description}</p>
+              <p className="text-sm text-text-secondary">{project.description[language]}</p>
 
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((stackItem) => {

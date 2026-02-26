@@ -39,7 +39,7 @@ export function ContactSection(): JSX.Element {
         <h3 className="text-lg font-semibold text-text-primary">{dictionary.contact.altContactTitle}</h3>
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-text-secondary">
           <a
-            href="#"
+            href="https://github.com/hervid2"
             className="inline-flex items-center gap-2 rounded-md border border-border-subtle px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-cyan hover:text-accent-cyan"
             rel="noopener noreferrer"
             target="_blank"
@@ -53,7 +53,7 @@ export function ContactSection(): JSX.Element {
             GitHub
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/hern%C3%A1n-david-cardona-becerra/"
             className="inline-flex items-center gap-2 rounded-md border border-border-subtle px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-cyan hover:text-accent-cyan"
             rel="noopener noreferrer"
             target="_blank"
@@ -84,7 +84,7 @@ export function ContactSection(): JSX.Element {
             value={values.name}
             onChange={(event) => updateField("name", event.target.value)}
             className="w-full rounded-lg border border-border-subtle bg-surface-card px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-cyan"
-            placeholder="Your name"
+            placeholder={dictionary.contact.namePlaceholder}
           />
         </div>
 
@@ -98,7 +98,7 @@ export function ContactSection(): JSX.Element {
             value={values.email}
             onChange={(event) => updateField("email", event.target.value)}
             className="w-full rounded-lg border border-border-subtle bg-surface-card px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-cyan"
-            placeholder="name@email.com"
+            placeholder={dictionary.contact.emailPlaceholder}
           />
         </div>
 
@@ -112,7 +112,7 @@ export function ContactSection(): JSX.Element {
             value={values.message}
             onChange={(event) => updateField("message", event.target.value)}
             className="w-full rounded-lg border border-border-subtle bg-surface-card px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-cyan"
-            placeholder="Write your message here..."
+            placeholder={dictionary.contact.messagePlaceholder}
           />
         </div>
 
@@ -122,7 +122,7 @@ export function ContactSection(): JSX.Element {
           disabled={submissionState === "loading"}
           aria-label="Send contact message"
         >
-          {submissionState === "loading" ? "Sending..." : dictionary.contact.submitLabel}
+          {submissionState === "loading" ? dictionary.contact.sendingLabel : dictionary.contact.submitLabel}
         </button>
 
         {submissionState === "success" && (
