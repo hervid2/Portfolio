@@ -22,7 +22,8 @@ function createInitialValues(): ContactFormValues {
   return {
     name: "",
     email: "",
-    message: ""
+    message: "",
+    captchaToken: ""
   };
 }
 
@@ -33,6 +34,7 @@ function createInitialValues(): ContactFormValues {
  */
 export function useContactForm(): UseContactFormResult {
   const { dictionary } = useLanguage();
+  const captchaEnabled = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY?.toString().trim());
   const [values, setValues] = useState<ContactFormValues>(() => createInitialValues());
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -63,15 +65,22 @@ export function useContactForm(): UseContactFormResult {
       return;
     }
 
+    if (captchaEnabled && !values.captchaToken.trim()) {
+      setSubmissionState("error");
+      setErrorMessage(dictionary.contact.captchaRequiredMessage);
+      return;
+    }
+
     try {
       setSubmissionState("loading");
       setErrorMessage("");
       await sendContactMessage(values);
       setSubmissionState("success");
       setValues(createInitialValues());
-    } catch {
+    } catch (error) {
       setSubmissionState("error");
-      setErrorMessage(dictionary.contact.errorMessage);
+      const fallbackMessage = error instanceof Error ? error.message : dictionary.contact.errorMessage;
+      setErrorMessage(fallbackMessage);
     }
   }
 

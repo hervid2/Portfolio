@@ -9,7 +9,7 @@ export const enDictionary: AppDictionary = {
   },
   hero: {
     role: "Full-stack Developer",
-    statement: "I build elegant and efficient software solutions for the web.",
+    statement: "I build elegant and efficient software solutions for the web and desktop.",
     ctaPrimary: "View My Work",
     ctaSecondary: "Get in Touch"
   },
@@ -44,6 +44,7 @@ export const enDictionary: AppDictionary = {
     sendingLabel: "Sending...",
     submitLabel: "Send Message",
     requiredFieldsMessage: "Please complete all fields before sending.",
+    captchaRequiredMessage: "Please complete the captcha before sending.",
     successMessage: "Your message has been sent successfully.",
     errorMessage: "Could not send the message. Please try again."
   },

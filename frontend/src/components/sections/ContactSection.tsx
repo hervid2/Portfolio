@@ -1,7 +1,25 @@
+import { useEffect, useRef } from "react";
 import type { FormEvent } from "react";
 import { ThemeIcon } from "@/components/ui/ThemeIcon";
 import { useContactForm } from "@/hooks/useContactForm";
 import { useLanguage } from "@/hooks/useLanguage";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: HTMLElement,
+        options: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "expired-callback": () => void;
+          "error-callback": () => void;
+        }
+      ) => string;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
 
 /**
  * Prevents default form action and calls contact form submit handler.
@@ -27,6 +45,60 @@ async function handleSubmit(
 export function ContactSection(): JSX.Element {
   const { dictionary } = useLanguage();
   const { values, submissionState, errorMessage, updateField, submitForm } = useContactForm();
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY?.toString().trim() || "";
+  const isTurnstileEnabled = turnstileSiteKey.length > 0;
+  const turnstileContainerRef = useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!isTurnstileEnabled) {
+      return;
+    }
+
+    let pollingIntervalId: ReturnType<typeof setInterval> | undefined;
+
+    const renderWidget = (): void => {
+      if (!window.turnstile || !turnstileContainerRef.current || turnstileWidgetIdRef.current) {
+        return;
+      }
+
+      turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: turnstileSiteKey,
+        callback: (token: string) => {
+          updateField("captchaToken", token);
+        },
+        "expired-callback": () => {
+          updateField("captchaToken", "");
+        },
+        "error-callback": () => {
+          updateField("captchaToken", "");
+        }
+      });
+
+      if (pollingIntervalId) {
+        clearInterval(pollingIntervalId);
+        pollingIntervalId = undefined;
+      }
+    };
+
+    renderWidget();
+
+    if (!turnstileWidgetIdRef.current) {
+      pollingIntervalId = setInterval(renderWidget, 300);
+    }
+
+    return () => {
+      if (pollingIntervalId) {
+        clearInterval(pollingIntervalId);
+      }
+
+      if (window.turnstile && turnstileWidgetIdRef.current) {
+        window.turnstile.remove(turnstileWidgetIdRef.current);
+      }
+
+      turnstileWidgetIdRef.current = null;
+    };
+  }, [isTurnstileEnabled, turnstileSiteKey]);
 
   return (
     <section id="contact" className="mx-auto w-full max-w-4xl px-5 py-24 md:px-8">
@@ -115,6 +187,10 @@ export function ContactSection(): JSX.Element {
             placeholder={dictionary.contact.messagePlaceholder}
           />
         </div>
+
+        {isTurnstileEnabled && (
+          <div ref={turnstileContainerRef} className="min-h-[65px]" />
+        )}
 
         <button
           type="submit"

@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ContactMessage {
+  id          BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  name        String   @db.VarChar(80)
+  email       String   @db.VarChar(120)
+  message     String   @db.Text
+  submittedAt DateTime @default(now()) @map("submitted_at") @db.Timestamp(0)
+  sourceIp    String?  @map("source_ip") @db.VarChar(45)
+  userAgent   String?  @map("user_agent") @db.VarChar(512)
+
+  @@index([submittedAt], map: "idx_contact_messages_submitted_at")
+  @@index([email], map: "idx_contact_messages_email")
+  @@map("contact_messages")
+}
+
+model Language {
+  id                  Int                  @id @default(autoincrement()) @db.UnsignedTinyInt
+  code                String               @unique(map: "uq_languages_code") @db.VarChar(5)
+  name                String               @db.VarChar(50)
+  projectDescriptions ProjectDescription[]
+
+  @@map("languages")
+}
+
+model ProfileSocialLink {
+  id             Int            @id @default(autoincrement()) @db.UnsignedInt
+  platformId     Int            @unique(map: "uq_profile_social_links_platform") @map("platform_id") @db.UnsignedTinyInt
+  profileUrl     String         @map("profile_url") @db.VarChar(500)
+  isActive       Boolean        @default(true) @map("is_active")
+  socialPlatform SocialPlatform @relation(fields: [platformId], references: [id], map: "fk_profile_social_links_platform")
+
+  @@map("profile_social_links")
+}
+
+model ProjectCategory {
+  id       Int       @id @default(autoincrement()) @db.UnsignedSmallInt
+  slug     String    @unique(map: "uq_project_categories_slug") @db.VarChar(80)
+  name     String    @db.VarChar(100)
+  projects Project[]
+
+  @@map("project_categories")
+}
+
+model ProjectDescription {
+  projectId       Int      @map("project_id") @db.UnsignedInt
+  languageId      Int      @map("language_id") @db.UnsignedTinyInt
+  descriptionText String   @map("description_text") @db.Text
+  language        Language @relation(fields: [languageId], references: [id], map: "fk_project_descriptions_language")
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade, map: "fk_project_descriptions_project")
+
+  @@id([projectId, languageId])
+  @@index([languageId], map: "idx_project_descriptions_language_id")
+  @@map("project_descriptions")
+}
+
+model ProjectTechnology {
+  projectId    Int        @map("project_id") @db.UnsignedInt
+  technologyId Int        @map("technology_id") @db.UnsignedSmallInt
+  displayOrder Int        @default(1) @map("display_order") @db.UnsignedSmallInt
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade, map: "fk_project_technologies_project")
+  technology   Technology @relation(fields: [technologyId], references: [id], map: "fk_project_technologies_technology")
+
+  @@id([projectId, technologyId])
+  @@index([technologyId], map: "idx_project_technologies_technology_id")
+  @@map("project_technologies")
+}
+
+model Project {
+  id                  Int                  @id @default(autoincrement()) @db.UnsignedInt
+  slug                String               @unique(map: "uq_projects_slug") @db.VarChar(120)
+  title               String               @db.VarChar(180)
+  categoryId          Int                  @map("category_id") @db.UnsignedSmallInt
+  imageUrl            String?              @map("image_url") @db.VarChar(500)
+  liveDemoUrl         String?              @map("live_demo_url") @db.VarChar(500)
+  codeUrl             String?              @map("code_url") @db.VarChar(500)
+  isUnderConstruction Boolean              @default(false) @map("is_under_construction")
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt           DateTime             @default(now()) @map("updated_at") @db.Timestamp(0)
+  descriptions        ProjectDescription[]
+  technologies        ProjectTechnology[]
+  category            ProjectCategory      @relation(fields: [categoryId], references: [id], map: "fk_projects_category")
+
+  @@index([categoryId], map: "idx_projects_category_id")
+  @@map("projects")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Skill {
+  id            Int     @id @default(autoincrement()) @db.UnsignedSmallInt
+  slug          String  @unique(map: "uq_skills_slug") @db.VarChar(80)
+  displayName   String  @map("display_name") @db.VarChar(120)
+  iconPathLight String? @map("icon_path_light") @db.VarChar(255)
+  iconPathDark  String? @map("icon_path_dark") @db.VarChar(255)
+  levelPercent  Int?    @map("level_percent") @db.UnsignedTinyInt
+  sortOrder     Int     @default(1) @map("sort_order") @db.UnsignedSmallInt
+
+  @@map("skills")
+}
+
+model SocialPlatform {
+  id                Int                @id @default(autoincrement()) @db.UnsignedTinyInt
+  slug              String             @unique(map: "uq_social_platforms_slug") @db.VarChar(50)
+  displayName       String             @map("display_name") @db.VarChar(80)
+  iconPathLight     String?            @map("icon_path_light") @db.VarChar(255)
+  iconPathDark      String?            @map("icon_path_dark") @db.VarChar(255)
+  profileSocialLink ProfileSocialLink?
+
+  @@map("social_platforms")
+}
+
+model Technology {
+  id                  Int                 @id @default(autoincrement()) @db.UnsignedSmallInt
+  slug                String              @unique(map: "uq_technologies_slug") @db.VarChar(80)
+  displayName         String              @map("display_name") @db.VarChar(100)
+  iconPathLight       String?             @map("icon_path_light") @db.VarChar(255)
+  iconPathDark        String?             @map("icon_path_dark") @db.VarChar(255)
+  projectTechnologies ProjectTechnology[]
+
+  @@map("technologies")
+}

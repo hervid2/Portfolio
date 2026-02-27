@@ -1,11 +1,15 @@
 import type { ContactRepository } from "../../domain/interfaces/ContactRepository.js";
+import type { MailService } from "../../domain/interfaces/MailService.js";
 import type { ContactMessageDTO } from "../../types/contact.js";
 
 /**
  * Handles business flow for contact form submissions.
  */
 export class SubmitContactMessageUseCase {
-  constructor(private readonly contactRepository: ContactRepository) {}
+  constructor(
+    private readonly contactRepository: ContactRepository,
+    private readonly mailService: MailService
+  ) {}
 
   /**
    * Persists contact message data using the configured repository.
@@ -16,5 +20,6 @@ export class SubmitContactMessageUseCase {
    */
   async execute(payload: ContactMessageDTO): Promise<void> {
     await this.contactRepository.save(payload);
+    await this.mailService.sendContactNotification(payload);
   }
 }

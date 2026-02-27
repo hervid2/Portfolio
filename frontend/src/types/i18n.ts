@@ -40,6 +40,7 @@ export interface AppDictionary {
     sendingLabel: string;
     submitLabel: string;
     requiredFieldsMessage: string;
+    captchaRequiredMessage: string;
     successMessage: string;
     errorMessage: string;
   };
