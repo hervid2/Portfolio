@@ -7,6 +7,9 @@ const envConfig = getEnvConfig();
 async function bootstrap(): Promise<void> {
   await prisma.$connect();
   console.info("[API] Database connection established");
+  console.info(
+    `[API] Runtime config: env=${envConfig.nodeEnv}, origins=${envConfig.allowedOrigins.length}, mail=${envConfig.mailEnabled}, captcha=${envConfig.captchaEnabled}`
+  );
 
   app.listen(envConfig.port, () => {
     console.info(`[API] Server running on port ${envConfig.port}`);
