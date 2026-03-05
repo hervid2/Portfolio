@@ -26,7 +26,7 @@ export const projects: Project[] = [
     category: "Web SPA",
     imageUrl:
       "/assets/images/projects/sushi-burrito-web-app.webp",
-    liveDemoUrl: null,
+    liveDemoUrl: "https://sushi-burrito-final.vercel.app/",
     codeUrl: "https://github.com/hervid2/SushiBurritoFinal"
   },
   {
