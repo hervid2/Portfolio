@@ -31,17 +31,17 @@ export const projects: Project[] = [
     demoCredentials: [
       {
         role: { en: "Admin", es: "Administrador" },
-        username: "hdcardonab@gmail.com",
+        username: "admin@demo.com",
         password: "AdminPassword123!"
       },
       {
         role: { en: "Kitchen", es: "Cocina" },
-        username: "hcardona852@unab.edu.co",
+        username: "kitchen@demo.com",
         password: "KitchenPassword123!"
       },
       {
         role: { en: "Waiter", es: "Mesero" },
-        username: "hervidcardobe@gmail.com",
+        username: "waiter@demo.com",
         password: "WaiterPassword123!"
       }
     ]
