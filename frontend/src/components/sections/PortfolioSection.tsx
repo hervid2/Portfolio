@@ -1,6 +1,8 @@
 import { projects } from "@/data/projects";
 import { ThemeIcon } from "@/components/ui/ThemeIcon";
 import { useLanguage } from "@/hooks/useLanguage";
+import type { DemoCredential } from "@/types/project";
+import type { AppDictionary, Language } from "@/types/i18n";
 
 interface IconSet {
   iconPath: string;
@@ -112,6 +114,45 @@ function renderProjectLink(
 }
 
 /**
+ * Renders demo credentials block for a project card.
+ *
+ * @param credentials - List of demo credentials to display.
+ * @param language - Active language for role labels.
+ * @param dictionary - App dictionary for translated labels.
+ * @returns Credentials block element.
+ */
+function renderDemoCredentials(
+  credentials: DemoCredential[],
+  language: Language,
+  dictionary: AppDictionary
+): JSX.Element {
+  return (
+    <div className="border-t border-border-subtle pt-4">
+      <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-text-secondary">
+        {dictionary.portfolio.credentialsTitle}
+      </p>
+      <div className="space-y-2">
+        {credentials.map((cred) => (
+          <div key={cred.role.en} className="rounded-lg bg-surface-muted px-3 py-2 text-xs">
+            <span className="font-semibold text-accent-cyan">{cred.role[language]}</span>
+            {cred.username !== null ? (
+              <div className="mt-1 space-y-0.5 font-mono text-text-secondary">
+                <div>user: {cred.username}</div>
+                <div>pass: {cred.password}</div>
+              </div>
+            ) : (
+              <div className="mt-1 font-mono text-text-secondary/50 italic">
+                {dictionary.portfolio.pendingCredentials}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
  * Renders portfolio cards from typed project data.
  *
  * @returns Portfolio section element.
@@ -186,6 +227,10 @@ export function PortfolioSection(): JSX.Element {
                   "/assets/icons/actions/code-dark.svg"
                 )}
               </div>
+
+              {project.demoCredentials && project.demoCredentials.length > 0
+                ? renderDemoCredentials(project.demoCredentials, language, dictionary)
+                : null}
             </div>
           </article>
         ))}

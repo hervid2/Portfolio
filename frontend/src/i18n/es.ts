@@ -18,7 +18,10 @@ export const esDictionary: AppDictionary = {
     subtitle: "Una selección de proyectos profesionales.",
     liveDemo: "Demo",
     code: "Código",
-    pending: "Enlace pendiente"
+    pending: "Enlace pendiente",
+    credentialsTitle: "Credenciales de prueba",
+    passwordLabel: "Contraseña",
+    pendingCredentials: "Pendiente"
   },
   about: {
     title: "Sobre mí",

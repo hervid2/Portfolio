@@ -19,6 +19,9 @@ export interface AppDictionary {
     liveDemo: string;
     code: string;
     pending: string;
+    credentialsTitle: string;
+    passwordLabel: string;
+    pendingCredentials: string;
   };
   about: {
     title: string;

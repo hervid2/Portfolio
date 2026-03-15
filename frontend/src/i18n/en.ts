@@ -18,7 +18,10 @@ export const enDictionary: AppDictionary = {
     subtitle: "A selection of professional projects.",
     liveDemo: "Live Demo",
     code: "Code",
-    pending: "Link pending"
+    pending: "Link pending",
+    credentialsTitle: "Demo Credentials",
+    passwordLabel: "Password",
+    pendingCredentials: "Pending"
   },
   about: {
     title: "About Me",

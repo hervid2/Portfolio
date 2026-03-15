@@ -1,4 +1,4 @@
-import type { Project } from "@/types/project";
+import type { Project, DemoCredential } from "@/types/project";
 
 export const projects: Project[] = [
   {
@@ -27,7 +27,24 @@ export const projects: Project[] = [
     imageUrl:
       "/assets/images/projects/sushi-burrito-web-app.webp",
     liveDemoUrl: "https://sushi-burrito-final.vercel.app/",
-    codeUrl: "https://github.com/hervid2/SushiBurritoFinal"
+    codeUrl: "https://github.com/hervid2/SushiBurritoFinal",
+    demoCredentials: [
+      {
+        role: { en: "Admin", es: "Administrador" },
+        username: "hdcardonab@gmail.com",
+        password: "AdminPassword123!"
+      },
+      {
+        role: { en: "Kitchen", es: "Cocina" },
+        username: "hcardona852@unab.edu.co",
+        password: "KitchenPassword123!"
+      },
+      {
+        role: { en: "Waiter", es: "Mesero" },
+        username: "hervidcardobe@gmail.com",
+        password: "WaiterPassword123!"
+      }
+    ]
   },
   {
     id: "the-slicing-edge",
@@ -41,6 +58,18 @@ export const projects: Project[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80",
     liveDemoUrl: null,
-    codeUrl: null
+    codeUrl: null,
+    demoCredentials: [
+      {
+        role: { en: "Admin", es: "Administrador" },
+        username: null,
+        password: null
+      },
+      {
+        role: { en: "User", es: "Usuario" },
+        username: null,
+        password: null
+      }
+    ]
   }
 ];

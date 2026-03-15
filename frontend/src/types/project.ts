@@ -1,3 +1,12 @@
+export interface DemoCredential {
+  role: {
+    en: string;
+    es: string;
+  };
+  username: string | null;
+  password: string | null;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -10,4 +19,5 @@ export interface Project {
   imageUrl: string;
   liveDemoUrl: string | null;
   codeUrl: string | null;
+  demoCredentials?: DemoCredential[];
 }
