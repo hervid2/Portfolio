@@ -17,6 +17,7 @@ interface EnvironmentConfig {
   smtpPass: string;
   captchaEnabled: boolean;
   turnstileSecretKey: string;
+  resendApiKey: string;
 }
 
 function parseBoolean(value: string | undefined, fallbackValue: boolean): boolean {
@@ -69,6 +70,7 @@ export function getEnvConfig(): EnvironmentConfig {
   const smtpPass = process.env.SMTP_PASS?.trim() || "";
   const captchaEnabled = parseBoolean(process.env.CAPTCHA_ENABLED, false);
   const turnstileSecretKey = process.env.TURNSTILE_SECRET_KEY?.trim() || "";
+  const resendApiKey = process.env.RESEND_API_KEY?.trim() || "";
 
   if (Number.isNaN(port) || port <= 0) {
     throw new Error("Invalid PORT configuration");
@@ -108,6 +110,7 @@ export function getEnvConfig(): EnvironmentConfig {
     smtpUser,
     smtpPass,
     captchaEnabled,
-    turnstileSecretKey
+    turnstileSecretKey,
+    resendApiKey
   };
 }

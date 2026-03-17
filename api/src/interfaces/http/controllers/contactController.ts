@@ -5,22 +5,29 @@ import { NoopCaptchaVerifier } from "../../../infrastructure/captcha/NoopCaptcha
 import { TurnstileCaptchaVerifier } from "../../../infrastructure/captcha/TurnstileCaptchaVerifier.js";
 import { NoopMailService } from "../../../infrastructure/email/NoopMailService.js";
 import { NodemailerMailService } from "../../../infrastructure/email/NodemailerMailService.js";
+import { ResendMailService } from "../../../infrastructure/email/ResendMailService.js";
 import { PrismaContactRepository } from "../../../infrastructure/repositories/PrismaContactRepository.js";
 import type { ContactRequestBody } from "../validators/contactSchema.js";
 
 const envConfig = getEnvConfig();
 const contactRepository = new PrismaContactRepository();
-const mailService = envConfig.mailEnabled
-  ? new NodemailerMailService({
+const mailService = envConfig.resendApiKey
+  ? new ResendMailService({
+      apiKey: envConfig.resendApiKey,
       mailFrom: envConfig.mailFrom,
-      mailTo: envConfig.mailTo,
-      smtpHost: envConfig.smtpHost,
-      smtpPort: envConfig.smtpPort,
-      smtpSecure: envConfig.smtpSecure,
-      smtpUser: envConfig.smtpUser,
-      smtpPass: envConfig.smtpPass
+      mailTo: envConfig.mailTo
     })
-  : new NoopMailService();
+  : envConfig.mailEnabled
+    ? new NodemailerMailService({
+        mailFrom: envConfig.mailFrom,
+        mailTo: envConfig.mailTo,
+        smtpHost: envConfig.smtpHost,
+        smtpPort: envConfig.smtpPort,
+        smtpSecure: envConfig.smtpSecure,
+        smtpUser: envConfig.smtpUser,
+        smtpPass: envConfig.smtpPass
+      })
+    : new NoopMailService();
 const captchaVerifier = envConfig.captchaEnabled
   ? new TurnstileCaptchaVerifier({
       secretKey: envConfig.turnstileSecretKey
