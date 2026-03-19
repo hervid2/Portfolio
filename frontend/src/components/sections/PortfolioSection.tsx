@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { projects } from "@/data/projects";
 import { ThemeIcon } from "@/components/ui/ThemeIcon";
 import { useLanguage } from "@/hooks/useLanguage";
-import type { DemoCredential } from "@/types/project";
-import type { AppDictionary, Language } from "@/types/i18n";
+import { CredentialsModal } from "@/components/ui/CredentialsModal";
 
 interface IconSet {
   iconPath: string;
@@ -114,51 +114,17 @@ function renderProjectLink(
 }
 
 /**
- * Renders demo credentials block for a project card.
- *
- * @param credentials - List of demo credentials to display.
- * @param language - Active language for role labels.
- * @param dictionary - App dictionary for translated labels.
- * @returns Credentials block element.
- */
-function renderDemoCredentials(
-  credentials: DemoCredential[],
-  language: Language,
-  dictionary: AppDictionary
-): JSX.Element {
-  return (
-    <div className="border-t border-border-subtle pt-4">
-      <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-text-secondary">
-        {dictionary.portfolio.credentialsTitle}
-      </p>
-      <div className="space-y-2">
-        {credentials.map((cred) => (
-          <div key={cred.role.en} className="rounded-lg bg-surface-muted px-3 py-2 text-xs">
-            <span className="font-semibold text-accent-cyan">{cred.role[language]}</span>
-            {cred.username !== null ? (
-              <div className="mt-1 space-y-0.5 font-mono text-text-secondary">
-                <div>user: {cred.username}</div>
-                <div>pass: {cred.password}</div>
-              </div>
-            ) : (
-              <div className="mt-1 font-mono text-text-secondary/50 italic">
-                {dictionary.portfolio.pendingCredentials}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/**
  * Renders portfolio cards from typed project data.
  *
  * @returns Portfolio section element.
  */
 export function PortfolioSection(): JSX.Element {
   const { dictionary, language } = useLanguage();
+  const [openCredentialsId, setOpenCredentialsId] = useState<string | null>(null);
+
+  const activeProject = openCredentialsId
+    ? projects.find((p) => p.id === openCredentialsId)
+    : null;
 
   return (
     <section id="portfolio" className="mx-auto w-full max-w-6xl px-5 py-24 md:px-8">
@@ -226,15 +192,33 @@ export function PortfolioSection(): JSX.Element {
                   "/assets/icons/actions/code.svg",
                   "/assets/icons/actions/code-dark.svg"
                 )}
+                {project.demoCredentials && project.demoCredentials.length > 0 ? (
+                  <button
+                    onClick={() => setOpenCredentialsId(project.id)}
+                    className="inline-flex items-center gap-2 rounded-md border border-accent-cyan/40 bg-accent-cyan/5 px-3 py-2 text-xs font-semibold text-accent-cyan transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-cyan hover:bg-accent-cyan/10"
+                  >
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                    </svg>
+                    {dictionary.portfolio.credentialsTitle}
+                  </button>
+                ) : null}
               </div>
-
-              {project.demoCredentials && project.demoCredentials.length > 0
-                ? renderDemoCredentials(project.demoCredentials, language, dictionary)
-                : null}
             </div>
           </article>
         ))}
       </div>
+
+      {activeProject?.demoCredentials ? (
+        <CredentialsModal
+          isOpen={openCredentialsId !== null}
+          onClose={() => setOpenCredentialsId(null)}
+          projectTitle={activeProject.title}
+          credentials={activeProject.demoCredentials}
+          language={language}
+          dictionary={dictionary}
+        />
+      ) : null}
     </section>
   );
 }
