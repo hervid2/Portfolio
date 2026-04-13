@@ -48,17 +48,17 @@ export const projects: Project[] = [
   },
   {
     id: "the-slicing-edge",
-    title: "The Slicing Edge",
+    title: "Slicing Edge E-commerce App",
     description: {
-      en: "E-commerce platform for kitchen knives, built for scalability and conversion.",
-      es: "Plataforma e-commerce para cuchillos de cocina, diseñada para escalar y convertir."
+      en: "A full-stack e-commerce platform for premium kitchen knives, built with Next.js 15, Fastify and PostgreSQL. Features Google OAuth, Stripe payments, AI chatbot assistant, admin dashboard and CI/CD pipeline via GitHub Actions.",
+      es: "Plataforma e-commerce full-stack para cuchillos de cocina premium, construida con Next.js 15, Fastify y PostgreSQL. Incluye Google OAuth, pagos con Stripe, chatbot con IA, panel de administración y pipeline CI/CD con GitHub Actions."
     },
-    stack: ["React", "TypeScript", "Node.js", "Express", "SQL"],
+    stack: ["Next.js", "TypeScript", "Fastify", "PostgreSQL", "Google OAuth", "Stripe", "GitHub Actions"],
     category: "E-commerce",
     imageUrl:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80",
-    liveDemoUrl: null,
-    codeUrl: null,
+      "/assets/images/projects/slicing-edge.png",
+    liveDemoUrl: "https://slicing-edge-e-commerce-web.vercel.app/",
+    codeUrl: "https://github.com/hervid2/Slicing-edge-e-commerce",
     demoCredentials: [
       {
         role: { en: "Admin", es: "Administrador" },
