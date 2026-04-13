@@ -53,7 +53,7 @@ export const projects: Project[] = [
       en: "A full-stack e-commerce platform for premium kitchen knives, built with Next.js 15, Fastify and PostgreSQL. Features Google OAuth, Stripe payments, AI chatbot assistant, admin dashboard and CI/CD pipeline via GitHub Actions.",
       es: "Plataforma e-commerce full-stack para cuchillos de cocina premium, construida con Next.js 15, Fastify y PostgreSQL. Incluye Google OAuth, pagos con Stripe, chatbot con IA, panel de administración y pipeline CI/CD con GitHub Actions."
     },
-    stack: ["Next.js", "TypeScript", "Fastify", "PostgreSQL", "Google OAuth", "Stripe", "GitHub Actions"],
+    stack: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Fastify", "PostgreSQL", "Google OAuth", "Stripe", "Docker", "GitHub Actions"],
     category: "E-commerce",
     imageUrl:
       "/assets/images/projects/slicing-edge.png",
