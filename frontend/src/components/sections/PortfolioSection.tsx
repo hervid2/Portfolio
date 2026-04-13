@@ -63,6 +63,30 @@ const techIconPathByLabel: Record<string, IconSet> = {
   websockets: {
     iconPath: "/assets/icons/tech/websockets.svg",
     iconPathDark: "/assets/icons/tech/websockets-dark.svg"
+  },
+  "next.js": {
+    iconPath: "/assets/icons/tech/nextjs.svg",
+    iconPathDark: "/assets/icons/tech/nextjs-dark.svg"
+  },
+  fastify: {
+    iconPath: "/assets/icons/tech/fastify.svg",
+    iconPathDark: "/assets/icons/tech/fastify-dark.svg"
+  },
+  postgresql: {
+    iconPath: "/assets/icons/tech/postgresql.svg",
+    iconPathDark: "/assets/icons/tech/postgresql-dark.svg"
+  },
+  "google oauth": {
+    iconPath: "/assets/icons/tech/google.svg",
+    iconPathDark: "/assets/icons/tech/google-dark.svg"
+  },
+  stripe: {
+    iconPath: "/assets/icons/tech/stripe.svg",
+    iconPathDark: "/assets/icons/tech/stripe-dark.svg"
+  },
+  "github actions": {
+    iconPath: "/assets/icons/tech/githubactions.svg",
+    iconPathDark: "/assets/icons/tech/githubactions-dark.svg"
   }
 };
 

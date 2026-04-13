@@ -55,5 +55,35 @@ export const skills: Skill[] = [
     label: "Git",
     iconPath: "/assets/icons/tech/git.svg",
     iconPathDark: "/assets/icons/tech/git-dark.svg"
+  },
+  {
+    id: "nextjs",
+    label: "Next.js",
+    iconPath: "/assets/icons/tech/nextjs.svg",
+    iconPathDark: "/assets/icons/tech/nextjs-dark.svg"
+  },
+  {
+    id: "fastify",
+    label: "Fastify",
+    iconPath: "/assets/icons/tech/fastify.svg",
+    iconPathDark: "/assets/icons/tech/fastify-dark.svg"
+  },
+  {
+    id: "postgresql",
+    label: "PostgreSQL",
+    iconPath: "/assets/icons/tech/postgresql.svg",
+    iconPathDark: "/assets/icons/tech/postgresql-dark.svg"
+  },
+  {
+    id: "stripe",
+    label: "Stripe",
+    iconPath: "/assets/icons/tech/stripe.svg",
+    iconPathDark: "/assets/icons/tech/stripe-dark.svg"
+  },
+  {
+    id: "githubactions",
+    label: "GitHub Actions",
+    iconPath: "/assets/icons/tech/githubactions.svg",
+    iconPathDark: "/assets/icons/tech/githubactions-dark.svg"
   }
 ];
