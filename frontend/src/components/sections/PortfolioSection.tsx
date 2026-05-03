@@ -170,11 +170,6 @@ export function PortfolioSection(): JSX.Element {
                 className="h-52 w-full object-cover"
                 loading="lazy"
               />
-              {project.id === "the-slicing-edge" ? (
-                <span className="absolute left-3 top-3 inline-flex items-center rounded-full border border-warning-amber/50 bg-warning-amber/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-900 shadow-md">
-                  Under Construction
-                </span>
-              ) : null}
             </div>
             <div className="space-y-4 p-5">
               <h3 className="text-xl font-bold text-text-primary">{project.title}</h3>

@@ -62,13 +62,13 @@ export const projects: Project[] = [
     demoCredentials: [
       {
         role: { en: "Admin", es: "Administrador" },
-        username: null,
-        password: null
+        username: "admin@slicing-edge.com",
+        password: "admin123456"
       },
       {
-        role: { en: "User", es: "Usuario" },
-        username: null,
-        password: null
+        role: { en: "Customer", es: "Cliente" },
+        username: "customer@example.com",
+        password: "customer123456"
       }
     ]
   }
