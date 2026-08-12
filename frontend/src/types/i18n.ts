@@ -22,6 +22,7 @@ export interface AppDictionary {
     credentialsTitle: string;
     passwordLabel: string;
     pendingCredentials: string;
+    watchDemo: string;
   };
   about: {
     title: string;

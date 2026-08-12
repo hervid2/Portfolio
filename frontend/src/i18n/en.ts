@@ -21,7 +21,8 @@ export const enDictionary: AppDictionary = {
     pending: "Link pending",
     credentialsTitle: "Demo Credentials",
     passwordLabel: "Password",
-    pendingCredentials: "Pending"
+    pendingCredentials: "Pending",
+    watchDemo: "Watch Demo Video"
   },
   about: {
     title: "About Me",

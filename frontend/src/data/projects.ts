@@ -8,12 +8,16 @@ export const projects: Project[] = [
       en: "A desktop solution built with Java focused on workflow efficiency and consistent UX.",
       es: "Una solución de escritorio en Java enfocada en la eficiencia de flujos de trabajo y una experiencia de usuario consistente."
     },
-    stack: ["Java", "Swing", "SQL"],
+    stack: ["Java", "Spring Boot", "Swing", "SQL"],
     category: "Desktop",
     imageUrl:
       "/assets/images/projects/java-desktop-app.webp",
     liveDemoUrl: null,
-    codeUrl: "https://github.com/hervid2/sushiBurritoJava"
+    codeUrl: "https://github.com/hervid2/sushiBurritoJava",
+    demoVideoId: {
+      en: "inrgfaGwJEE",
+      es: "sSIvLiMbzEM"
+    }
   },
   {
     id: "sushi-burrito-spa",

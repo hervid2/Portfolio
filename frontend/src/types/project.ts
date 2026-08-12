@@ -20,4 +20,9 @@ export interface Project {
   liveDemoUrl: string | null;
   codeUrl: string | null;
   demoCredentials?: DemoCredential[];
+  /** YouTube video ID (not full URL) per language, e.g. "dQw4w9WgXcQ". */
+  demoVideoId?: {
+    en: string;
+    es: string;
+  };
 }

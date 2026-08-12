@@ -21,7 +21,8 @@ export const esDictionary: AppDictionary = {
     pending: "Enlace pendiente",
     credentialsTitle: "Credenciales de prueba",
     passwordLabel: "Contraseña",
-    pendingCredentials: "Pendiente"
+    pendingCredentials: "Pendiente",
+    watchDemo: "Ver video demo"
   },
   about: {
     title: "Sobre mí",

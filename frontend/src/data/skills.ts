@@ -39,6 +39,11 @@ export const skills: Skill[] = [
     iconPathDark: "/assets/icons/tech/java-dark.svg"
   },
   {
+    id: "springboot",
+    label: "Spring Boot",
+    iconPath: "/assets/icons/tech/spring-boot.svg"
+  },
+  {
     id: "mysql",
     label: "MySQL",
     iconPath: "/assets/icons/tech/mysql.svg",
