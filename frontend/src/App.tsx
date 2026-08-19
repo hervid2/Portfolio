@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
+import { MotionConfig } from "motion/react";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -31,20 +32,22 @@ export default function App(): JSX.Element {
           content="Portfolio of Hernán David Cardona, full-stack developer focused on modern web solutions."
         />
       </Helmet>
-      <div className="min-h-screen bg-surface-base text-text-primary">
-        <Navbar />
-        <main>
-          <HeroSection />
-          <Suspense
-            fallback={<div className="px-5 py-10 text-center text-text-secondary">Loading...</div>}
-          >
-            <PortfolioSection />
-            <AboutSection />
-            <ContactSection />
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
+      <MotionConfig reducedMotion="user">
+        <div className="min-h-screen bg-surface-base text-text-primary">
+          <Navbar />
+          <main>
+            <HeroSection />
+            <Suspense
+              fallback={<div className="px-5 py-10 text-center text-text-secondary">Loading...</div>}
+            >
+              <PortfolioSection />
+              <AboutSection />
+              <ContactSection />
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </MotionConfig>
     </>
   );
 }

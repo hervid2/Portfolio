@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import { CARD_CORNER_RADIUS, buildCardLayoutId } from "@/utils/projectCardIdentity";
+import { LAYOUT_SPRING } from "@/utils/motionPresets";
 import type { DemoCredential } from "@/types/project";
 import type { AppDictionary, Language } from "@/types/i18n";
 
 interface CredentialsModalProps {
-  isOpen: boolean;
+  projectId: string;
   onClose: () => void;
   projectTitle: string;
   credentials: DemoCredential[];
@@ -19,6 +22,16 @@ interface CredentialRowProps {
   onCopy: (value: string, key: string) => void;
 }
 
+/**
+ * Renders one credential value with a copy-to-clipboard control.
+ *
+ * @param label - Field label, abbreviated in the gutter.
+ * @param value - Credential value to display and copy.
+ * @param copyKey - Unique key identifying this row for copy feedback.
+ * @param copiedKey - Key of the row currently showing copy confirmation.
+ * @param onCopy - Called with the value and key when the copy button is used.
+ * @returns Credential row element.
+ */
 function CredentialRow({ label, value, copyKey, copiedKey, onCopy }: CredentialRowProps): JSX.Element {
   const isCopied = copiedKey === copyKey;
 
@@ -31,6 +44,7 @@ function CredentialRow({ label, value, copyKey, copiedKey, onCopy }: CredentialR
         {value}
       </code>
       <button
+        type="button"
         onClick={() => onCopy(value, copyKey)}
         className="flex-shrink-0 rounded-md p-1.5 text-text-secondary transition-colors hover:bg-surface-card hover:text-accent-cyan"
         aria-label={`Copy ${label}`}
@@ -52,36 +66,54 @@ function CredentialRow({ label, value, copyKey, copiedKey, onCopy }: CredentialR
 
 /**
  * Overlay modal that displays demo credentials for a project.
- * Closes on backdrop click or Escape key.
+ *
+ * Mounting is controlled by an `AnimatePresence` in the parent, so this
+ * component is always in its open state while rendered. The panel shares its
+ * `layoutId` with the originating project card so the modal grows out of it.
+ * Closes on backdrop click or Escape.
+ *
+ * @param projectId - Project id used to pair the morph with its source card.
+ * @param onClose - Called when the modal requests to close.
+ * @param projectTitle - Project title shown in the header.
+ * @param credentials - Demo credentials to list.
+ * @param language - Active language used to pick localized role names.
+ * @param dictionary - Active dictionary for UI labels.
+ * @returns Animated modal element.
  */
 export function CredentialsModal({
-  isOpen,
+  projectId,
   onClose,
   projectTitle,
   credentials,
   language,
   dictionary
-}: CredentialsModalProps): JSX.Element | null {
+}: CredentialsModalProps): JSX.Element {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isOpen) return;
-    const handleEsc = (e: KeyboardEvent): void => {
-      if (e.key === "Escape") onClose();
+    const handleEsc = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") onClose();
     };
+
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, []);
 
-  if (!isOpen) return null;
-
+  /**
+   * Copies a credential value and shows transient confirmation on its row.
+   *
+   * @async
+   * @param value - Value to write to the clipboard.
+   * @param key - Row key used to target the confirmation state.
+   * @returns {Promise<void>} Resolves once the value is copied.
+   */
   async function handleCopy(value: string, key: string): Promise<void> {
     await navigator.clipboard.writeText(value);
     setCopiedKey(key);
@@ -89,15 +121,30 @@ export function CredentialsModal({
   }
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      <div
-        className="relative w-full max-w-md rounded-2xl border border-border-subtle bg-surface-card shadow-[0_25px_60px_rgba(0,0,0,0.5)]"
-        onClick={(e) => e.stopPropagation()}
+      <motion.div
+        layoutId={buildCardLayoutId(projectId)}
+        transition={{ layout: LAYOUT_SPRING }}
+        style={{ borderRadius: CARD_CORNER_RADIUS }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${dictionary.portfolio.credentialsTitle} — ${projectTitle}`}
+        className="relative w-full max-w-md border border-border-subtle bg-surface-card shadow-[0_25px_60px_rgba(0,0,0,0.5)]"
+        onClick={(event) => event.stopPropagation()}
       >
-        <div className="p-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.15, duration: 0.2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.1 } }}
+          className="p-6"
+        >
           <div className="mb-5 flex items-start justify-between gap-4">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-accent-cyan">
@@ -106,6 +153,7 @@ export function CredentialsModal({
               <h3 className="mt-1 text-lg font-bold text-text-primary">{projectTitle}</h3>
             </div>
             <button
+              type="button"
               onClick={onClose}
               className="flex-shrink-0 rounded-lg p-1.5 text-text-secondary transition-colors hover:bg-surface-muted hover:text-text-primary"
               aria-label="Close"
@@ -118,25 +166,27 @@ export function CredentialsModal({
           </div>
 
           <div className="space-y-3">
-            {credentials.map((cred) => (
+            {credentials.map((credential) => (
               <div
-                key={cred.role.en}
+                key={credential.role.en}
                 className="rounded-xl border border-border-subtle bg-surface-muted p-4"
               >
-                <p className="mb-3 text-xs font-semibold text-accent-cyan">{cred.role[language]}</p>
-                {cred.username !== null ? (
+                <p className="mb-3 text-xs font-semibold text-accent-cyan">
+                  {credential.role[language]}
+                </p>
+                {credential.username !== null ? (
                   <div className="space-y-2">
                     <CredentialRow
                       label="User"
-                      value={cred.username}
-                      copyKey={`${cred.role.en}-user`}
+                      value={credential.username}
+                      copyKey={`${credential.role.en}-user`}
                       copiedKey={copiedKey}
                       onCopy={handleCopy}
                     />
                     <CredentialRow
                       label={dictionary.portfolio.passwordLabel}
-                      value={cred.password ?? ""}
-                      copyKey={`${cred.role.en}-pass`}
+                      value={credential.password ?? ""}
+                      copyKey={`${credential.role.en}-pass`}
                       copiedKey={copiedKey}
                       onCopy={handleCopy}
                     />
@@ -149,8 +199,8 @@ export function CredentialsModal({
               </div>
             ))}
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }
