@@ -22,7 +22,9 @@ export const enDictionary: AppDictionary = {
     credentialsTitle: "Demo Credentials",
     passwordLabel: "Password",
     pendingCredentials: "Pending",
-    watchDemo: "Watch Demo Video"
+    watchDemo: "Watch Demo Video",
+    filterAll: "All",
+    filterLabel: "Filter projects by category"
   },
   about: {
     title: "About Me",

@@ -22,7 +22,9 @@ export const esDictionary: AppDictionary = {
     credentialsTitle: "Credenciales de prueba",
     passwordLabel: "Contraseña",
     pendingCredentials: "Pendiente",
-    watchDemo: "Ver video demo"
+    watchDemo: "Ver video demo",
+    filterAll: "Todos",
+    filterLabel: "Filtrar proyectos por categoría"
   },
   about: {
     title: "Sobre mí",
