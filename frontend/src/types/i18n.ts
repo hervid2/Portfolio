@@ -23,6 +23,8 @@ export interface AppDictionary {
     passwordLabel: string;
     pendingCredentials: string;
     watchDemo: string;
+    filterAll: string;
+    filterLabel: string;
   };
   about: {
     title: string;
