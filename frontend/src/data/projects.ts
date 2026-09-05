@@ -75,5 +75,36 @@ export const projects: Project[] = [
         password: "customer123456"
       }
     ]
+  },
+  {
+    id: "flyworkflow-incidents",
+    title: "FlyWorkFlow Incident Management",
+    description: {
+      en: "Incident management platform for construction projects, built with Next.js 14 and TypeScript. Features Mapbox GL map visualization with geolocated reports, an analytics dashboard with KPIs and trend charts (Recharts), role-based access control, Zustand state management and an E2E suite with Vitest and Playwright.",
+      es: "Plataforma de gestión de incidencias para proyectos de construcción, construida con Next.js 14 y TypeScript. Incluye visualización en mapa con Mapbox GL y reportes geolocalizados, dashboard analítico con KPIs y gráficas de tendencia (Recharts), control de acceso por roles, gestión de estado con Zustand y suite E2E con Vitest y Playwright."
+    },
+    stack: ["Next.js", "TypeScript", "React", "SCSS", "Mapbox GL", "Zod", "React Hook Form", "Vitest", "Playwright", "GitHub Actions"],
+    category: "Web App",
+    imageUrl:
+      "/assets/images/projects/flyworkflow.webp",
+    liveDemoUrl: "https://flyworkflowapp.vercel.app/",
+    codeUrl: "https://github.com/hervid2/flyworkflowapp",
+    demoCredentials: [
+      {
+        role: { en: "Super Admin", es: "Superadministrador" },
+        username: "camila.rojas@flyworkflow.io",
+        password: "FlyWorkFlow2026!"
+      },
+      {
+        role: { en: "Admin", es: "Administrador" },
+        username: "isabela.nieto@constructoradelvalle.com",
+        password: "FlyWorkFlow2026!"
+      },
+      {
+        role: { en: "Member", es: "Miembro" },
+        username: "diego.salazar@constructoradelvalle.com",
+        password: "FlyWorkFlow2026!"
+      }
+    ]
   }
 ];

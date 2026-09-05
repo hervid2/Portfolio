@@ -94,7 +94,7 @@ export function CredentialsModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md rounded-2xl border border-border-subtle bg-surface-card shadow-[0_25px_60px_rgba(0,0,0,0.5)]"
+        className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-border-subtle bg-surface-card shadow-[0_25px_60px_rgba(0,0,0,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
@@ -118,9 +118,9 @@ export function CredentialsModal({
           </div>
 
           <div className="space-y-3">
-            {credentials.map((cred) => (
+            {credentials.map((cred, index) => (
               <div
-                key={cred.role.en}
+                key={`${cred.role.en}-${index}`}
                 className="rounded-xl border border-border-subtle bg-surface-muted p-4"
               >
                 <p className="mb-3 text-xs font-semibold text-accent-cyan">{cred.role[language]}</p>
@@ -129,14 +129,14 @@ export function CredentialsModal({
                     <CredentialRow
                       label="User"
                       value={cred.username}
-                      copyKey={`${cred.role.en}-user`}
+                      copyKey={`${index}-user`}
                       copiedKey={copiedKey}
                       onCopy={handleCopy}
                     />
                     <CredentialRow
                       label={dictionary.portfolio.passwordLabel}
                       value={cred.password ?? ""}
-                      copyKey={`${cred.role.en}-pass`}
+                      copyKey={`${index}-pass`}
                       copiedKey={copiedKey}
                       onCopy={handleCopy}
                     />

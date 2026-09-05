@@ -91,6 +91,34 @@ const techIconPathByLabel: Record<string, IconSet> = {
   "github actions": {
     iconPath: "/assets/icons/tech/githubactions.svg",
     iconPathDark: "/assets/icons/tech/githubactions-dark.svg"
+  },
+  scss: {
+    iconPath: "/assets/icons/tech/scss.svg",
+    iconPathDark: "/assets/icons/tech/scss-dark.svg"
+  },
+  sass: {
+    iconPath: "/assets/icons/tech/scss.svg",
+    iconPathDark: "/assets/icons/tech/scss-dark.svg"
+  },
+  "mapbox gl": {
+    iconPath: "/assets/icons/tech/mapbox.svg",
+    iconPathDark: "/assets/icons/tech/mapbox-dark.svg"
+  },
+  zod: {
+    iconPath: "/assets/icons/tech/zod.svg",
+    iconPathDark: "/assets/icons/tech/zod-dark.svg"
+  },
+  "react hook form": {
+    iconPath: "/assets/icons/tech/react-hook-form.svg",
+    iconPathDark: "/assets/icons/tech/react-hook-form-dark.svg"
+  },
+  vitest: {
+    iconPath: "/assets/icons/tech/vitest.svg",
+    iconPathDark: "/assets/icons/tech/vitest-dark.svg"
+  },
+  playwright: {
+    iconPath: "/assets/icons/tech/playwright.svg",
+    iconPathDark: "/assets/icons/tech/playwright-dark.svg"
   }
 };
 
