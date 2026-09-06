@@ -12,6 +12,7 @@ export const projects: Project[] = [
     category: "Desktop",
     imageUrl:
       "/assets/images/projects/java-desktop-app.webp",
+    previewVideoUrl: "/assets/videos/projects/java-desktop-app.mp4",
     liveDemoUrl: null,
     codeUrl: "https://github.com/hervid2/sushiBurritoJava",
     demoVideoId: {
@@ -30,6 +31,7 @@ export const projects: Project[] = [
     category: "Web SPA",
     imageUrl:
       "/assets/images/projects/sushi-burrito-web-app.webp",
+    previewVideoUrl: "/assets/videos/projects/sushi-burrito-spa.mp4",
     liveDemoUrl: "https://sushi-burrito-final.vercel.app/",
     codeUrl: "https://github.com/hervid2/SushiBurritoFinal",
     demoCredentials: [
@@ -61,6 +63,7 @@ export const projects: Project[] = [
     category: "E-commerce",
     imageUrl:
       "/assets/images/projects/slicing-edge.png",
+    previewVideoUrl: "/assets/videos/projects/the-slicing-edge.mp4",
     liveDemoUrl: "https://slicing-edge-e-commerce-web.vercel.app/",
     codeUrl: "https://github.com/hervid2/Slicing-edge-e-commerce",
     demoCredentials: [
@@ -87,6 +90,7 @@ export const projects: Project[] = [
     category: "Web App",
     imageUrl:
       "/assets/images/projects/flyworkflow.webp",
+    previewVideoUrl: "/assets/videos/projects/flyworkflow-incidents.mp4",
     liveDemoUrl: "https://flyworkflowapp.vercel.app/",
     codeUrl: "https://github.com/hervid2/flyworkflowapp",
     demoCredentials: [

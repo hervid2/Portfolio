@@ -80,6 +80,8 @@ Notes:
 - Home / Portfolio / About / Contact sections.
 - EN/ES switch with persistent language preference.
 - Portfolio cards driven by typed data arrays.
+- Project cards play a muted looping preview clip on hover, falling back to the static
+  poster image on touch screens and under `prefers-reduced-motion`.
 - Contact API endpoint with Helmet, CORS, rate limit, and schema validation.
 - Contact message persistence with Prisma + MySQL.
 - SMTP email notifications on contact submission.

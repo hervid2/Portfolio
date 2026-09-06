@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ThemeIcon } from "@/components/ui/ThemeIcon";
+import { useHoverPreviewVideo } from "@/hooks/useHoverPreviewVideo";
 import { resolveTechIconPath } from "@/utils/techIcons";
 import {
   gridItemVariants,
@@ -9,6 +10,7 @@ import {
   REPLAY_VIEWPORT
 } from "@/utils/motionPresets";
 import { CARD_CORNER_RADIUS, buildCardLayoutId } from "@/utils/projectCardIdentity";
+import type { FocusEvent } from "react";
 import type { Project } from "@/types/project";
 import type { AppDictionary, Language } from "@/types/i18n";
 
@@ -94,6 +96,9 @@ function ProjectLink({
  * for text of a different length. Its `layoutId` is shared with the modals so
  * an opening modal grows out of this card.
  *
+ * Pointing at the card—or reaching it with the keyboard—crossfades the static
+ * poster into a muted looping clip, and leaving it fades the poster back in.
+ *
  * @param project - Project data to render.
  * @param language - Active language used to pick localized copy.
  * @param dictionary - Active dictionary for UI labels.
@@ -109,6 +114,32 @@ export function ProjectCard({
   onOpenCredentials
 }: ProjectCardProps): JSX.Element {
   const hasCredentials = Boolean(project.demoCredentials && project.demoCredentials.length > 0);
+  const {
+    videoRef,
+    isPreviewMounted,
+    isPreviewVisible,
+    startPreview,
+    stopPreview,
+    markPreviewReady,
+    markPreviewFailed
+  } = useHoverPreviewVideo(project.previewVideoUrl);
+
+  /**
+   * Stops the preview only once focus leaves the card entirely.
+   *
+   * Blur bubbles from every focusable child, so moving between the card links
+   * would otherwise restart the clip on each hop.
+   *
+   * @param event - Blur event bubbled from a focusable descendant.
+   * @returns Nothing.
+   */
+  function handleCardBlur(event: FocusEvent<HTMLElement>): void {
+    if (event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      return;
+    }
+
+    stopPreview();
+  }
 
   return (
     <motion.article
@@ -121,6 +152,10 @@ export function ProjectCard({
       viewport={REPLAY_VIEWPORT}
       whileHover={{ y: HOVER_LIFT_Y, transition: HOVER_SPRING }}
       transition={{ layout: LAYOUT_SPRING }}
+      onPointerEnter={startPreview}
+      onPointerLeave={stopPreview}
+      onFocus={startPreview}
+      onBlur={handleCardBlur}
       style={{ borderRadius: CARD_CORNER_RADIUS }}
       className={
         "flex flex-col overflow-hidden border border-border-subtle bg-surface-card " +
@@ -128,13 +163,33 @@ export function ProjectCard({
         "hover:border-accent-cyan hover:shadow-[0_20px_45px_rgba(16,217,229,0.2)]"
       }
     >
-      <motion.div layout="position" className="relative">
+      <motion.div layout="position" className="relative h-52 w-full overflow-hidden">
         <img
           src={project.imageUrl}
           alt={`${project.title} preview image`}
-          className="h-52 w-full object-cover"
+          className="h-full w-full object-cover"
           loading="lazy"
         />
+
+        {isPreviewMounted && project.previewVideoUrl ? (
+          <video
+            ref={videoRef}
+            src={project.previewVideoUrl}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+            tabIndex={-1}
+            onLoadedData={markPreviewReady}
+            onError={markPreviewFailed}
+            className={
+              "absolute inset-0 h-full w-full object-cover " +
+              "transition-opacity duration-500 " +
+              (isPreviewVisible ? "opacity-100" : "opacity-0")
+            }
+          />
+        ) : null}
       </motion.div>
 
       <motion.div layout="position" className="flex flex-1 flex-col gap-4 p-5">
