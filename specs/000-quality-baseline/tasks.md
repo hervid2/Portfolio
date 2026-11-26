@@ -237,7 +237,7 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Evidence: 0b02118 · Verify → exit 0 (12/12 pass; red check: `aria-pressed={true}` and a fixed
     `onSelect` key in the scratch-mutated component failed 9 tests, then reverted)
 
-- [ ] **T-15** [P] — `LanguageContext.test.tsx`: `LanguageProvider` + probe consumer; stored
+- [x] **T-15** [P] — `LanguageContext.test.tsx`: `LanguageProvider` + probe consumer; stored
   `"es"` → `esDictionary.nav.home`; `"fr"` and nothing → `enDictionary.nav.home`;
   `setLanguage("es")` → `localStorage` holds `"es"` (BR-001).
   - AC: AC-000-05(e)
@@ -245,6 +245,8 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Verify: `npm test --prefix frontend -- src/context/LanguageContext.test.tsx &&
     (cd frontend && npx eslint src/context/LanguageContext.test.tsx --max-warnings 0)`
   - Depends on: T-09
+  - Evidence: 2b8de06 · Verify → exit 0 (4/4 pass; full suite 32/32; red check: fallback
+    mutated to `"es"` in the scratch-mutated provider failed 2 tests, then reverted)
 
 ## Phase F — API
 
