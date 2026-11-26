@@ -420,7 +420,7 @@ whole test suite (Phase E net) and the build.
   - Verify: `(cd frontend && npx eslint src/components/ui/Project{Card,CardMedia,StackList,CardActions,Link,ActionIcons}.tsx
     --max-warnings 0) && npm test --prefix frontend && npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
-  - Evidence: 2f7b100 · Verify → exit 0 (eslint 0 problems, was 68 counted lines; 36/36 tests;
+  - Evidence: 2f7b100 · Verify → exit 0 (eslint 0 problems, was 178 lines; 36/36 tests;
     build ok; typecheck ok; prettier ok). Card DOM (EN+ES, 4 projects, preview mount/fade, blur,
     button clicks) byte-identical before/after. Browser: credentials modal morphs from the card
     (initial `scale(0.774, 1.272)` = card/panel ratio → `transform: none`). The `PopChild` ref
@@ -479,7 +479,7 @@ whole test suite (Phase E net) and the build.
     ok; prettier ok). Section, EN/ES markup and opened-modal markup byte-identical (temp jsdom/SSR
     dump, not committed). `findProject` helper keeps `PortfolioModals` under 40 lines.
 
-- [ ] **T-32** — Remaining frontend fixes: `App.tsx` long lazy-import lines (manual split if
+- [x] **T-32** — Remaining frontend fixes: `App.tsx` long lazy-import lines (manual split if
   Prettier left any over 100; `MotionConfig reducedMotion="user"` still wraps the tree);
   `ProjectFilterBar.tsx:39` className split by concatenation; remove the unused `DemoCredential`
   import in `data/projects.ts`; JSDoc on `handleChange` in `useMediaQuery`. Frontend lint reaches
@@ -493,6 +493,13 @@ whole test suite (Phase E net) and the build.
     test -z "$(git status --porcelain)" &&
     grep -q '<MotionConfig reducedMotion="user">' frontend/src/App.tsx`
   - Depends on: T-23, T-24, T-26, T-27, T-28, T-29, T-30, T-31
+  - Evidence: 2ecfc17 · Verify → exit 0 (lint 0 problems; format:check ok; `npm run typecheck
+    --prefix frontend` ok; 36/36 tests; build ok; clean tree; MotionConfig grep ok). Lazy imports
+    were already ≤ 100; the 108-char line was the meta description → `META_DESCRIPTION` const
+    (string unchanged); pill classes → `ACTIVE_PILL_CLASS` const (Prettier re-joins a concat).
+    Coordinator decisions: `max-len` `ignorePattern: "^\\s*import\\s"` in frontend (mirrors api,
+    T-19); `HeroProfileCard` → `HeroProfileLinks` (file, name, JSDoc, HeroSection import); T-27
+    evidence corrected to the original 178 lines.
 
 ## Phase H — Harness
 
