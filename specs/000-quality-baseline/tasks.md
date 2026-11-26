@@ -503,7 +503,7 @@ whole test suite (Phase E net) and the build.
 
 ## Phase H — Harness
 
-- [ ] **T-33** [P] — Create the `testing-conventions` skill in `.harness/skills/` (file location
+- [x] **T-33** [P] — Create the `testing-conventions` skill in `.harness/skills/` (file location
   and naming, Vitest + Testing Library patterns, the jsdom shims in `src/test/setup.ts`, the
   AC-id convention in test names, fakes vs mocks (`vi.fn` / `vi.spyOn` on in-memory and no-op
   adapters), coverage commands, and the review check that constructors with logic carry JSDoc,
@@ -516,6 +516,8 @@ whole test suite (Phase E net) and the build.
     test -f .claude/skills/testing-conventions/SKILL.md &&
     test -z "$(git status --porcelain .claude | grep -v 'skills/testing-conventions')"`
   - Depends on: T-32
+  - Evidence: 57e464e · Verify → exit 0 (sync regenerated adapters; both SKILL.md exist;
+    `.claude` diff only `skills/testing-conventions`)
 
 - [ ] **T-34** — Update `AGENTS.md`: remove every † (including the "Commands marked †…"
   sentence); add a `format` / `format:check` row; e2e row reads "defined in spec 004
