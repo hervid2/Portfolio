@@ -618,7 +618,7 @@ whole test suite (Phase E net) and the build.
 | AC-000-01 | T-07, T-23, T-25–T-32, T-38 | `npm run lint --prefix frontend` (T-32), CI `lint` |
 | AC-000-02 | T-08, T-16, T-17, T-19, T-21, T-22, T-38 | `npm run lint --prefix api` (T-22), CI guard |
 | AC-000-03 | T-02, T-04, T-05, T-06, T-38, P-02 | CI `format:check` + parity guard; local record |
-| AC-000-04 | T-03, T-09, T-10 | `npx tsc -b frontend`, `npx tsc -p api --noEmit`, CI `typecheck` |
+| AC-000-04 | T-03, T-09, T-10 | `npm run typecheck --prefix frontend`, `npm run typecheck --prefix api`, CI `typecheck` |
 | AC-000-05 | T-09, T-11–T-15, T-24 | Vitest files (a)–(f); coverage report |
 | AC-000-06 | T-10, T-17, T-18 | Vitest files (a)(b); coverage report |
 | AC-000-07 | T-38, P-01 | CI run on the draft PR |

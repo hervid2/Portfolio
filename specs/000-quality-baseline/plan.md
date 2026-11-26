@@ -157,8 +157,8 @@ Each package (`frontend/`, `api/`) owns its whole toolchain: dev dependencies, `
   - frontend `typecheck`: `tsc -b`
   - api `typecheck`: `tsc -p tsconfig.json --noEmit`
   - `AGENTS.md` keeps `npx tsc -b frontend` and `npx tsc -p api --noEmit` as the canonical
-    commands.
-
+  - `AGENTS.md` lists `npm run typecheck --prefix frontend|api` as the canonical commands
+    (changed at T-34: the root `npx tsc` form fails without a root TypeScript install).
 ### 1.6 API seams (the only API structural changes)
 - **Captcha seam (CL-01):** `SubmitContactMessageUseCase` receives `CaptchaVerifier` as its third
   constructor argument. `execute(command)` follows these steps:

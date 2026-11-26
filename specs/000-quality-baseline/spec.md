@@ -1,5 +1,5 @@
 # Spec 000 — Quality baseline (brownfield walking skeleton)
-Status: Planned · Version: 1.2 · Branch: feat/000-quality-baseline ·
+Status: Planned · Version: 1.3 · Branch: feat/000-quality-baseline ·
 FR: FR-002 (partial), FR-008 (tests only) · NFR: NFR-002, NFR-007, NFR-008, NFR-009 ·
 Debt: DEBT-001, DEBT-005 · Depends on: —
 
@@ -251,9 +251,9 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
   Prettier options of §2 (`printWidth: 100`, `endOfLine: "lf"`).
   **Verified by:** the CI `format:check` step (AC-000-07), plus a local run on Hernán's Windows
   machine recorded in `validation.md` as supporting evidence.
-- **AC-000-04** — Given the repository, when `npx tsc -b frontend` and
-  `npx tsc -p api --noEmit` run, then both exit 0, and the API type check includes the test
-  files.
+- **AC-000-04** — Given the repository, when `npm run typecheck --prefix frontend` (`tsc -b`)
+  and `npm run typecheck --prefix api` (`tsc -p tsconfig.json --noEmit`) run, then both exit 0,
+  and the API type check includes the test files.
   **Verified by:** the CI type-check step (AC-000-07).
 - **AC-000-05** — Given the frontend package, when `npm test --prefix frontend` runs, then
   Vitest (jsdom + Testing Library) passes at least these tests, with expectations derived from
@@ -360,3 +360,4 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | 1.0 | 2026-11-26 | Approved at G-Spec (no changes to v0.2 content) | Hernán (G-Spec) |
 | 1.1 | 2026-11-26 | Minor, from plan §8: added AC-000-05(f) (BR-002 theme test); ASM-000-10 resolved (included); ASM-000-12 confirmed; added ASM-000-14 and ASM-000-15; status → Planned | Hernán (G-Plan) |
 | 1.2 | 2026-11-26 | ASM-000-15 reduced-motion check reads "no regression against the `main` baseline" (T-01 finding F-1, DEBT-010) | Hernán (2026-11-26) |
+| 1.3 | 2026-11-26 | AC-000-04 names the `typecheck` scripts (same `tsc` commands); the root `npx tsc` form fails because TypeScript is not installed at the root (found in T-03, fixed in AGENTS.md at T-34) | Coordinator (clarification, no scope change) |
