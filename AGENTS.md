@@ -48,20 +48,23 @@ AGENTS.md → MEMORY.md → active spec (specs/NNN-*/) → documents that spec r
 - **Decisions:**
   - Pre-rendering: a custom Vite SSG pipeline (ADR-0003, Option C).
   - Architecture maps: a native SVG component (ADR-0004).
+- **Tooling:** ESLint 10, Prettier 3, Vitest 3 (+ Testing Library in the frontend).
 - **Node:** 22.x locally (22.17).
 
 ## Project commands
-Run from the repository root. Commands marked † become available with spec 000.
+Run from the repository root.
 
 | Action | Command |
 |---|---|
 | Install dependencies | `npm ci --prefix frontend` · `npm ci --prefix api` |
 | Development environment | `npm run dev --prefix frontend` (port 5173) · `npm run dev --prefix api` (port 4000) |
-| Tests (all / one file) | † `npm test --prefix frontend` · † `npm test --prefix frontend -- <path>` |
-| Lint / format / types | † `npm run lint --prefix frontend` · † `npm run lint --prefix api` · types: `npx tsc -b frontend` · `npx tsc -p api --noEmit` |
+| Tests (all / one file) | `npm test --prefix frontend` · `npm test --prefix frontend -- <path>` · `npm test --prefix api` |
+| Lint | `npm run lint --prefix frontend` · `npm run lint --prefix api` |
+| Format / format check | `npm run format --prefix <pkg>` · `npm run format:check --prefix <pkg>` (`frontend` or `api`) |
+| Type check | `npm run typecheck --prefix frontend` · `npm run typecheck --prefix api` |
 | Build | `npm run build --prefix frontend` · `npm run build --prefix api` |
 | Preview production build | `npm run preview --prefix frontend` |
-| e2e | † defined in spec 000 / 004 (Playwright) |
+| e2e | defined in spec 004 (Playwright) |
 | API diagnostics (manual) | `npm run test:e2e --prefix api` · `test:persistence` · `test:smtp` |
 
 ## Repository structure
@@ -95,12 +98,14 @@ Full rules: docs/constitution.md, Title II and Title IV.
 - **Commands:** /feature, /sdd-specify, /sdd-clarify, /sdd-plan, /sdd-tasks, /sdd-implement, /sdd-validate, /sdd-status, /bug, /adr, /memory
   - Inline (main session, they need the human): /feature, /sdd-specify, /sdd-status, /bug, /memory.
   - The rest fork into their subagent.
-- **Skills** (`.harness/skills/`): `i18n-dictionaries`, `project-data`, `ui-tokens-motion`. `testing-conventions` arrives with spec 000.
+- **Skills** (`.harness/skills/`): `i18n-dictionaries`, `project-data`, `ui-tokens-motion`, `testing-conventions`.
 - **MCP:** Playwright only (`.harness/mcp.md`).
 - **Limitation:** Claude Code cannot restrict a subagent's edits to specific paths, so per-role path limits are instructions, not enforcement. Reviewers check them in the diff.
 
 ## Mandatory verification after each change
-- Lint, type check and the affected tests. Until spec 000 lands: `npm run build --prefix frontend`.
+- Per touched package (`frontend` and/or `api`): `npm run format:check`, `npm run lint`,
+  `npm run typecheck`, `npm test` (or the affected test files) and `npm run build`,
+  each with `--prefix <pkg>`.
 - UI changes: check in the browser (Playwright MCP) in EN and ES, dark and light themes, at 360 px and 1280 px.
 - Route or pre-render changes: `curl` the built HTML and confirm the content is there.
 

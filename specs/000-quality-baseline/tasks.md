@@ -10,8 +10,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
 - All `Verify` commands run from the repository root in Git Bash. `(cd <pkg> && …)` is used where a
   tool needs the package as its working directory.
 - From T-06 on, every task that touches a package also passes `npm run format:check --prefix <pkg>`.
-  From T-09/T-10 on, it also passes `npx tsc -b frontend` / `npx tsc -p api --noEmit` and the
-  package's `npm test`. These are implied and not repeated in each `Verify`.
+  From T-09/T-10 on, it also passes `npm run typecheck --prefix <pkg>` and the package's
+  `npm test`. These are implied and not repeated in each `Verify`.
 - Until T-22 (api) and T-32 (frontend), the full `npm run lint` is expected to fail on the known
   baseline violations (plan §1.2). Fix tasks therefore lint only the files they touch, with
   `--max-warnings 0`.
