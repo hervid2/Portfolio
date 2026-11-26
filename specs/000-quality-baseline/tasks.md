@@ -565,13 +565,17 @@ whole test suite (Phase E net) and the build.
   - Evidence: 4fc5326 · Verify → exit 0. Rows FR-002 (AC-000-05(a)(e)), FR-003
     (AC-000-05(f)), FR-008 (AC-000-06(a)(b)) with their test file paths
 
-- [ ] **T-37** [P] — `docs/roadmap.md`: DEBT-001 and DEBT-005 → `Closed (spec 000)`; add
+- [x] **T-37** [P] — `docs/roadmap.md`: DEBT-001 and DEBT-005 → `Closed (spec 000)`; add
   DEBT-009 with the plan R-6 wording.
   - AC: — (spec §2 Documentation, CL-21)
   - Files: `docs/roadmap.md` (path exception)
   - Verify: `grep -E '^\| DEBT-001 ' docs/roadmap.md | grep -q 'Closed' &&
     grep -E '^\| DEBT-005 ' docs/roadmap.md | grep -q 'Closed' && grep -q '^| DEBT-009 ' docs/roadmap.md`
   - Depends on: T-32
+  - Evidence: 33b8cc8 · Verify → exit 0. DEBT-001 and DEBT-005 → `Closed (spec 000)`; DEBT-009
+    already present with the R-6 wording (added at planning), kept as-is. Coordinator addition:
+    DEBT-013 (`ProjectCard` ref warning under `AnimatePresence mode="popLayout"`, pre-existing,
+    found in T-23/T-27/T-29) and DEBT-014 (duplicated modal shell, T-28) added as `Open`
 
 ## Phase J — CI
 
