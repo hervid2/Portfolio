@@ -217,7 +217,7 @@ Each package (`frontend/`, `api/`) owns its whole toolchain: dev dependencies, `
   | `ContactSection` (177) | `useTurnstileWidget(siteKey, onToken)` hook (the effect, unchanged); `ContactAlternatives` (alt-contact block); `ContactForm` + `ContactFormField` (the 3 identical field blocks). Fixes `exhaustive-deps`: `useContactForm` wraps `updateField` in `useCallback([])` (it only calls the stable `setValues`), and the effect lists it. The effect runs exactly as often as today. |
   | `ProjectCard` (178), `ProjectLink` (41) | `ProjectCardMedia` (poster + preview clip), `ProjectStackList`, `ProjectCardActions`; `ProjectLink` moves to `ProjectLink.tsx` and is shortened. The two inline SVGs move to `ProjectActionIcons.tsx` (`PlayIcon`, `KeyIcon`; both are components, so each gets its own file if the reviewer insists on one per file). |
   | `CredentialsModal` (110), `VideoModal` (72) | `useModalBehavior(onClose)` (Esc to close + body scroll lock), extracted only if both modals' effects are character-identical; otherwise one hook per modal. `CredentialRow` moves to its own file. `CredentialsModal` keeps `handleCopy`; the panel header becomes `ModalHeader` only if it is the same markup in both modals. |
-  | `HeroSection` (98) | `HeroIntro` (headline + copy), `HeroActions` (CTAs), `HeroProfileCard` (right column) |
+  | `HeroSection` (98) | `HeroIntro` (headline + copy), `HeroActions` (CTAs), `HeroProfileLinks` (GitHub/LinkedIn row; renamed at T-32) |
   | `AboutSection` (78) | `AboutBio` (photo + text) and `AboutSkillsGrid` |
   | `PortfolioSection` (75) | `PortfolioGrid` (filtered grid + `AnimatePresence`) and `PortfolioModals` (the two modal `AnimatePresence` blocks) |
   | `useContactForm` (43) | extract a module-level `resolveValidationError(values, captchaEnabled, dictionary): string \| null` |
@@ -356,7 +356,7 @@ Spec §4.1b fixes the first and the last steps.
 | `frontend/src/hooks/useModalBehavior.ts` | create (conditional, §1.7) | Esc + scroll lock shared by the modals |
 | `frontend/src/components/layout/NavbarSectionLinks.tsx`, `NavbarMobileMenu.tsx`, `NavbarControls.tsx` | create | `Navbar` split |
 | `frontend/src/components/sections/ContactAlternatives.tsx`, `ContactForm.tsx`, `ContactFormField.tsx` | create | `ContactSection` split |
-| `frontend/src/components/sections/HeroIntro.tsx`, `HeroActions.tsx`, `HeroProfileCard.tsx` | create | `HeroSection` split |
+| `frontend/src/components/sections/HeroIntro.tsx`, `HeroActions.tsx`, `HeroProfileLinks.tsx` | create | `HeroSection` split |
 | `frontend/src/components/sections/AboutBio.tsx`, `AboutSkillsGrid.tsx` | create | `AboutSection` split |
 | `frontend/src/components/sections/PortfolioGrid.tsx`, `PortfolioModals.tsx` | create | `PortfolioSection` split |
 | `frontend/src/components/ui/ProjectCardMedia.tsx`, `ProjectStackList.tsx`, `ProjectCardActions.tsx`, `ProjectLink.tsx`, `ProjectActionIcons.tsx` | create | `ProjectCard` split |
