@@ -8,7 +8,13 @@ import jsdoc from "eslint-plugin-jsdoc";
 import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
-const maxLenBase = { code: 100, tabWidth: 2, ignoreUrls: true };
+// Single-specifier imports cannot be wrapped by Prettier (coordinator decision, T-19 / T-32).
+const maxLenBase = {
+  code: 100,
+  tabWidth: 2,
+  ignoreUrls: true,
+  ignorePattern: "^\\s*import\\s"
+};
 
 export default defineConfig(
   {

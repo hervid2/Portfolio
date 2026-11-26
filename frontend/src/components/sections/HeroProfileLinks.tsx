@@ -12,13 +12,13 @@ const PROFILE_ICON_CLASS = "h-[18px] w-[18px] object-contain";
 /**
  * Renders the hero's external profile links (GitHub and LinkedIn).
  *
- * The hero is a single centered column, so the "profile card" is this row of
- * profile links. Its English `aria-label` and `alt` strings are pre-existing and
- * kept as-is (plan R-12).
+ * The hero is a single centered column with no right column; this row of
+ * profile links sits under the CTAs. Its English `aria-label` and `alt` strings
+ * are pre-existing and kept as-is (plan R-12).
  *
  * @returns The profile link row.
  */
-export function HeroProfileCard(): JSX.Element {
+export function HeroProfileLinks(): JSX.Element {
   return (
     <motion.div
       variants={fadeUpVariants}

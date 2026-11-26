@@ -19,6 +19,10 @@ const ContactSection = lazy(() =>
   }))
 );
 
+/** Default meta description; English copy kept as-is (plan R-12). */
+const META_DESCRIPTION =
+  "Portfolio of Hernán David Cardona, full-stack developer focused on modern web solutions.";
+
 /**
  * Renders the portfolio single-page application with all primary sections.
  *
@@ -29,10 +33,7 @@ export default function App(): JSX.Element {
     <>
       <Helmet>
         <title>Hernán David Cardona | Full-stack Developer</title>
-        <meta
-          name="description"
-          content="Portfolio of Hernán David Cardona, full-stack developer focused on modern web solutions."
-        />
+        <meta name="description" content={META_DESCRIPTION} />
       </Helmet>
       <MotionConfig reducedMotion="user">
         <div className="min-h-screen bg-surface-base text-text-primary">

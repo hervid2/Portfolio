@@ -13,6 +13,10 @@ interface ProjectFilterBarProps {
 /** Shared layout id for the pill that slides between active filter chips. */
 const ACTIVE_PILL_LAYOUT_ID = "portfolio-filter-pill";
 
+/** Classes for the sliding pill that marks the active filter chip. */
+const ACTIVE_PILL_CLASS =
+  "absolute -inset-px rounded-full border border-accent-cyan bg-accent-cyan/10";
+
 /**
  * Renders the category filter chips for the portfolio grid.
  *
@@ -59,7 +63,7 @@ export function ProjectFilterBar({
               <motion.span
                 layoutId={ACTIVE_PILL_LAYOUT_ID}
                 transition={LAYOUT_SPRING}
-                className="absolute -inset-px rounded-full border border-accent-cyan bg-accent-cyan/10"
+                className={ACTIVE_PILL_CLASS}
               />
             ) : null}
             <span className="relative">{label}</span>

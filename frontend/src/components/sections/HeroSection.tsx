@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { HeroActions } from "@/components/sections/HeroActions";
 import { HeroIntro } from "@/components/sections/HeroIntro";
-import { HeroProfileCard } from "@/components/sections/HeroProfileCard";
+import { HeroProfileLinks } from "@/components/sections/HeroProfileLinks";
 import { createStaggerContainer, LAYOUT_SPRING, REPLAY_VIEWPORT } from "@/utils/motionPresets";
 
 /**
@@ -42,7 +42,7 @@ export function HeroSection(): JSX.Element {
         >
           <HeroIntro />
           <HeroActions />
-          <HeroProfileCard />
+          <HeroProfileLinks />
         </motion.div>
       </motion.div>
     </section>
