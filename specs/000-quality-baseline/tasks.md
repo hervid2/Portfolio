@@ -637,7 +637,9 @@ whole test suite (Phase E net) and the build.
   - Evidence: applied by the Coordinator 2026-11-26 after Hernán's yes; `GET
     .../branches/main/protection` → checks `["frontend","api"]`, strict false, enforce_admins
     false, force pushes and deletions false, 0 required reviews (`validation.md`, AC-000-11)
-- [ ] **P-04** — Remove the baseline worktree: `git worktree remove ../portfolio-main-baseline`.
+- [x] **P-04** — Remove the baseline worktree: `git worktree remove ../portfolio-main-baseline`.
+  - Evidence: baseline preview (port 4173, pid 8756) stopped; `git worktree remove --force` +
+    `prune`; `git worktree list` shows only the main checkout (Coordinator, 2026-11-26).
   - AC: — · Owner: Coordinator asks the implementer
   - Depends on: P-02
 
