@@ -120,7 +120,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
 
 ## Phase C — ESLint
 
-- [ ] **T-07** [P] — Frontend ESLint: install `eslint@^10.15.0`, `@eslint/js@^10.0.1`,
+- [x] **T-07** [P] — Frontend ESLint: install `eslint@^10.15.0`, `@eslint/js@^10.0.1`,
   `typescript-eslint@^8.74.0`, `eslint-plugin-react-hooks@^7.1.1`, `eslint-plugin-jsdoc@^63.3.3`,
   `eslint-config-prettier@^10.1.8` (dev); create `frontend/eslint.config.js` exactly per plan
   §1.2 (preset order, `eslint-config-prettier` before the rules block, the rules table, the
@@ -135,6 +135,9 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     && ! grep -qE 'dist/|coverage/|\.config\.js' .evidence/lint-fe.txt` — record the per-rule
     histogram (`grep -oE '[a-z@/-]+$' | sort | uniq -c`) in Evidence.
   - Depends on: T-06
+  - Evidence: e0dee46 · Verify → exit 0 (lint exit 1, 43 problems, only allowed rules):
+    27 max-len, 10 max-lines-per-function, 4 jsdoc/require-jsdoc, 1 exhaustive-deps,
+    1 no-unused-vars; format:check and build OK (JS 96.46 kB / CSS 4.24 kB gzip)
 
 - [ ] **T-08** [P] — API ESLint: install the same packages minus `eslint-plugin-react-hooks`;
   create `api/eslint.config.js` (plan §1.2, with `no-console` off in `src/scripts/**`); set `lint`
