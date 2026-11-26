@@ -14,10 +14,23 @@ interface ResendMailServiceConfig {
 export class ResendMailService implements MailService {
   private readonly client: Resend;
 
+  /**
+   * Creates the Resend client from the given configuration.
+   *
+   * @param config - Resend API key, sender and recipient.
+   */
   constructor(private readonly config: ResendMailServiceConfig) {
     this.client = new Resend(config.apiKey);
   }
 
+  /**
+   * Emails a plain-text notification for a new contact message via Resend.
+   *
+   * @async
+   * @param contactMessage - Contact payload to notify about.
+   * @returns Promise resolved when Resend accepts the email.
+   * @throws Error when Resend returns an error.
+   */
   async sendContactNotification(contactMessage: ContactMessageDTO): Promise<void> {
     const { error } = await this.client.emails.send({
       from: this.config.mailFrom,

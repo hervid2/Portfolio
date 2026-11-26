@@ -17,6 +17,12 @@ interface ContactApiResponse {
   message: string;
 }
 
+/**
+ * Checks health, submits a contact message and confirms it was stored.
+ *
+ * @async
+ * @returns Promise resolved when every step passes.
+ */
 async function run(): Promise<void> {
   const healthResponse = await fetch(`${API_BASE_URL}/health`);
 

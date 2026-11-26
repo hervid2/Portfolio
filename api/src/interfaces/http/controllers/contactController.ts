@@ -1,28 +1,12 @@
 import type { Request, Response } from "express";
-// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
-// prettier-ignore
-import {
-  SubmitContactMessageUseCase
-} from "../../../application/use-cases/SubmitContactMessageUseCase.js";
+import { SubmitContactMessageUseCase } from "../../../application/use-cases/SubmitContactMessageUseCase.js";
 import { getEnvConfig } from "../../../config/env.js";
 import { NoopCaptchaVerifier } from "../../../infrastructure/captcha/NoopCaptchaVerifier.js";
-// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
-// prettier-ignore
-import {
-  TurnstileCaptchaVerifier
-} from "../../../infrastructure/captcha/TurnstileCaptchaVerifier.js";
+import { TurnstileCaptchaVerifier } from "../../../infrastructure/captcha/TurnstileCaptchaVerifier.js";
 import { NoopMailService } from "../../../infrastructure/email/NoopMailService.js";
-// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
-// prettier-ignore
-import {
-  NodemailerMailService
-} from "../../../infrastructure/email/NodemailerMailService.js";
+import { NodemailerMailService } from "../../../infrastructure/email/NodemailerMailService.js";
 import { ResendMailService } from "../../../infrastructure/email/ResendMailService.js";
-// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
-// prettier-ignore
-import {
-  PrismaContactRepository
-} from "../../../infrastructure/repositories/PrismaContactRepository.js";
+import { PrismaContactRepository } from "../../../infrastructure/repositories/PrismaContactRepository.js";
 import type { ContactRequestBody } from "../validators/contactSchema.js";
 
 const envConfig = getEnvConfig();

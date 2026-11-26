@@ -20,6 +20,13 @@ interface EnvironmentConfig {
   resendApiKey: string;
 }
 
+/**
+ * Parses an environment flag; only "true" (any case, trimmed) counts as enabled.
+ *
+ * @param value - Raw environment value.
+ * @param fallbackValue - Value used when the variable is unset or empty.
+ * @returns The parsed boolean.
+ */
 function parseBoolean(value: string | undefined, fallbackValue: boolean): boolean {
   if (!value) {
     return fallbackValue;
@@ -28,6 +35,14 @@ function parseBoolean(value: string | undefined, fallbackValue: boolean): boolea
   return value.trim().toLowerCase() === "true";
 }
 
+/**
+ * Returns a trimmed required setting or fails fast when it is missing.
+ *
+ * @param value - Raw environment value.
+ * @param key - Variable name used in the error message.
+ * @returns The trimmed value.
+ * @throws Error when the value is missing or blank.
+ */
 function resolveRequiredString(value: string | undefined, key: string): string {
   const resolved = value?.trim();
 

@@ -14,9 +14,23 @@ type TestResult = {
   details?: string;
 };
 
+/**
+ * Runs the persistence checks and prints a pass/fail summary.
+ *
+ * @async
+ * @returns Promise resolved when the summary is printed.
+ */
 async function run(): Promise<void> {
   const results: TestResult[] = [];
 
+  /**
+   * Runs one named check and records its result.
+   *
+   * @async
+   * @param name - Check label shown in the summary.
+   * @param action - Check body; a thrown error marks it as failed.
+   * @returns Promise resolved when the result is recorded.
+   */
   async function test(name: string, action: () => Promise<void>): Promise<void> {
     try {
       await action();

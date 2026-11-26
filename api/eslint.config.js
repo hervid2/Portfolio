@@ -20,7 +20,11 @@ export default defineConfig(
   {
     plugins: { jsdoc },
     rules: {
-      "max-len": ["error", { code: 100, tabWidth: 2, ignoreUrls: true }],
+      "max-len": [
+        "error",
+        // Single-specifier imports cannot be wrapped by Prettier (coordinator decision, T-19).
+        { code: 100, tabWidth: 2, ignoreUrls: true, ignorePattern: "^\\s*import\\s" }
+      ],
       "max-lines-per-function": ["error", { max: 40, skipBlankLines: true, skipComments: true }],
       "no-console": "error",
       "@typescript-eslint/no-unused-vars": [

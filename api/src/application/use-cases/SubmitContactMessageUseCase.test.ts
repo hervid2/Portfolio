@@ -1,10 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NoopMailService } from "../../infrastructure/email/NoopMailService.js";
-// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
-// prettier-ignore
-import {
-  InMemoryContactRepository
-} from "../../infrastructure/repositories/InMemoryContactRepository.js";
+import { InMemoryContactRepository } from "../../infrastructure/repositories/InMemoryContactRepository.js";
 import type { SubmitContactMessageCommand } from "../../types/contact.js";
 import { SubmitContactMessageUseCase } from "./SubmitContactMessageUseCase.js";
 

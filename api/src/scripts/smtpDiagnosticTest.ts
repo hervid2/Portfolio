@@ -10,6 +10,12 @@
 import nodemailer from "nodemailer";
 import { getEnvConfig } from "../config/env.js";
 
+/**
+ * Verifies the SMTP connection and sends one test email.
+ *
+ * @async
+ * @returns Promise resolved when the test email is sent.
+ */
 async function run(): Promise<void> {
   const env = getEnvConfig();
 
