@@ -1,29 +1,42 @@
 import { app } from "./app.js";
 import { getEnvConfig } from "./config/env.js";
 import { prisma } from "./infrastructure/database/prismaClient.js";
+import { logger } from "./infrastructure/logging/logger.js";
 
 const envConfig = getEnvConfig();
 
+/**
+ * Connects to the database, logs the runtime config and starts the HTTP server.
+ *
+ * @returns A promise that resolves once the server has been told to listen.
+ */
 async function bootstrap(): Promise<void> {
   await prisma.$connect();
-  console.info("[API] Database connection established");
-  console.info(
-    `[API] Runtime config: env=${envConfig.nodeEnv}, origins=${envConfig.allowedOrigins.length}, mail=${envConfig.mailEnabled}, captcha=${envConfig.captchaEnabled}`
+  logger.info("[API] Database connection established");
+  logger.info(
+    `[API] Runtime config: env=${envConfig.nodeEnv}, ` +
+      `origins=${envConfig.allowedOrigins.length}, ` +
+      `mail=${envConfig.mailEnabled}, captcha=${envConfig.captchaEnabled}`
   );
 
   app.listen(envConfig.port, () => {
-    console.info(`[API] Server running on port ${envConfig.port}`);
+    logger.info(`[API] Server running on port ${envConfig.port}`);
   });
 }
 
 void bootstrap().catch((error: unknown) => {
-  console.error("[API] Failed to start server", error);
+  logger.error("[API] Failed to start server", error);
   process.exit(1);
 });
 
+/**
+ * Closes the database connection before the process exits.
+ *
+ * @returns A promise that resolves once the connection is closed.
+ */
 async function shutdown(): Promise<void> {
   await prisma.$disconnect();
-  console.info("[API] Database connection closed");
+  logger.info("[API] Database connection closed");
 }
 
 process.on("SIGINT", () => {

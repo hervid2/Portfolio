@@ -1,5 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 
+import { logger } from "../../../infrastructure/logging/logger.js";
+
 /**
  * Handles uncaught API errors and returns safe responses.
  *
@@ -18,7 +20,7 @@ export function errorHandler(
   const message = error instanceof Error ? error.message : "Unexpected server error";
 
   if (!isProduction) {
-    console.error(`[API] ${request.method} ${request.originalUrl}`, error);
+    logger.error(`[API] ${request.method} ${request.originalUrl}`, error);
   }
 
   response.status(500).json({
