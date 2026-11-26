@@ -519,7 +519,7 @@ whole test suite (Phase E net) and the build.
   - Evidence: 57e464e · Verify → exit 0 (sync regenerated adapters; both SKILL.md exist;
     `.claude` diff only `skills/testing-conventions`)
 
-- [ ] **T-34** — Update `AGENTS.md`: remove every † (including the "Commands marked †…"
+- [x] **T-34** — Update `AGENTS.md`: remove every † (including the "Commands marked †…"
   sentence); add a `format` / `format:check` row; e2e row reads "defined in spec 004
   (Playwright)"; replace "Until spec 000 lands: …" with the full local check list (format:check,
   lint, type check, test, build); list `testing-conventions` among the skills; add a Stack
@@ -532,6 +532,10 @@ whole test suite (Phase E net) and the build.
     ! grep -qE 'Until spec 000 lands|arrives with spec 000' AGENTS.md &&
     grep -q 'testing-conventions' AGENTS.md`
   - Depends on: T-33
+  - Evidence: ff92952 · Verify → exit 0; `npm run typecheck --prefix frontend|api` → ok.
+    Coordinator decision: type-check commands are `npm run typecheck --prefix <pkg>` (root
+    `npx tsc` has no TypeScript), overriding "keep npx tsc" here and plan §1.5; the conventions
+    header was updated the same way. No T-38 guard uses the npx form.
 
 ## Phase I — Documentation
 
