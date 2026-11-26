@@ -250,7 +250,7 @@ id; expectations are derived from the data (CL-15, CL-17).
 
 ## Phase F — API
 
-- [ ] **T-16** — API logger (CL-03): create `api/src/infrastructure/logging/logger.ts` (plan §1.6,
+- [x] **T-16** — API logger (CL-03): create `api/src/infrastructure/logging/logger.ts` (plan §1.6,
   one documented `eslint-disable-next-line no-console` per method); `server.ts` and
   `errorHandler.ts` call `logger.*` with identical arguments and `[API] …` prefixes; JSDoc on
   `bootstrap` and `shutdown`; wrap the long line in `server.ts`.
@@ -262,6 +262,10 @@ id; expectations are derived from the data (CL-15, CL-17).
     test -z "$(grep -rn 'console\.' api/src --include='*.ts' | grep -v '^api/src/scripts/' |
     grep -v '^api/src/infrastructure/logging/logger.ts')"`
   - Depends on: T-10
+  - Evidence: 35ad829 · Verify → exit 0 (red first: same eslint on server.ts + errorHandler.ts
+    gave 9 errors: 6 no-console, 2 require-jsdoc, 1 max-len); prettier --check, `npm run
+    typecheck --prefix api`, `npm run build --prefix api` → exit 0. API has no test files yet
+    (T-17/T-18), so `npm test --prefix api` exits 1 "No test files found", same as before T-16
 
 - [ ] **T-17** — Captcha seam (CL-01), test first: write
   `SubmitContactMessageUseCase.test.ts` (plan §6 AC-000-06(b): spies on
