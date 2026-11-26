@@ -374,7 +374,7 @@ whole test suite (Phase E net) and the build.
   - Evidence: 2145970 · Verify → exit 0 (eslint 0 problems; typecheck ok; 32/32 tests; build ok;
     `format:check` ok). Browser 360 px: menu toggles and closes on nav, theme class + storage, ES/EN ok.
 
-- [ ] **T-24** — `useThemeMode.test.ts` with `renderHook`: stored `"light"` → light and
+- [x] **T-24** — `useThemeMode.test.ts` with `renderHook`: stored `"light"` → light and
   `theme-light` on `<html>`; nothing and `"blue"` → dark; toggle persists (ASM-000-10 resolved as
   included).
   - AC: AC-000-05(f)
@@ -382,6 +382,8 @@ whole test suite (Phase E net) and the build.
   - Verify: `npm test --prefix frontend -- src/hooks/useThemeMode.test.ts &&
     (cd frontend && npx eslint src/hooks/useThemeMode.test.ts --max-warnings 0)`
   - Depends on: T-23
+  - Evidence: 89c906d · Verify → exit 0 (4/4 tests; eslint 0 problems; prettier ok; typecheck ok;
+    full suite 36/36). Mutation (drop light `setItem`) → toggle test fails, then reverted.
 
 - [ ] **T-25** [P] — Split `ContactSection` (177 lines): `useTurnstileWidget(siteKey, onToken)`
   (effect unchanged, JSDoc on `renderWidget`); `ContactAlternatives`; `ContactForm` +
