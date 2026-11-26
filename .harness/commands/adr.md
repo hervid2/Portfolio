@@ -1,0 +1,11 @@
+---
+description: Drafts a new Architecture Decision Record with options and trade-offs
+agent: planner
+---
+Decision: $ARGUMENTS
+
+1. Read docs/architecture/overview.md, docs/adr/, docs/requirements/non-functional.md.
+2. Research current versions and maintenance of each option (Art. 14; `npm view`, official docs).
+3. Create docs/adr/NNNN-<slug>.md (template D.9) with 2–3 options, a trade-off table against the
+   NFRs, and a recommendation. Status: Proposed. Hernán decides.
+4. Add it to the ADR index in docs/architecture/overview.md.
