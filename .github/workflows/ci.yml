@@ -1,0 +1,158 @@
+# CI for the portfolio (spec 000, plan §1.8, AC-000-07). Runs on every PR and on pushes to main.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Upload coverage
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-frontend
+          path: frontend/coverage/
+          if-no-files-found: warn
+
+      - name: Build
+        run: npm run build
+
+      - name: "Guard: DEBT-005 build artifacts (AC-000-10)"
+        working-directory: .
+        shell: bash
+        run: |
+          tracked=$(git ls-files 'frontend/tsconfig*.tsbuildinfo' \
+            frontend/vite.config.js frontend/vite.config.d.ts \
+            frontend/tailwind.config.js frontend/tailwind.config.d.ts)
+          if [ -n "$tracked" ]; then echo "::error::DEBT-005: tracked: $tracked"; exit 1; fi
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain; echo "::error::DEBT-005: build left the tree dirty"; exit 1
+          fi
+          if [ -e frontend/vite.config.js ] || [ -e frontend/tailwind.config.js ]; then
+            echo "::error::DEBT-005: emitted *.config.js found"; exit 1
+          fi
+
+      - name: "Guard: NFR-002 baseline record (AC-000-13)"
+        working-directory: .
+        shell: bash
+        run: |
+          pattern='^\| spec 000 baseline \| [0-9a-f]{7,40} \| [0-9.]+ kB \| [0-9.]+ kB \|'
+          if ! grep -Eq "$pattern" docs/architecture/overview.md; then
+            echo "::error::NFR-002: bundle baseline row missing in overview.md"; exit 1
+          fi
+
+      - name: "Guard: Prettier configs identical (AC-000-03)"
+        working-directory: .
+        shell: bash
+        run: |
+          if ! cmp frontend/.prettierrc.json api/.prettierrc.json; then
+            echo "::error::Prettier configs differ between frontend and api"; exit 1
+          fi
+
+  api:
+    name: api
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Upload coverage
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-api
+          path: api/coverage/
+          if-no-files-found: warn
+
+      - name: Build
+        run: npm run build
+
+      - name: "Guard: no-console disables (AC-000-02)"
+        working-directory: .
+        shell: bash
+        run: |
+          hits=$(grep -rnE 'eslint-disable' api/src frontend/src \
+            | grep -v '^api/src/infrastructure/logging/logger.ts:' \
+            | grep -E 'no-console|eslint-disable(-next-line|-line)?[[:space:]]*($|\*/|--)' || true)
+          if [ -n "$hits" ]; then
+            echo "$hits"; echo "::error::no-console or blanket eslint-disable found"; exit 1
+          fi
+
+      - name: "Guard: harness docs (AC-000-12)"
+        working-directory: .
+        shell: bash
+        run: |
+          ! grep -q '†' AGENTS.md && grep -q 'format:check' AGENTS.md \
+            && grep -q 'defined in spec 004 (Playwright)' AGENTS.md \
+            && ! grep -qE 'Until spec 000 lands|arrives with spec 000' AGENTS.md \
+            && test -f .harness/skills/testing-conventions/SKILL.md \
+            && test -f .claude/skills/testing-conventions/SKILL.md \
+            || { echo "::error::harness docs out of date (AC-000-12)"; exit 1; }
