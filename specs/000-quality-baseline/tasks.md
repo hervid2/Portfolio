@@ -303,7 +303,7 @@ id; expectations are derived from the data (CL-15, CL-17).
     red was shown by mutation (name `min(1)`, message `max(1201)` → 3 failed), then reverted.
     Full `npm test --prefix api` (13/13), `format:check` and `typecheck --prefix api` → exit 0
 
-- [ ] **T-19** — API JSDoc and wrapping: JSDoc on class methods, helpers and the two
+- [x] **T-19** — API JSDoc and wrapping: JSDoc on class methods, helpers and the two
   constructors with logic (`NodemailerMailService`, `ResendMailService`); wrap lines over 100.
   No logic change. Leaves only the three D-1 function-length violations.
   - AC: AC-000-02
@@ -315,6 +315,11 @@ id; expectations are derived from the data (CL-15, CL-17).
     test "$(grep -c 'max-lines-per-function' .evidence/lint-api.txt)" -eq 3 &&
     npm run build --prefix api`
   - Depends on: T-17, T-18
+  - Evidence: a749dc0 · Verify → exit 0 (lint: 3 problems, all `max-lines-per-function`, the D-1
+    set; build ok). No `max-len` hits remained. Coordinator-approved deviation: api `max-len`
+    gets `ignorePattern: "^\s*import\s"` (Prettier cannot wrap single-specifier imports); the
+    T-17 `prettier-ignore` imports were removed and reformatted (same option at T-32 for
+    frontend). `npm test --prefix api` (13/13), `format:check`, `typecheck --prefix api` → exit 0
 
 - [ ] **T-20** — *(D-1, confirmed at G-Plan 2026-11-26)* `env.test.ts`, a
   characterization test of `getEnvConfig` before the split: `vi.stubEnv` on every key it reads;
