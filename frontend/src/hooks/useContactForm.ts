@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { sendContactMessage } from "@/services/api/contactApi";
 import { useLanguage } from "@/hooks/useLanguage";
 import type { ContactFormValues } from "@/types/contact";
 
-type SubmissionState = "idle" | "loading" | "success" | "error";
+/** Lifecycle of a contact form submission. */
+export type SubmissionState = "idle" | "loading" | "success" | "error";
 
 interface UseContactFormResult {
   values: ContactFormValues;
@@ -40,17 +41,20 @@ export function useContactForm(): UseContactFormResult {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   /**
-   * Updates a specific contact form field.
+   * Updates a specific contact form field. Stable across renders: it only calls `setValues`.
    *
    * @param fieldName - Field key to update.
    * @param fieldValue - New value for the field.
    */
-  function updateField(fieldName: keyof ContactFormValues, fieldValue: string): void {
-    setValues((previousValues) => ({
-      ...previousValues,
-      [fieldName]: fieldValue
-    }));
-  }
+  const updateField = useCallback(
+    (fieldName: keyof ContactFormValues, fieldValue: string): void => {
+      setValues((previousValues) => ({
+        ...previousValues,
+        [fieldName]: fieldValue
+      }));
+    },
+    []
+  );
 
   /**
    * Sends form values to API and handles submission state.
