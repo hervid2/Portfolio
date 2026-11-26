@@ -144,7 +144,7 @@ Each package (`frontend/`, `api/`) owns its whole toolchain: dev dependencies, `
     in CL-05 is real, so the emit fix is required, not cosmetic.
 - **API.**
   - **`tsconfig.json` stays unchanged** (`rootDir: src`, `outDir: dist`, `include: ["src"]`), so
-    `npx tsc -p api --noEmit` type-checks the colocated tests (AC-000-04).
+    `npm run typecheck --prefix api` type-checks the colocated tests (AC-000-04).
   - **A new `tsconfig.build.json`:** `extends: "./tsconfig.json"`,
     `exclude: ["src/**/*.test.ts"]`. The `build` script becomes `tsc -p tsconfig.build.json`.
   - **Effect:** whether the API host runs `npm run build` or a bare `tsc`, the output is still
@@ -156,7 +156,6 @@ Each package (`frontend/`, `api/`) owns its whole toolchain: dev dependencies, `
 - **Scripts:**
   - frontend `typecheck`: `tsc -b`
   - api `typecheck`: `tsc -p tsconfig.json --noEmit`
-  - `AGENTS.md` keeps `npx tsc -b frontend` and `npx tsc -p api --noEmit` as the canonical
   - `AGENTS.md` lists `npm run typecheck --prefix frontend|api` as the canonical commands
     (changed at T-34: the root `npx tsc` form fails without a root TypeScript install).
 ### 1.6 API seams (the only API structural changes)

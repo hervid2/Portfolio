@@ -52,7 +52,7 @@ Any change to `frontend/src/data/projects.ts`, to `frontend/src/types/project.ts
 - Renaming an `id` to "fix" a typo, which breaks the media and identity mappings.
 
 ## Verification
-- `npx tsc -b frontend` passes.
+- `npm run typecheck --prefix frontend` passes.
 - The data invariant tests pass once spec 000 adds them (`npm test --prefix frontend`).
 - `curl -sI <each new URL>` returns 2xx/3xx.
 - Check the card visually in EN and ES, in both themes.

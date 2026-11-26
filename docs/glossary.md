@@ -21,10 +21,11 @@
 | Skill | `Skill` (`frontend/src/types/skill.ts`) | A technology shown in the About → Skills grid | Tech, tool | Existing code |
 | Language | `Language` = `"en" \| "es"` | UI language; persisted preference | Locale (in code), lang | Existing code |
 | Dictionary | `AppDictionary` (`frontend/src/types/i18n.ts`) | Typed set of UI strings per language | Translations, messages | Existing code |
-| Theme mode | `ThemeMode` = `"dark" \| "light"` (`frontend/src/types/theme.ts` from spec 000; today local to `Navbar.tsx`) | Visual theme; persisted preference | Color scheme | Existing code |
+| Theme mode | `ThemeMode` = `"dark" \| "light"` (`frontend/src/types/theme.ts`; state in `frontend/src/hooks/useThemeMode.ts`) | Visual theme; persisted preference | Color scheme | Existing code |
 | Contact message | `ContactMessage` (Prisma) | A message submitted through the contact form | Lead, inquiry | Existing code |
 | Section | DOM id `home` · `portfolio` · `about` · `contact` | A top-level part of the home page | Page (for these) | Existing code |
 | CAPTCHA verifier | `CaptchaVerifier` (`api/src/domain/interfaces/CaptchaVerifier.ts`) | Port that checks a Turnstile token server-side; `NoopCaptchaVerifier` accepts every token when CAPTCHA is disabled | Bot check, recaptcha | Existing code; injected into the use case by spec 000 (CL-01) |
+| Submission command | `SubmitContactMessageCommand` (`api/src/types/contact.ts`) | Input of `SubmitContactMessageUseCase.execute`: the parsed contact fields plus `captchaToken` and the optional `remoteIp` | Request, payload (in the use case) | Spec 000 (C-08) |
 | Submission outcome | `SubmitContactMessageResult` = `{ status: "accepted" }` \| `{ status: "captcha-rejected" }` | Typed result of `SubmitContactMessageUseCase`; the controller maps `captcha-rejected` to `400 {"message":"Captcha validation failed"}` | Error code, response (in the use case) | Spec 000 plan |
 | API logger | `logger` (`api/src/infrastructure/logging/logger.ts`) | The only place the API writes to the console (`info`, `warn`, `error`) | Console (in app code), log helper | Spec 000 (CL-03) |
 | Required check | CI job ids `frontend` · `api` | A GitHub Actions job whose name is a required status check on `main` | Pipeline, build (for these) | Spec 000 (CL-08, CL-18) |

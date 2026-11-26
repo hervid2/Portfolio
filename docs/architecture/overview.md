@@ -68,7 +68,8 @@ Set up in spec 000. Conventions (test names with AC ids, fakes, jsdom shims): th
 - **CI** — `.github/workflows/ci.yml`, jobs `frontend` and `api` on pull requests and pushes to
   `main`: `npm ci`, `format:check`, `lint`, `typecheck`, `test` (coverage uploaded as
   `coverage-frontend` / `coverage-api`), `build`, then guards (DEBT-005, `no-console` disables,
-  this bundle baseline, harness docs, Prettier parity). Both jobs are the required checks.
+  this bundle baseline, harness docs, Prettier parity). Both jobs are required
+  status checks on `main` (branch protection, AC-000-11, since 2026-11-26).
 - **e2e** — Playwright with axe on desktop and mobile viewports: spec 004, together with the
   check that pre-rendered HTML holds the content (NFR-005). Not part of spec 000.
 

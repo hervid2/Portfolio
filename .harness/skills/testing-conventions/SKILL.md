@@ -76,7 +76,7 @@ description: Use when writing, changing or reviewing unit or component tests in 
      `src/test/**`. Still give shared helpers (`setup`, `renderBar`) and fixed fixtures a short
      English JSDoc, as the existing tests do.
    - `max-len` (100), `no-console`, strict TypeScript and Prettier still apply. `tsc` type-checks
-     the tests (`npx tsc -b frontend`, `npx tsc -p api --noEmit`).
+     the tests (`npm run typecheck --prefix frontend`, `npm run typecheck --prefix api`).
 8. **Coverage:**
    - `npm test --prefix frontend` and `npm test --prefix api` run `vitest run --coverage` (v8,
      `text` + `lcov`, written to `<package>/coverage/`, which is git-ignored).
@@ -84,6 +84,9 @@ description: Use when writing, changing or reviewing unit or component tests in 
      frontend`.
    - Coverage is reported, not gated (ASM-011): there are no thresholds. CI uploads the reports
      as `coverage-frontend` and `coverage-api`. Do not add thresholds without a spec.
+   - Windows: run coverage from a `C:`-cased cwd (PowerShell). A lowercase `c:` cwd (e.g. cmd
+     `cd /d c:\...`) makes v8 list each tested file twice (100 % and 0 % rows) and lowers
+     "All files". It is a local artifact only; CI runs on Linux.
 9. **Review check: constructors with logic carry JSDoc.** Lint never requires JSDoc on a
    constructor (`checkConstructors: false`; `eslint-plugin-jsdoc` cannot tell an empty
    constructor from one with logic, plan §1.2). So the reviewer checks every new or changed class
@@ -137,6 +140,6 @@ it("AC-000-05(d) renders one button per category inside the labelled group", () 
 ## Verification
 - `npm test --prefix frontend` and `npm test --prefix api` pass and print the coverage table.
 - `npm run lint --prefix frontend` and `npm run lint --prefix api` pass.
-- `npx tsc -b frontend` and `npx tsc -p api --noEmit` pass.
+- `npm run typecheck --prefix frontend` and `npm run typecheck --prefix api` pass.
 - A new test fails before the change it covers (red), and passes after it (green).
 - Review: every new or changed constructor with logic has JSDoc (rule 9).

@@ -52,6 +52,6 @@ downloadCv: "Descargar CV",
 - Different facts in each language (e.g. "US & Canada" in EN but "EE. UU., Canadá y LATAM" in ES).
 
 ## Verification
-- `npx tsc -b frontend` passes, which proves dictionary parity.
+- `npm run typecheck --prefix frontend` passes, which proves dictionary parity.
 - `grep -rnE "language === \"(es|en)\" \?" frontend/src` returns nothing new.
 - Visual check of the changed screen in both languages (Playwright MCP or manual).

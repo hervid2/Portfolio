@@ -2,9 +2,11 @@ import type { FormEvent, MutableRefObject } from "react";
 import { motion } from "motion/react";
 import { ContactFormField } from "@/components/sections/ContactFormField";
 import type { ContactFieldName } from "@/components/sections/ContactFormField";
+import { ContactFormStatus } from "@/components/sections/ContactFormStatus";
 import { useLanguage } from "@/hooks/useLanguage";
 import type { SubmissionState } from "@/hooks/useContactForm";
 import type { ContactFormValues } from "@/types/contact";
+import type { AppDictionary } from "@/types/i18n";
 import { fadeUpVariants, HOVER_LIFT_Y_SMALL, HOVER_SPRING } from "@/utils/motionPresets";
 
 const CONTACT_FIELD_NAMES: readonly ContactFieldName[] = ["name", "email", "message"];
@@ -35,40 +37,29 @@ async function handleSubmit(
   await submitForm();
 }
 
-interface ContactFormStatusProps {
-  submissionState: SubmissionState;
-  errorMessage: string;
-}
-
 /**
- * Renders the success message or the error message after a submission, or nothing otherwise.
+ * Renders the animated submit button, disabled and relabeled while the submission is loading.
  *
- * @param props - Component props.
- * @param props.submissionState - Current submission state.
- * @param props.errorMessage - Specific error message; the generic one is used when empty.
- * @returns Status paragraph, or null while idle or loading.
+ * @param submissionState - Current submission state.
+ * @param contact - Contact section dictionary with the submit and sending labels.
+ * @returns Submit button element.
  */
-function ContactFormStatus({
-  submissionState,
-  errorMessage
-}: ContactFormStatusProps): JSX.Element | null {
-  const { dictionary } = useLanguage();
-
-  if (submissionState === "success") {
-    return (
-      <p className="text-sm font-semibold text-accent-cyan">{dictionary.contact.successMessage}</p>
-    );
-  }
-
-  if (submissionState === "error") {
-    return (
-      <p className="text-sm font-semibold text-red-400">
-        {errorMessage || dictionary.contact.errorMessage}
-      </p>
-    );
-  }
-
-  return null;
+function renderSubmitButton(
+  submissionState: SubmissionState,
+  contact: AppDictionary["contact"]
+): JSX.Element {
+  return (
+    <motion.button
+      type="submit"
+      className="btn-primary"
+      disabled={submissionState === "loading"}
+      aria-label="Send contact message"
+      variants={fadeUpVariants}
+      whileHover={{ y: HOVER_LIFT_Y_SMALL, transition: HOVER_SPRING }}
+    >
+      {submissionState === "loading" ? contact.sendingLabel : contact.submitLabel}
+    </motion.button>
+  );
 }
 
 /**
@@ -76,10 +67,24 @@ function ContactFormStatus({
  * the success or error message.
  *
  * @param props - Component props (form state and handlers from `useContactForm`).
+ * @param props.values - Current field values.
+ * @param props.submissionState - Current submission state.
+ * @param props.errorMessage - Specific error message shown after a failed submission.
+ * @param props.updateField - Updates one field value.
+ * @param props.submitForm - Submits the form.
+ * @param props.isTurnstileEnabled - Whether the Turnstile container is rendered.
+ * @param props.turnstileContainerRef - Ref of the node Turnstile mounts its widget into.
  * @returns Form element.
  */
-export function ContactForm(props: ContactFormProps): JSX.Element {
-  const { values, submissionState, errorMessage, updateField, submitForm } = props;
+export function ContactForm({
+  values,
+  submissionState,
+  errorMessage,
+  updateField,
+  submitForm,
+  isTurnstileEnabled,
+  turnstileContainerRef
+}: ContactFormProps): JSX.Element {
   const { dictionary } = useLanguage();
 
   return (
@@ -100,22 +105,9 @@ export function ContactForm(props: ContactFormProps): JSX.Element {
 
       {/* Left unanimated on purpose: Turnstile mounts its widget into this
           node imperatively, and wrapping it in a transform would interfere. */}
-      {props.isTurnstileEnabled && (
-        <div ref={props.turnstileContainerRef} className="min-h-[65px]" />
-      )}
+      {isTurnstileEnabled && <div ref={turnstileContainerRef} className="min-h-[65px]" />}
 
-      <motion.button
-        type="submit"
-        className="btn-primary"
-        disabled={submissionState === "loading"}
-        aria-label="Send contact message"
-        variants={fadeUpVariants}
-        whileHover={{ y: HOVER_LIFT_Y_SMALL, transition: HOVER_SPRING }}
-      >
-        {submissionState === "loading"
-          ? dictionary.contact.sendingLabel
-          : dictionary.contact.submitLabel}
-      </motion.button>
+      {renderSubmitButton(submissionState, dictionary.contact)}
 
       <ContactFormStatus submissionState={submissionState} errorMessage={errorMessage} />
     </form>
