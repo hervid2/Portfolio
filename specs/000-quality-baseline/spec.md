@@ -1,5 +1,5 @@
 # Spec 000 — Quality baseline (brownfield walking skeleton)
-Status: Approved · Version: 1.0 · Branch: feat/000-quality-baseline ·
+Status: Planned · Version: 1.1 · Branch: feat/000-quality-baseline ·
 FR: FR-002 (partial), FR-008 (tests only) · NFR: NFR-002, NFR-007, NFR-008, NFR-009 ·
 Debt: DEBT-001, DEBT-005 · Depends on: —
 
@@ -78,8 +78,8 @@ Every later spec (001–008) builds on this pipeline.
 - **Harness (CL-20):** the `testing-conventions` skill in `.harness/skills/` plus regenerated
   Claude Code adapters, and the `AGENTS.md` updates listed in AC-000-12.
 - **Documentation (CL-21):**
-  - `docs/traceability.md`: rows for FR-002/BR-001 → AC-000-05 (a)(e) and FR-008/BR-003 →
-    AC-000-06;
+  - `docs/traceability.md`: rows for FR-002/BR-001 → AC-000-05 (a)(e), FR-003/BR-002 →
+    AC-000-05(f) and FR-008/BR-003 → AC-000-06;
   - `docs/roadmap.md`: DEBT-001 and DEBT-005 marked closed;
   - the NFR-002 bundle baseline (AC-000-13).
 
@@ -150,8 +150,8 @@ Every later spec (001–008) builds on this pipeline.
   BR-001 examples (`"es"` → ES, `"fr"` → EN, nothing → EN, `setLanguage` persists). The EN/ES
   dictionary test (a) protects the language switch (FR-002). Example: a key in `en.ts` that is
   missing in `es.ts`, or an empty string value, fails the test.
-- **BR-002** (theme): a persistence test is added only if the plan sizes it at ≤ 1 task
-  (ASM-000-10).
+- **BR-002** (theme): tested directly by AC-000-05(f) with the BR-002 examples (`"light"` →
+  light, nothing → dark, `"blue"` → dark) and toggle persistence (ASM-000-10, resolved).
 - **BR-003** (contact field limits, after trim): name 2–80, email ≤ 120 and valid format,
   message 10–1200. Tested at the boundaries by AC-000-06(a). Example: name `"A"` is invalid,
   `"Al"` is valid, `"  A  "` is invalid.
@@ -269,7 +269,10 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
     `aria-pressed` is true only on the active chip; a click calls `onSelect` with the category
     key;
   - (e) `LanguageProvider` with `localStorage` `"es"` renders ES, `"fr"` renders EN, nothing
-    renders EN, and `setLanguage` persists the value (BR-001).
+    renders EN, and `setLanguage` persists the value (BR-001);
+  - (f) `useThemeMode` (via `renderHook`) with `localStorage` `"light"` returns light and
+    sets `theme-light` on `<html>`; nothing and `"blue"` return dark; toggling persists the
+    new value (BR-002, ASM-000-10).
   **Verified by:** these Vitest tests, named with their AC id (e.g. `it("AC-000-05b …")`).
 - **AC-000-06** — Given the api package, when `npm test --prefix api` runs, then Vitest passes
   these unit tests, and a coverage report is produced with no threshold:
@@ -341,10 +344,12 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | ASM-000-07 | ASM | The new dev dependencies (ESLint stack, Prettier, Vitest stack, Testing Library, jsdom, optionally `eslint-plugin-react`) are listed and approved in the plan (G-Plan), pinned to the newest versions compatible with Vite 5.4, React 18.3 and TS 5.6, with a compatibility source per tool (CL-10). | agent | Proposed |
 | ASM-000-08 | ASM | `enforce_admins: false`: branch protection binds agents and collaborators, not the admin. Hernán can still push to or merge into `main` without checks. Accepted risk (CL-08). | Hernán | Accepted 2026-11-26 |
 | ASM-000-09 | ASM | API edits are limited per §8 (CL-22). Smoke check: `npm run build --prefix api` (in CI) plus a local `npm run test:e2e --prefix api` if Hernán has MySQL locally; otherwise an accepted risk recorded in `validation.md`. | Hernán | Accepted 2026-11-26 |
-| ASM-000-10 | ASM | A BR-002 theme-persistence test is added as AC-000-05(f) only if the plan sizes it at ≤ 1 task; otherwise it is deferred and the plan says so (CL-17). | agent | Proposed |
+| ASM-000-10 | ASM | A BR-002 theme-persistence test is added as AC-000-05(f) only if the plan sizes it at ≤ 1 task; otherwise it is deferred and the plan says so (CL-17). Resolved: included as AC-000-05(f), because `useThemeMode` is extracted by the `Navbar` split anyway (plan §8). | Hernán | Resolved 2026-11-26 (G-Plan) |
 | ASM-000-11 | ASM | The AC-000-13 automated check proves the baseline is recorded, not that the numbers are right; the numbers are checked against the CI build log in review. | agent | Proposed |
-| ASM-000-12 | ASM | `vite build` does not fail when `VITE_API_BASE_URL` / `VITE_TURNSTILE_SITE_KEY` are missing, so CI needs no secrets. The planner confirms (Art. 14). | agent | Proposed |
+| ASM-000-12 | ASM | `vite build` does not fail when `VITE_API_BASE_URL` / `VITE_TURNSTILE_SITE_KEY` are missing, so CI needs no secrets. The planner confirms (Art. 14). Confirmed by code reading: every `import.meta.env.VITE_*` read uses optional chaining with a fallback (plan §8); the draft-PR CI run is the final proof. | Hernán | Confirmed 2026-11-26 (G-Plan) |
 | ASM-000-13 | ASM | The protection agent uses Hernán's own `gh` session for one call after his explicit yes; no admin token is stored in the repo or in CI (CL-08, NFR-009). | Hernán | Accepted 2026-11-26 |
+| ASM-000-14 | ASM | The API host builds with `npm run build` or a bare `tsc`. Both still produce `dist/server.js` (plan R-4). | agent | Accepted 2026-11-26 (G-Plan) |
+| ASM-000-15 | ASM | AC-000-09's "`MotionConfig` still wraps the tree" is checked by behavior (no lingering transforms under reduced motion), plus a code check that `App.tsx` still renders `<MotionConfig reducedMotion="user">` around the tree. | agent | Accepted 2026-11-26 (G-Plan) |
 | OQ-000-01 | OQ | The `gh` token is invalid (MEMORY.md). AC-000-11 needs a session with admin rights on `hervid2/Portfolio`: Hernán runs `gh auth login` before the protection step (after G-Merge). Until then the spec cannot reach "Implemented". | Hernán | Open |
 
 ## 12. Change log
@@ -353,3 +358,4 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | 0.1 | 2026-11-26 | Initial draft from the owner interview (2 rounds) | — |
 | 0.2 | 2026-11-26 | Applied the owner's answers to CL-01…CL-24: captcha seam in the use case; named recorded-verification exception (AC-000-08/09/11) instead of rewording NFR-007; logger wrapper; LF policy; tsconfig emit fix and DEBT-005 CI guard; visual comparison method and delivery order; JSDoc scope; branch protection by an agent with `enforce_admins: false`; NFR-002 baseline (new AC-000-13); version pinning; stronger test oracles; NFR-002/NFR-009 and FR-008 in the header; DEBT-008 recorded | Answers: Hernán 2026-11-26 · G-Spec pending |
 | 1.0 | 2026-11-26 | Approved at G-Spec (no changes to v0.2 content) | Hernán (G-Spec) |
+| 1.1 | 2026-11-26 | Minor, from plan §8: added AC-000-05(f) (BR-002 theme test); ASM-000-10 resolved (included); ASM-000-12 confirmed; added ASM-000-14 and ASM-000-15; status → Planned | Hernán (G-Plan) |
