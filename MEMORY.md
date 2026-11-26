@@ -2,10 +2,12 @@
 
 ## Current status
 - **Stage:** Genesis G5 (next) · Active feature: 000-quality-baseline (not started) · SDD phase: 1
-- **Branch:** `main` @ 0e8d626 (harness merged via PR #2; `chore/genesis-harness` can be deleted)
-- **Last completed step:** G-Harness merged into `main` (PR #2, 2026-11-26)
-- **Next step:** G5: `/feature 000` (quality baseline) in a new session → creates
-  `feat/000-quality-baseline` from `main`. This MEMORY.md update is uncommitted: commit it there.
+- **Branch:** `docs/oq-001-consent` (OQ-001 closure; not pushed, no PR yet). Harness is in `main`
+  (PR #2); `chore/genesis-harness` can be deleted.
+- **Last completed step:** OQ-001 closed in docs (2026-11-26)
+- **Next step:**
+  1. Hernán pushes `docs/oq-001-consent` and merges its PR.
+  2. G5: `/feature 000` (quality baseline) in a new session → `feat/000-quality-baseline` from `main`.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
 - ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; the upgrade is optional (DEBT-007).
