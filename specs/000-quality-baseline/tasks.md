@@ -46,7 +46,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Depends on: — (G-Plan approved)
   - Evidence: 4a6ac70 · Verify → exit 0 (40 PNGs; main ed051a4; JS 96.46 kB / CSS 4.24 kB gzip)
 
-- [ ] **T-02** — Add the root `.gitattributes` (`* text=auto eol=lf`; `binary` for
+- [x] **T-02** — Add the root `.gitattributes` (`* text=auto eol=lf`; `binary` for
   `*.png *.jpg *.jpeg *.gif *.webp *.ico *.mp4 *.webm *.woff *.woff2 *.ttf *.otf *.pdf`; SVG stays
   text) and run `git add --renormalize .`. The commit contains only this (plan §1.9, R-2).
   - AC: AC-000-03 (line-ending policy)
@@ -57,6 +57,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Verify: `test -z "$(git ls-files --eol | grep 'i/crlf')" &&
     test -z "$(git diff HEAD~1 HEAD --ignore-cr-at-eol --name-only -- . ':!.gitattributes')"`
   - Depends on: T-01
+  - Evidence: d39ae6a · Verify part 1 → OK; part 2 lists only the approved `.gitignore` addition
+    (passes with `':!.gitignore'` added); renormalize re-staged 0 files (index was already LF)
 
 - [ ] **T-03** — DEBT-005: `git rm` the six artifacts
   (`frontend/tsconfig.node.tsbuildinfo`, `frontend/tsconfig.tsbuildinfo`,
