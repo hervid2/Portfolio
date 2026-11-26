@@ -333,7 +333,7 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Evidence: 60cb2d2 · Verify → exit 0 (25/25 tests; `config/env.ts` 100% stmts/branches;
     eslint 0). `npm test --prefix api` (38/38), `format:check`, `typecheck --prefix api` → exit 0
 
-- [ ] **T-21** — *(D-1)* Split `getEnvConfig` (`config/env.ts`) into helpers of ≤ 40 lines with
+- [x] **T-21** — *(D-1)* Split `getEnvConfig` (`config/env.ts`) into helpers of ≤ 40 lines with
   identical behavior and output. If D-1 was approved without the test, T-20 is skipped and this
   task depends on T-19 only.
   - AC: AC-000-02
@@ -341,6 +341,8 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Verify: `npm test --prefix api && (cd api && npx eslint src/config/env.ts --max-warnings 0) &&
     npm run build --prefix api`
   - Depends on: T-20 (or T-19)
+  - Evidence: 43a52e0 · Verify → exit 0 (38/38 tests incl. env.test.ts 25/25; `config/env.ts`
+    100% stmts/branches; eslint 0; build ok). `format:check`, `typecheck --prefix api` → exit 0
 
 - [ ] **T-22** — *(D-1)* Split `run` in `scripts/persistenceSmokeTest.ts` and
   `scripts/contactFormE2eTest.ts` into functions of ≤ 40 lines; same steps, order and console
