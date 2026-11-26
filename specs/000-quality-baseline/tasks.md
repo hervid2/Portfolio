@@ -60,7 +60,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Evidence: d39ae6a · Verify part 1 → OK; part 2 lists only the approved `.gitignore` addition
     (passes with `':!.gitignore'` added); renormalize re-staged 0 files (index was already LF)
 
-- [ ] **T-03** — DEBT-005: `git rm` the six artifacts
+- [x] **T-03** — DEBT-005: `git rm` the six artifacts
   (`frontend/tsconfig.node.tsbuildinfo`, `frontend/tsconfig.tsbuildinfo`,
   `frontend/vite.config.{js,d.ts}`, `frontend/tailwind.config.{js,d.ts}`); add `*.tsbuildinfo`
   and the four generated config paths to `.gitignore`; in `frontend/tsconfig.node.json` add
@@ -76,6 +76,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     test ! -e frontend/vite.config.js && test ! -e frontend/tailwind.config.js &&
     test -z "$(git ls-files frontend | grep -E 'tsbuildinfo$|(vite|tailwind)\.config\.(js|d\.ts)$')"`
   - Depends on: T-02
+  - Evidence: a402b51 · Verify → exit 0 (tsc via `frontend/node_modules/.bin/tsc`; emit only in
+    `frontend/node_modules/.tmp/`; bundle JS 96.46 kB / CSS 4.24 kB gzip, same as `main`)
 
 ## Phase B — Prettier
 
