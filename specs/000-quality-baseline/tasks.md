@@ -156,7 +156,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
 
 ## Phase D — Vitest
 
-- [ ] **T-09** [P] — Frontend Vitest: install `vitest@^3.2.7`, `@vitest/coverage-v8@^3.2.7`,
+- [x] **T-09** [P] — Frontend Vitest: install `vitest@^3.2.7`, `@vitest/coverage-v8@^3.2.7`,
   `jsdom@^29.1.1`, `@testing-library/react@^16.3.3`, `@testing-library/dom@^10.4.2`,
   `@testing-library/jest-dom@^7.0.1` (dev); create `frontend/vitest.config.ts` and
   `frontend/src/test/setup.ts` (plan §1.4); add `vitest.config.ts` to the `include` of
@@ -171,6 +171,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     test "$(npm ls vite --prefix frontend --all --parseable | sort -u | wc -l)" -eq 1 &&
     (cd frontend && npx eslint vitest.config.ts src/test/setup.ts --max-warnings 0)`
   - Depends on: T-07
+  - Evidence: 71de16d · Verify → exit 0 (tsc via `frontend/node_modules/.bin/tsc`; no TS2742, no
+    `ViteUserConfig` needed; single `vite@5.4.21`; coverage text report printed; bundle unchanged)
 
 - [ ] **T-10** [P] — API Vitest: install `vitest@^3.2.7`, `@vitest/coverage-v8@^3.2.7` (dev);
   create `api/vitest.config.ts` (node environment, coverage excludes `src/scripts/**` and
