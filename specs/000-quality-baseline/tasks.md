@@ -226,7 +226,7 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Evidence: 8afc2e2 · Verify → exit 0 (3/3 pass; red check: constant `project-card` return in
     the scratch-mutated util failed 2 tests, then reverted)
 
-- [ ] **T-14** [P] — `ProjectFilterBar.test.tsx`: renders `categories.length` buttons; the "all"
+- [x] **T-14** [P] — `ProjectFilterBar.test.tsx`: renders `categories.length` buttons; the "all"
   chip text equals `allLabel`; `aria-pressed="true"` only on the active chip;
   `fireEvent.click` calls `onSelect(key)`.
   - AC: AC-000-05(d)
@@ -234,6 +234,8 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Verify: `npm test --prefix frontend -- src/components/ui/ProjectFilterBar.test.tsx &&
     (cd frontend && npx eslint src/components/ui/ProjectFilterBar.test.tsx --max-warnings 0)`
   - Depends on: T-09
+  - Evidence: 0b02118 · Verify → exit 0 (12/12 pass; red check: `aria-pressed={true}` and a fixed
+    `onSelect` key in the scratch-mutated component failed 9 tests, then reverted)
 
 - [ ] **T-15** [P] — `LanguageContext.test.tsx`: `LanguageProvider` + probe consumer; stored
   `"es"` → `esDictionary.nav.home`; `"fr"` and nothing → `enDictionary.nav.home`;
