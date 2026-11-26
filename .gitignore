@@ -11,3 +11,6 @@ coverage/
 
 # Filled stakeholder questionnaire: third-party answers stay private (BR-007)
 docs/discovery/stakeholder-questionnaire.md
+
+# Local validation evidence (screenshots, logs): too large for git (spec 000 §7.4)
+.evidence/
