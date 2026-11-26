@@ -579,7 +579,7 @@ whole test suite (Phase E net) and the build.
 
 ## Phase J — CI
 
-- [ ] **T-38** — Create `.nvmrc` (`22`) and `.github/workflows/ci.yml` per plan §1.8: triggers,
+- [x] **T-38** — Create `.nvmrc` (`22`) and `.github/workflows/ci.yml` per plan §1.8: triggers,
   `permissions: contents: read`, `concurrency`, jobs `frontend` and `api` (`name` = id),
   `actions/{checkout,setup-node,upload-artifact}@v7`, the step table (including
   `npx prisma generate` in `api`, with the R-3 placeholder `DATABASE_URL` only if needed), coverage
@@ -596,6 +596,14 @@ whole test suite (Phase E net) and the build.
     grep -cE '^  (frontend|api):$' .github/workflows/ci.yml | grep -q '^2$' &&
     test "$(cat .nvmrc)" = 22`. The real proof is the draft-PR run (P-01).
   - Depends on: T-34, T-35, T-36, T-37
+  - Evidence: 423c985 · Verify → exit 0. Clean worktree of 423c985 (no `.env`, Node 22.17), every
+    step run in order: frontend `npm ci`, `format:check`, `lint`, `typecheck`, `test`, `build` →
+    all 0; api `npm ci`, `npx prisma generate` (no `DATABASE_URL`, so R-3 placeholder not added),
+    `format:check`, `lint`, `typecheck`, `test`, `build` → all 0; coverage dirs written. Guards
+    extracted from `ci.yml` and run in Git Bash after the builds: DEBT-005 0, NFR-002 0, Prettier
+    parity 0, `no-console` 0, harness 0; negative probes (blanket and `no-console` disables,
+    emitted `vite.config.js`, dirty tree) → 1. YAML parsed (scratch `yaml@2.6.1`, not installed in
+    the repo); worktree removed
 
 ## Post-implementation steps (not implementer tasks; listed so every AC has an owner)
 
