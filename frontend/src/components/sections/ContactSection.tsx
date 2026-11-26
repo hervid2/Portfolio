@@ -130,7 +130,9 @@ export function ContactSection(): JSX.Element {
         variants={fadeUpVariants}
         className="mt-10 rounded-2xl border border-border-subtle bg-surface-card p-6"
       >
-        <h3 className="text-lg font-semibold text-text-primary">{dictionary.contact.altContactTitle}</h3>
+        <h3 className="text-lg font-semibold text-text-primary">
+          {dictionary.contact.altContactTitle}
+        </h3>
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-text-secondary">
           <motion.a
             href="https://github.com/hervid2"
@@ -222,9 +224,7 @@ export function ContactSection(): JSX.Element {
 
         {/* Left unanimated on purpose: Turnstile mounts its widget into this
             node imperatively, and wrapping it in a transform would interfere. */}
-        {isTurnstileEnabled && (
-          <div ref={turnstileContainerRef} className="min-h-[65px]" />
-        )}
+        {isTurnstileEnabled && <div ref={turnstileContainerRef} className="min-h-[65px]" />}
 
         <motion.button
           type="submit"
@@ -234,11 +234,15 @@ export function ContactSection(): JSX.Element {
           variants={fadeUpVariants}
           whileHover={{ y: HOVER_LIFT_Y_SMALL, transition: HOVER_SPRING }}
         >
-          {submissionState === "loading" ? dictionary.contact.sendingLabel : dictionary.contact.submitLabel}
+          {submissionState === "loading"
+            ? dictionary.contact.sendingLabel
+            : dictionary.contact.submitLabel}
         </motion.button>
 
         {submissionState === "success" && (
-          <p className="text-sm font-semibold text-accent-cyan">{dictionary.contact.successMessage}</p>
+          <p className="text-sm font-semibold text-accent-cyan">
+            {dictionary.contact.successMessage}
+          </p>
         )}
 
         {submissionState === "error" && (

@@ -79,7 +79,8 @@ export function useContactForm(): UseContactFormResult {
       setValues(createInitialValues());
     } catch (error) {
       setSubmissionState("error");
-      const fallbackMessage = error instanceof Error ? error.message : dictionary.contact.errorMessage;
+      const fallbackMessage =
+        error instanceof Error ? error.message : dictionary.contact.errorMessage;
       setErrorMessage(fallbackMessage);
     }
   }

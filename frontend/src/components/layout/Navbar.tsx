@@ -88,7 +88,11 @@ export function Navbar(): JSX.Element {
         </button>
 
         <nav className="hidden gap-8 text-sm font-semibold text-text-secondary md:flex">
-          <button type="button" onClick={() => scrollToSection("home")} className="hover:text-accent-cyan">
+          <button
+            type="button"
+            onClick={() => scrollToSection("home")}
+            className="hover:text-accent-cyan"
+          >
             {dictionary.nav.home}
           </button>
           <button
@@ -159,7 +163,10 @@ export function Navbar(): JSX.Element {
       </div>
 
       {isMenuOpen && (
-        <nav id="mobile-menu" className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-5 pb-4 md:hidden">
+        <nav
+          id="mobile-menu"
+          className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-5 pb-4 md:hidden"
+        >
           <button
             type="button"
             onClick={() => {

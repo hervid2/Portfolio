@@ -14,7 +14,9 @@ const AboutSection = lazy(() =>
   import("@/components/sections/AboutSection").then((module) => ({ default: module.AboutSection }))
 );
 const ContactSection = lazy(() =>
-  import("@/components/sections/ContactSection").then((module) => ({ default: module.ContactSection }))
+  import("@/components/sections/ContactSection").then((module) => ({
+    default: module.ContactSection
+  }))
 );
 
 /**
@@ -38,7 +40,9 @@ export default function App(): JSX.Element {
           <main>
             <HeroSection />
             <Suspense
-              fallback={<div className="px-5 py-10 text-center text-text-secondary">Loading...</div>}
+              fallback={
+                <div className="px-5 py-10 text-center text-text-secondary">Loading...</div>
+              }
             >
               <PortfolioSection />
               <AboutSection />

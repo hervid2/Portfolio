@@ -47,7 +47,9 @@ body,
 
 body {
   @apply bg-surface-base text-text-primary antialiased;
-  transition: background-color 220ms ease, color 220ms ease;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease;
 }
 
 @layer components {

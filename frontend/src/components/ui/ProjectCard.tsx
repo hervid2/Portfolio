@@ -62,9 +62,7 @@ function ProjectLink({
 
   if (!url) {
     return (
-      <span
-        className={`${INTERACTIVE_BASE_CLASSES} border-border-subtle text-text-secondary`}
-      >
+      <span className={`${INTERACTIVE_BASE_CLASSES} border-border-subtle text-text-secondary`}>
         {icon}
         {label}: {pendingLabel}
       </span>
