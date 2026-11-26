@@ -174,7 +174,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Evidence: 71de16d · Verify → exit 0 (tsc via `frontend/node_modules/.bin/tsc`; no TS2742, no
     `ViteUserConfig` needed; single `vite@5.4.21`; coverage text report printed; bundle unchanged)
 
-- [ ] **T-10** [P] — API Vitest: install `vitest@^3.2.7`, `@vitest/coverage-v8@^3.2.7` (dev);
+- [x] **T-10** [P] — API Vitest: install `vitest@^3.2.7`, `@vitest/coverage-v8@^3.2.7` (dev);
   create `api/vitest.config.ts` (node environment, coverage excludes `src/scripts/**` and
   `src/server.ts`) and `api/tsconfig.build.json` (`extends ./tsconfig.json`, excludes
   `src/**/*.test.ts`); change `build` to `tsc -p tsconfig.build.json`; add `test`
@@ -188,6 +188,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     test -z "$(find api/dist -name '*.test.js')" &&
     (cd api && npx eslint vitest.config.ts --max-warnings 0)`
   - Depends on: T-08
+  - Evidence: 0b71d23 · Verify → exit 0 (tsc via `npm run typecheck --prefix api`; coverage text
+    table printed; probe `*.test.ts` ran, was type-checked and stayed out of `dist/`)
 
 ## Phase E — Frontend regression net (tests on code the refactors do not split)
 Written before the Phase G refactors so they guard them (plan R-1). Test names start with the AC
