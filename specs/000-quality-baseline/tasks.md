@@ -95,7 +95,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Evidence: 57af1fd · Verify → prettier 3.10.1, `format:check` exit 1 with 21 files listed
     (plan measured 22; all under `src/`); build OK, bundle JS 96.46 kB / CSS 4.24 kB gzip
 
-- [ ] **T-05** — API Prettier setup: same as T-04 for `api/`, with `api/.prettierrc.json`
+- [x] **T-05** — API Prettier setup: same as T-04 for `api/`, with `api/.prettierrc.json`
   byte-identical to the frontend copy. The plan measured `api/` as already conformant; if
   `format:check` still lists files, run `npm run format --prefix api` in this same commit (API
   formatting only, no other edit).
@@ -104,6 +104,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     `api/.prettierignore` (+ API files only if reformatted)
   - Verify: `npm run format:check --prefix api && cmp frontend/.prettierrc.json api/.prettierrc.json`
   - Depends on: T-04
+  - Evidence: cd2f150 · Verify → prettier 3.10.1, `format:check` exit 0 (no reformat needed),
+    `cmp` identical; `tsc --noEmit` and `npm run build` in `api/` OK
 
 - [ ] **T-06** — Pure formatting commit for the frontend: `npm run format --prefix frontend`.
   No manual edit (plan R-2: reviewed with `git diff -w`).
