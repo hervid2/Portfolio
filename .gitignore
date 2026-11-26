@@ -17,3 +17,10 @@ docs/discovery/stakeholder-questionnaire.md
 
 # Playwright MCP output folder (local screenshots, snapshots)
 .playwright-mcp/
+
+# TypeScript build artifacts (DEBT-005): tsc -b now writes under node_modules/.tmp/
+*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+frontend/tailwind.config.js
+frontend/tailwind.config.d.ts
