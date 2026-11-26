@@ -107,13 +107,16 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Evidence: cd2f150 · Verify → prettier 3.10.1, `format:check` exit 0 (no reformat needed),
     `cmp` identical; `tsc --noEmit` and `npm run build` in `api/` OK
 
-- [ ] **T-06** — Pure formatting commit for the frontend: `npm run format --prefix frontend`.
+- [x] **T-06** — Pure formatting commit for the frontend: `npm run format --prefix frontend`.
   No manual edit (plan R-2: reviewed with `git diff -w`).
   - AC: AC-000-03
   - Files: in-scope files under `frontend/` (format only)
   - Verify: `npm run format:check --prefix frontend && npm run build --prefix frontend &&
     test -z "$(git diff HEAD~1 HEAD --name-only -- . ':!frontend')"`
   - Depends on: T-04
+  - Evidence: accd0d0 · Verify → `format:check` exit 0, build OK (JS 96.46 kB / CSS 4.24 kB gzip,
+    unchanged), scope test empty; 9 files committed (the other 12 of 21 differed only in CRLF in
+    the working tree), `git diff -w` = wrapping only
 
 ## Phase C — ESLint
 
