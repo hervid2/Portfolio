@@ -205,7 +205,7 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Evidence: cc7d2a0 · Verify → exit 0 (5/5 pass; red check: a dropped key and a blanked value
     in a scratch `es.ts` failed 2 tests naming `portfolio.filterLabel` / `nav.home`, then reverted)
 
-- [ ] **T-12** [P] — `useProjectFilter.test.ts` with `renderHook`: `categories` =
+- [x] **T-12** [P] — `useProjectFilter.test.ts` with `renderHook`: `categories` =
   `["all", ...new Set(projects.map(p => p.category))]`; `"all"` → `projects` in order; each
   category → only its projects; the union equals all projects.
   - AC: AC-000-05(b)
@@ -213,6 +213,8 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Verify: `npm test --prefix frontend -- src/hooks/useProjectFilter.test.ts &&
     (cd frontend && npx eslint src/hooks/useProjectFilter.test.ts --max-warnings 0)`
   - Depends on: T-09
+  - Evidence: c782425 · Verify → exit 0 (8/8 pass; red check: inverted filter and reversed
+    categories in a scratch hook failed 6 tests, then reverted)
 
 - [ ] **T-13** [P] — `projectCardIdentity.test.ts`: `buildCardLayoutId` returns
   `project-card-<id>`, is deterministic, and `new Set(ids.map(build)).size === projects.length`.
