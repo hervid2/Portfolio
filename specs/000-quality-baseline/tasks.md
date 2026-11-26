@@ -321,7 +321,7 @@ id; expectations are derived from the data (CL-15, CL-17).
     T-17 `prettier-ignore` imports were removed and reformatted (same option at T-32 for
     frontend). `npm test --prefix api` (13/13), `format:check`, `typecheck --prefix api` → exit 0
 
-- [ ] **T-20** — *(D-1, confirmed at G-Plan 2026-11-26)* `env.test.ts`, a
+- [x] **T-20** — *(D-1, confirmed at G-Plan 2026-11-26)* `env.test.ts`, a
   characterization test of `getEnvConfig` before the split: `vi.stubEnv` on every key it reads;
   defaults; fail-fast errors (missing `DATABASE_URL`, `PORT=0`, mail on without `SMTP_HOST`,
   captcha on without `TURNSTILE_SECRET_KEY`); the full parsed output.
@@ -330,6 +330,8 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Verify: `npm test --prefix api -- src/config/env.test.ts &&
     (cd api && npx eslint src/config/env.test.ts --max-warnings 0)`
   - Depends on: T-19
+  - Evidence: 60cb2d2 · Verify → exit 0 (25/25 tests; `config/env.ts` 100% stmts/branches;
+    eslint 0). `npm test --prefix api` (38/38), `format:check`, `typecheck --prefix api` → exit 0
 
 - [ ] **T-21** — *(D-1)* Split `getEnvConfig` (`config/env.ts`) into helpers of ≤ 40 lines with
   identical behavior and output. If D-1 was approved without the test, T-20 is skipped and this
