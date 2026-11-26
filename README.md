@@ -87,6 +87,16 @@ Notes:
 - SMTP email notifications on contact submission.
 - Cloudflare Turnstile CAPTCHA validation in frontend and backend.
 
+## Development process
+
+This project follows Spec-Driven Development under [GENESIS](docs/governance/GENESIS.md):
+
+- **Requirements:** [docs/requirements/](docs/requirements/)
+- **Architecture decisions:** [docs/adr/](docs/adr/)
+- **Plan:** [docs/roadmap.md](docs/roadmap.md)
+- **Feature specs:** `specs/NNN-*/`, one folder per feature, each with its spec, plan, tasks and validation.
+- **AI agents:** they operate from [AGENTS.md](AGENTS.md) and the harness in `.harness/`.
+
 ## Deployment notes
 
 - Frontend (Vercel): set Root Directory to `frontend`, build command `npm run build`, output `dist`.
