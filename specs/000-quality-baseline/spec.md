@@ -1,5 +1,5 @@
 # Spec 000 — Quality baseline (brownfield walking skeleton)
-Status: Planned · Version: 1.1 · Branch: feat/000-quality-baseline ·
+Status: Planned · Version: 1.2 · Branch: feat/000-quality-baseline ·
 FR: FR-002 (partial), FR-008 (tests only) · NFR: NFR-002, NFR-007, NFR-008, NFR-009 ·
 Debt: DEBT-001, DEBT-005 · Depends on: —
 
@@ -349,7 +349,7 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | ASM-000-12 | ASM | `vite build` does not fail when `VITE_API_BASE_URL` / `VITE_TURNSTILE_SITE_KEY` are missing, so CI needs no secrets. The planner confirms (Art. 14). Confirmed by code reading: every `import.meta.env.VITE_*` read uses optional chaining with a fallback (plan §8); the draft-PR CI run is the final proof. | Hernán | Confirmed 2026-11-26 (G-Plan) |
 | ASM-000-13 | ASM | The protection agent uses Hernán's own `gh` session for one call after his explicit yes; no admin token is stored in the repo or in CI (CL-08, NFR-009). | Hernán | Accepted 2026-11-26 |
 | ASM-000-14 | ASM | The API host builds with `npm run build` or a bare `tsc`. Both still produce `dist/server.js` (plan R-4). | agent | Accepted 2026-11-26 (G-Plan) |
-| ASM-000-15 | ASM | AC-000-09's "`MotionConfig` still wraps the tree" is checked by behavior (no lingering transforms under reduced motion), plus a code check that `App.tsx` still renders `<MotionConfig reducedMotion="user">` around the tree. | agent | Accepted 2026-11-26 (G-Plan) |
+| ASM-000-15 | ASM | AC-000-09's "`MotionConfig` still wraps the tree" is checked by behavior (under reduced motion, no regression against the `main` baseline list of elements that keep a transform; F-1 / DEBT-010), plus a code check that `App.tsx` still renders `<MotionConfig reducedMotion="user">` around the tree. | agent | Accepted 2026-11-26 (G-Plan) |
 | OQ-000-01 | OQ | The `gh` token is invalid (MEMORY.md). AC-000-11 needs a session with admin rights on `hervid2/Portfolio`: Hernán runs `gh auth login` before the protection step (after G-Merge). Until then the spec cannot reach "Implemented". | Hernán | Open |
 
 ## 12. Change log
@@ -359,3 +359,4 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | 0.2 | 2026-11-26 | Applied the owner's answers to CL-01…CL-24: captcha seam in the use case; named recorded-verification exception (AC-000-08/09/11) instead of rewording NFR-007; logger wrapper; LF policy; tsconfig emit fix and DEBT-005 CI guard; visual comparison method and delivery order; JSDoc scope; branch protection by an agent with `enforce_admins: false`; NFR-002 baseline (new AC-000-13); version pinning; stronger test oracles; NFR-002/NFR-009 and FR-008 in the header; DEBT-008 recorded | Answers: Hernán 2026-11-26 · G-Spec pending |
 | 1.0 | 2026-11-26 | Approved at G-Spec (no changes to v0.2 content) | Hernán (G-Spec) |
 | 1.1 | 2026-11-26 | Minor, from plan §8: added AC-000-05(f) (BR-002 theme test); ASM-000-10 resolved (included); ASM-000-12 confirmed; added ASM-000-14 and ASM-000-15; status → Planned | Hernán (G-Plan) |
+| 1.2 | 2026-11-26 | ASM-000-15 reduced-motion check reads "no regression against the `main` baseline" (T-01 finding F-1, DEBT-010) | Hernán (2026-11-26) |
