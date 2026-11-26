@@ -23,12 +23,6 @@
 - Production API: `api-portfolio.hernan-cardona.com` (`/health` 200). Frontend: `portfolio-hernan-cardona.vercel.app`.
 
 ## Active blockers and open questions
-- OQ-001: answered 2026-11-26, pending formal closure in docs (planner: brief, roadmap,
-  traceability, FR-021 → spec 008 unblocked; also fix brief.md:223 "Spec 006" → 008).
-  - Leonardo Ortiz authorized: quote = questionnaire Q3, display "Leonardo Ortiz — owner of
-    Sushi Burrito", restaurant + city may be named, LinkedIn text reusable.
-  - Hernán accepts the filled questionnaire as the BR-007 written authorization (his decision).
-  - The EN translation is pre-authorized by Leonardo: spec 008 needs no extra approval.
-  - The filled questionnaire is local only: gitignored and untracked (public repo).
+- OQ-001 closed 2026-11-26 (FR-021): spec 008 unblocked; EN translation pre-authorized.
 - OQ-005: retention policy for contact messages.
 - ASM-008: the FlyWorkFlow Super Admin demo account may be invalid → to be checked in the PO-9 audit (spec 001).

@@ -196,8 +196,15 @@
 - **Requirement:** Where the client has given written authorization, the system shall show their testimonial (quote, name, role) on the Sushi Burrito card and in a case study if one exists, in EN and ES.
 - **Related rules:** BR-007
 - **Acceptance criteria (summary):** Shown only with an authorization record.
+- **Authorized content (OQ-001, 2026-11-26):** display name "Leonardo Ortiz — owner of Sushi
+  Burrito" (Bucaramanga; restaurant and city may be named). Quote, Spanish original: "Fue todo
+  un profesional en su trabajo, implementó una solución sencilla pero práctica y eficiente que
+  nos permitió agilizar todo el flujo de trabajo y tener trazabilidad completa de todos los datos
+  del negocio." Published in ES and in an EN translation (pre-authorized). Only the quote,
+  display name, role and restaurant name are published; no contact data. The author may
+  withdraw consent at any time. Written authorization (BR-007) is held privately by the owner.
 - **Origin:** PO-11; OQ-001
-- **Status:** Proposed (blocked by OQ-001)
+- **Status:** Approved (OQ-001 resolved 2026-11-26)
 
 ## FR-022 — Interactive architecture map
 - **Actor(s):** Hiring manager
