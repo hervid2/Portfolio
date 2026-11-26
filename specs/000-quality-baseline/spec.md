@@ -1,5 +1,5 @@
 # Spec 000 — Quality baseline (brownfield walking skeleton)
-Status: Planned · Version: 1.3 · Branch: feat/000-quality-baseline ·
+Status: Implemented · Version: 1.4 · Branch: feat/000-quality-baseline ·
 FR: FR-002 (partial), FR-008 (tests only) · NFR: NFR-002, NFR-007, NFR-008, NFR-009 ·
 Debt: DEBT-001, DEBT-005 · Depends on: —
 
@@ -350,7 +350,7 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | ASM-000-13 | ASM | The protection agent uses Hernán's own `gh` session for one call after his explicit yes; no admin token is stored in the repo or in CI (CL-08, NFR-009). | Hernán | Accepted 2026-11-26 |
 | ASM-000-14 | ASM | The API host builds with `npm run build` or a bare `tsc`. Both still produce `dist/server.js` (plan R-4). | agent | Accepted 2026-11-26 (G-Plan) |
 | ASM-000-15 | ASM | AC-000-09's "`MotionConfig` still wraps the tree" is checked by behavior (under reduced motion, no regression against the `main` baseline list of elements that keep a transform; F-1 / DEBT-010), plus a code check that `App.tsx` still renders `<MotionConfig reducedMotion="user">` around the tree. | agent | Accepted 2026-11-26 (G-Plan) |
-| OQ-000-01 | OQ | The `gh` token is invalid (MEMORY.md). AC-000-11 needs a session with admin rights on `hervid2/Portfolio`: Hernán runs `gh auth login` before the protection step (after G-Merge). Until then the spec cannot reach "Implemented". | Hernán | Open |
+| OQ-000-01 | OQ | The `gh` token is invalid (MEMORY.md). AC-000-11 needs a session with admin rights on `hervid2/Portfolio`: Hernán runs `gh auth login` before the protection step (after G-Merge). Until then the spec cannot reach "Implemented". | Hernán | Resolved 2026-11-26 (admin `gh` session; protection applied, AC-000-11 verified) |
 
 ## 12. Change log
 | Version | Date | Change | Approved by |
@@ -361,3 +361,4 @@ Each AC ends with **Verified by**: the automated test or check, or the named exc
 | 1.1 | 2026-11-26 | Minor, from plan §8: added AC-000-05(f) (BR-002 theme test); ASM-000-10 resolved (included); ASM-000-12 confirmed; added ASM-000-14 and ASM-000-15; status → Planned | Hernán (G-Plan) |
 | 1.2 | 2026-11-26 | ASM-000-15 reduced-motion check reads "no regression against the `main` baseline" (T-01 finding F-1, DEBT-010) | Hernán (2026-11-26) |
 | 1.3 | 2026-11-26 | AC-000-04 names the `typecheck` scripts (same `tsc` commands); the root `npx tsc` form fails because TypeScript is not installed at the root (found in T-03, fixed in AGENTS.md at T-34) | Coordinator (clarification, no scope change) |
+| 1.4 | 2026-11-26 | Status → Implemented. Validation cycle 1 APPROVED (3 focuses). G-Merge: retroactive approval by Hernán 2026-11-26 (PR #4 was merged before phase 7, C-01). AC-000-11 verified (branch protection on `main`; OQ-000-01 resolved). Closeout doc fixes C-03, C-04, C-05, C-07, C-08 | Hernán (G-Merge, retroactive) |

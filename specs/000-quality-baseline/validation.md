@@ -23,10 +23,26 @@ auto-deploys from `main` (owner, 2026-11-26).
 - Production smoke: `/health` 200; invalid contact payload → 400 with the defined shape.
 
 **Open items.**
-- AC-000-11 (branch protection): pending owner approval (OQ-000-01).
+- AC-000-11 (branch protection): ~~pending owner approval (OQ-000-01)~~ done, see below.
 - ASM-000-09: the API `test:e2e` was not run (no local MySQL); accepted risk, partly offset by
   the production smoke.
-- Retroactive G-Merge decision by the owner (C-01).
+- Retroactive G-Merge decision by the owner (C-01): approved, see below.
+
+**AC-000-11 verification (2026-11-26).** OQ-000-01 is resolved: the `gh` session has admin
+rights. After Hernán's explicit yes, the Coordinator applied branch protection to `main` and
+verified it with `GET /repos/hervid2/Portfolio/branches/main/protection`:
+```text
+required_status_checks.contexts  ["frontend", "api"]   strict: false
+enforce_admins                   false                 (owner choice, CL-08)
+allow_force_pushes               false
+allow_deletions                  false
+required_pull_request_reviews    required_approving_review_count: 0
+```
+AC-000-11 → ✅ Pass. The "Pending" rows for AC-000-11 in the focus reports below are superseded.
+
+**G-Merge (retroactive).** Hernán approved the merge of PR #4 retroactively on 2026-11-26,
+after reading this consolidated verdict (C-01). The phase 7 findings are handled as follow-ups
+on `chore/000-closeout`. Spec 000 → Implemented (spec v1.4).
 
 The three focus reports follow unchanged.
 

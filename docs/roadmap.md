@@ -2,7 +2,7 @@
 
 | Spec | Feature | Backlog | FRs covered | Priority | Depends on | Status |
 |---|---|---|---|---|---|---|
-| 000 | Quality baseline (brownfield walking skeleton): ESLint, Vitest + Testing Library with real tests, type check, GitHub Actions CI for frontend and api | — | NFR-007, NFR-008 | Must | — | Planned |
+| 000 | Quality baseline (brownfield walking skeleton): ESLint, Vitest + Testing Library with real tests, type check, GitHub Actions CI for frontend and api | — | NFR-007, NFR-008 | Must | — | Implemented (2026-11-26) |
 | 001 | Project cards accuracy: FlyWorkFlow stack, Slicing Edge AI assistant first, Client/Personal label and subtitle, demo audit and notices | PO-4, PO-5, PO-6, PO-9 | FR-014, FR-015, FR-016, FR-019 | Must | 000 | Planned |
 | 002 | Hero and contact CTAs: new headline, Download CV (by language), copy email | PO-7, PO-1 | FR-010, FR-011, FR-017 | Must | 000 | Planned |
 | 003 | About and Skills alignment | PO-8 | FR-018 | Should | 000 | Planned |

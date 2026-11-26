@@ -611,11 +611,14 @@ whole test suite (Phase E net) and the build.
 
 ## Post-implementation steps (not implementer tasks; listed so every AC has an owner)
 
-- [ ] **P-01** — Coordinator asks Hernán to push `feat/000-quality-baseline` and open a **draft
+- [x] **P-01** — Coordinator asks Hernán to push `feat/000-quality-baseline` and open a **draft
   PR**; both CI checks must pass (spec §4.1b, CL-18). Fixes go back to the implementer as new
   tasks.
   - AC: AC-000-07 (run link recorded in `validation.md`) · Owner: Hernán + Coordinator
   - Depends on: T-38
+  - Evidence: PR #4, CI run 45905796398 (`pull_request`, head `0b905aa`) green in both jobs;
+    post-merge run 45905884732 on `main` (`e11bf10`) green. Deviation: the PR was not a draft
+    and was merged before validation (C-01; retroactive G-Merge 2026-11-26)
 - [ ] **P-02** — Validation (phase 7) records in `validation.md`: AC-000-03 local Windows
   `format:check` run in both packages; AC-000-08 throwaway changes (lint error, 101-char line,
   formatting error, type error, failing test, per package; commands and exit codes, nothing
@@ -624,11 +627,16 @@ whole test suite (Phase E net) and the build.
   ASM-000-09 `npm run test:e2e --prefix api` result or the accepted risk.
   - AC: AC-000-03, AC-000-08, AC-000-09, AC-000-13 · Owner: reviewers
   - Depends on: P-01
-- [ ] **P-03** — After G-Merge, the post-merge `main` CI run, Hernán's explicit yes and his
+  - Evidence: `validation.md` cycle 1, consolidated verdict APPROVED (compliance, e2e,
+    quality-security); AC-000-09 40/40 shots at 0.0000 %; ASM-000-09 recorded as accepted risk
+- [x] **P-03** — After G-Merge, the post-merge `main` CI run, Hernán's explicit yes and his
   `gh auth login` (OQ-000-01): the protection agent runs the plan §4 `PUT` and `GET`, and records
   the summary in `MEMORY.md`. The spec becomes Implemented.
   - AC: AC-000-11 · Owner: protection agent
   - Depends on: G-Merge
+  - Evidence: applied by the Coordinator 2026-11-26 after Hernán's yes; `GET
+    .../branches/main/protection` → checks `["frontend","api"]`, strict false, enforce_admins
+    false, force pushes and deletions false, 0 required reviews (`validation.md`, AC-000-11)
 - [ ] **P-04** — Remove the baseline worktree: `git worktree remove ../portfolio-main-baseline`.
   - AC: — · Owner: Coordinator asks the implementer
   - Depends on: P-02
