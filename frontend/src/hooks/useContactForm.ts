@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { sendContactMessage } from "@/services/api/contactApi";
 import { useLanguage } from "@/hooks/useLanguage";
 import type { ContactFormValues } from "@/types/contact";
+import type { AppDictionary } from "@/types/i18n";
 
 /** Lifecycle of a contact form submission. */
 export type SubmissionState = "idle" | "loading" | "success" | "error";
@@ -26,6 +27,30 @@ function createInitialValues(): ContactFormValues {
     message: "",
     captchaToken: ""
   };
+}
+
+/**
+ * Checks the client-side preconditions for submitting the contact form.
+ *
+ * @param values - Current form values.
+ * @param captchaEnabled - Whether a Turnstile token is required.
+ * @param dictionary - Active dictionary used for the error copy.
+ * @returns The localized error message, or `null` when the form can be sent.
+ */
+function resolveValidationError(
+  values: ContactFormValues,
+  captchaEnabled: boolean,
+  dictionary: AppDictionary
+): string | null {
+  if (!values.name.trim() || !values.email.trim() || !values.message.trim()) {
+    return dictionary.contact.requiredFieldsMessage;
+  }
+
+  if (captchaEnabled && !values.captchaToken.trim()) {
+    return dictionary.contact.captchaRequiredMessage;
+  }
+
+  return null;
 }
 
 /**
@@ -63,15 +88,10 @@ export function useContactForm(): UseContactFormResult {
    * @returns Promise that resolves after API call completion.
    */
   async function submitForm(): Promise<void> {
-    if (!values.name.trim() || !values.email.trim() || !values.message.trim()) {
+    const validationError = resolveValidationError(values, captchaEnabled, dictionary);
+    if (validationError) {
       setSubmissionState("error");
-      setErrorMessage(dictionary.contact.requiredFieldsMessage);
-      return;
-    }
-
-    if (captchaEnabled && !values.captchaToken.trim()) {
-      setSubmissionState("error");
-      setErrorMessage(dictionary.contact.captchaRequiredMessage);
+      setErrorMessage(validationError);
       return;
     }
 
@@ -89,11 +109,5 @@ export function useContactForm(): UseContactFormResult {
     }
   }
 
-  return {
-    values,
-    submissionState,
-    errorMessage,
-    updateField,
-    submitForm
-  };
+  return { values, submissionState, errorMessage, updateField, submitForm };
 }
