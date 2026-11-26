@@ -25,5 +25,5 @@
 | FR-018 | BR-006 | 003 | — | — | Planned |
 | FR-019 | — | 001 | — | — | Planned |
 | FR-020 | — | 005 | — | — | Planned |
-| FR-021 | BR-007 | 008 | — | — | Blocked (OQ-001) |
+| FR-021 | BR-007 | 008 | — | — | Planned |
 | FR-022 | — | 007 | — | — | Planned |

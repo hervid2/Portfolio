@@ -8,3 +8,6 @@ coverage/
 .DS_Store
 *.log
 /rules/
+
+# Filled stakeholder questionnaire: third-party answers stay private (BR-007)
+docs/discovery/stakeholder-questionnaire.md

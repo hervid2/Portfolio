@@ -2,11 +2,12 @@
 
 ## Current status
 - **Stage:** Genesis G5 (next) · Active feature: 000-quality-baseline (not started) · SDD phase: 1
-- **Branch:** `chore/genesis-harness` @ fe9da4a (bootstrap commit; not pushed, no PR yet)
-- **Last completed step:** G-Harness approved and committed (2026-11-26)
+- **Branch:** `docs/oq-001-consent` (OQ-001 closure; not pushed, no PR yet). Harness is in `main`
+  (PR #2); `chore/genesis-harness` can be deleted.
+- **Last completed step:** OQ-001 closed in docs (2026-11-26)
 - **Next step:**
-  1. Hernán decides on pushing and opening the PR for `chore/genesis-harness`.
-  2. G5: `/feature 000` (quality baseline), in a new session.
+  1. Hernán pushes `docs/oq-001-consent` and merges its PR.
+  2. G5: `/feature 000` (quality baseline) in a new session → `feat/000-quality-baseline` from `main`.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
 - ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; the upgrade is optional (DEBT-007).
@@ -24,6 +25,6 @@
 - Production API: `api-portfolio.hernan-cardona.com` (`/health` 200). Frontend: `portfolio-hernan-cardona.vercel.app`.
 
 ## Active blockers and open questions
-- OQ-001: testimonial consent. Hernán sends `docs/discovery/stakeholder-questionnaire.md` → blocks spec 008.
+- OQ-001 closed 2026-11-26 (FR-021): spec 008 unblocked; EN translation pre-authorized.
 - OQ-005: retention policy for contact messages.
 - ASM-008: the FlyWorkFlow Super Admin demo account may be invalid → to be checked in the PO-9 audit (spec 001).

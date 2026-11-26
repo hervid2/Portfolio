@@ -10,7 +10,7 @@
 | 005 | Link-preview SEO: per-route meta description, Open Graph and Twitter tags, OG image | PO-10 | FR-020 | Should | 004 | Planned |
 | 006 | Case studies: FlyWorkFlow and Slicing Edge | PO-3 | FR-013 | Must | 005 | Planned |
 | 007 | Interactive architecture maps ×4 (per ADR-0004) | PO-12 | FR-022 | Should | 001 | Planned |
-| 008 | Sushi Burrito testimonial | PO-11 | FR-021 | Should | 001, OQ-001 | Blocked (OQ-001) |
+| 008 | Sushi Burrito testimonial | PO-11 | FR-021 | Should | 001, OQ-001 (resolved 2026-11-26) | Planned |
 
 > Slice features into **vertical slices**: each one delivers end-to-end value
 > (UI → logic → data) and can be demonstrated on its own.
