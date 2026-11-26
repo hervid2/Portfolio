@@ -344,7 +344,7 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Evidence: 43a52e0 · Verify → exit 0 (38/38 tests incl. env.test.ts 25/25; `config/env.ts`
     100% stmts/branches; eslint 0; build ok). `format:check`, `typecheck --prefix api` → exit 0
 
-- [ ] **T-22** — *(D-1)* Split `run` in `scripts/persistenceSmokeTest.ts` and
+- [x] **T-22** — *(D-1)* Split `run` in `scripts/persistenceSmokeTest.ts` and
   `scripts/contactFormE2eTest.ts` into functions of ≤ 40 lines; same steps, order and console
   output. API lint reaches 0.
   - AC: AC-000-02
@@ -352,6 +352,8 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Verify: `npm run lint --prefix api && npx tsc -p api --noEmit && npm test --prefix api &&
     npm run build --prefix api`
   - Depends on: T-21
+  - Evidence: eef0ec5 · Verify → exit 0 (lint 0 problems; typecheck ok; 38/38 tests; build ok;
+    `format:check` ok). Smoke test old vs new on an unreachable DB: same 15 checks, order, summary
 
 ## Phase G — Frontend refactor (no visual or behavior change, plan §1.7)
 Each split moves function boundaries only: same DOM, class strings (moved verbatim, split by
