@@ -1,12 +1,28 @@
 import type { Request, Response } from "express";
-import { SubmitContactMessageUseCase } from "../../../application/use-cases/SubmitContactMessageUseCase.js";
+// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
+// prettier-ignore
+import {
+  SubmitContactMessageUseCase
+} from "../../../application/use-cases/SubmitContactMessageUseCase.js";
 import { getEnvConfig } from "../../../config/env.js";
 import { NoopCaptchaVerifier } from "../../../infrastructure/captcha/NoopCaptchaVerifier.js";
-import { TurnstileCaptchaVerifier } from "../../../infrastructure/captcha/TurnstileCaptchaVerifier.js";
+// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
+// prettier-ignore
+import {
+  TurnstileCaptchaVerifier
+} from "../../../infrastructure/captcha/TurnstileCaptchaVerifier.js";
 import { NoopMailService } from "../../../infrastructure/email/NoopMailService.js";
-import { NodemailerMailService } from "../../../infrastructure/email/NodemailerMailService.js";
+// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
+// prettier-ignore
+import {
+  NodemailerMailService
+} from "../../../infrastructure/email/NodemailerMailService.js";
 import { ResendMailService } from "../../../infrastructure/email/ResendMailService.js";
-import { PrismaContactRepository } from "../../../infrastructure/repositories/PrismaContactRepository.js";
+// Prettier keeps single-specifier imports on one line; this one is over 100 chars.
+// prettier-ignore
+import {
+  PrismaContactRepository
+} from "../../../infrastructure/repositories/PrismaContactRepository.js";
 import type { ContactRequestBody } from "../validators/contactSchema.js";
 
 const envConfig = getEnvConfig();
@@ -33,7 +49,11 @@ const captchaVerifier = envConfig.captchaEnabled
       secretKey: envConfig.turnstileSecretKey
     })
   : new NoopCaptchaVerifier();
-const submitContactMessageUseCase = new SubmitContactMessageUseCase(contactRepository, mailService);
+const submitContactMessageUseCase = new SubmitContactMessageUseCase(
+  contactRepository,
+  mailService,
+  captchaVerifier
+);
 
 /**
  * Handles POST /api/contact requests.
@@ -47,23 +67,20 @@ export async function contactController(
   request: Request<unknown, unknown, ContactRequestBody>,
   response: Response
 ): Promise<void> {
-  if (envConfig.captchaEnabled) {
-    const isCaptchaValid = await captchaVerifier.verifyToken(request.body.captchaToken, request.ip);
-
-    if (!isCaptchaValid) {
-      response.status(400).json({
-        message: "Captcha validation failed"
-      });
-      return;
-    }
-  }
-
-  await submitContactMessageUseCase.execute({
+  const result = await submitContactMessageUseCase.execute({
     name: request.body.name,
     email: request.body.email,
     message: request.body.message,
-    submittedAt: new Date().toISOString()
+    captchaToken: request.body.captchaToken,
+    remoteIp: request.ip
   });
+
+  if (result.status === "captcha-rejected") {
+    response.status(400).json({
+      message: "Captcha validation failed"
+    });
+    return;
+  }
 
   response.status(201).json({
     message: "Contact message sent successfully"
