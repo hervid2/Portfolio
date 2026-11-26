@@ -411,7 +411,7 @@ whole test suite (Phase E net) and the build.
     typecheck ok; prettier ok). Extraction alone left 43 lines, so the return object was collapsed
     to one line (same file, no behavior change).
 
-- [ ] **T-27** [P] — Split `ProjectCard` (178 lines): `ProjectCardMedia`, `ProjectStackList`,
+- [x] **T-27** [P] — Split `ProjectCard` (178 lines): `ProjectCardMedia`, `ProjectStackList`,
   `ProjectCardActions`; move `ProjectLink` (41 lines) to `ProjectLink.tsx` and shorten it; move
   the two inline SVGs to `ProjectActionIcons.tsx` (`PlayIcon`, `KeyIcon`). `buildCardLayoutId`
   usage and `layoutId` values unchanged.
@@ -420,6 +420,11 @@ whole test suite (Phase E net) and the build.
   - Verify: `(cd frontend && npx eslint src/components/ui/Project{Card,CardMedia,StackList,CardActions,Link,ActionIcons}.tsx
     --max-warnings 0) && npm test --prefix frontend && npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
+  - Evidence: 2f7b100 · Verify → exit 0 (eslint 0 problems, was 68 counted lines; 36/36 tests;
+    build ok; typecheck ok; prettier ok). Card DOM (EN+ES, 4 projects, preview mount/fade, blur,
+    button clicks) byte-identical before/after. Browser: credentials modal morphs from the card
+    (initial `scale(0.774, 1.272)` = card/panel ratio → `transform: none`). The `PopChild` ref
+    warning on `ProjectCard` is pre-existing (seen on baseline).
 
 - [ ] **T-28** [P] — Split the modals: `CredentialsModal` (110 lines) and `VideoModal` (72
   lines). Extract `useModalBehavior(onClose)` only if both Esc + scroll-lock effects are
