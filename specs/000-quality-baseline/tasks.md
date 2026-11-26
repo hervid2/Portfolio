@@ -400,13 +400,16 @@ whole test suite (Phase E net) and the build.
     #contact DOM (styles stripped) byte-identical before/after; widget not re-mounted on typing
     or EN→ES. `useContactForm` is 47 lines (was 43) until T-26.
 
-- [ ] **T-26** — `useContactForm` (43 lines): extract module-level
+- [x] **T-26** — `useContactForm` (43 lines): extract module-level
   `resolveValidationError(values, captchaEnabled, dictionary): string | null`, with JSDoc.
   - AC: AC-000-01
   - Files: `frontend/src/hooks/useContactForm.ts`
   - Verify: `(cd frontend && npx eslint src/hooks/useContactForm.ts --max-warnings 0) &&
     npm test --prefix frontend && npm run build --prefix frontend`
   - Depends on: T-25
+  - Evidence: e758e3f · Verify → exit 0 (eslint 0 problems, was 47 lines; 36/36 tests; build ok;
+    typecheck ok; prettier ok). Extraction alone left 43 lines, so the return object was collapsed
+    to one line (same file, no behavior change).
 
 - [ ] **T-27** [P] — Split `ProjectCard` (178 lines): `ProjectCardMedia`, `ProjectStackList`,
   `ProjectCardActions`; move `ProjectLink` (41 lines) to `ProjectLink.tsx` and shorten it; move
