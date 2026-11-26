@@ -14,8 +14,14 @@ const AboutSection = lazy(() =>
   import("@/components/sections/AboutSection").then((module) => ({ default: module.AboutSection }))
 );
 const ContactSection = lazy(() =>
-  import("@/components/sections/ContactSection").then((module) => ({ default: module.ContactSection }))
+  import("@/components/sections/ContactSection").then((module) => ({
+    default: module.ContactSection
+  }))
 );
+
+/** Default meta description; English copy kept as-is (plan R-12). */
+const META_DESCRIPTION =
+  "Portfolio of Hernán David Cardona, full-stack developer focused on modern web solutions.";
 
 /**
  * Renders the portfolio single-page application with all primary sections.
@@ -27,10 +33,7 @@ export default function App(): JSX.Element {
     <>
       <Helmet>
         <title>Hernán David Cardona | Full-stack Developer</title>
-        <meta
-          name="description"
-          content="Portfolio of Hernán David Cardona, full-stack developer focused on modern web solutions."
-        />
+        <meta name="description" content={META_DESCRIPTION} />
       </Helmet>
       <MotionConfig reducedMotion="user">
         <div className="min-h-screen bg-surface-base text-text-primary">
@@ -38,7 +41,9 @@ export default function App(): JSX.Element {
           <main>
             <HeroSection />
             <Suspense
-              fallback={<div className="px-5 py-10 text-center text-text-secondary">Loading...</div>}
+              fallback={
+                <div className="px-5 py-10 text-center text-text-secondary">Loading...</div>
+              }
             >
               <PortfolioSection />
               <AboutSection />

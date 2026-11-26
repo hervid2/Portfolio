@@ -5,9 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write \"**/*.{ts,tsx,js,cjs,css,json,html}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,cjs,css,json,html}\"",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:persistence": "tsx src/scripts/persistenceSmokeTest.ts",
     "test:e2e": "tsx src/scripts/contactFormE2eTest.ts",
     "test:smtp": "tsx src/scripts/smtpDiagnosticTest.ts",
@@ -29,12 +34,20 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^22.7.7",
     "@types/nodemailer": "^6.4.16",
+    "@vitest/coverage-v8": "^3.2.7",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^63.3.3",
+    "prettier": "^3.10.1",
     "prisma": "^5.22.0",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.74.0",
+    "vitest": "^3.2.7"
   }
 }

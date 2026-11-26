@@ -33,7 +33,11 @@ const captchaVerifier = envConfig.captchaEnabled
       secretKey: envConfig.turnstileSecretKey
     })
   : new NoopCaptchaVerifier();
-const submitContactMessageUseCase = new SubmitContactMessageUseCase(contactRepository, mailService);
+const submitContactMessageUseCase = new SubmitContactMessageUseCase(
+  contactRepository,
+  mailService,
+  captchaVerifier
+);
 
 /**
  * Handles POST /api/contact requests.
@@ -47,23 +51,20 @@ export async function contactController(
   request: Request<unknown, unknown, ContactRequestBody>,
   response: Response
 ): Promise<void> {
-  if (envConfig.captchaEnabled) {
-    const isCaptchaValid = await captchaVerifier.verifyToken(request.body.captchaToken, request.ip);
-
-    if (!isCaptchaValid) {
-      response.status(400).json({
-        message: "Captcha validation failed"
-      });
-      return;
-    }
-  }
-
-  await submitContactMessageUseCase.execute({
+  const result = await submitContactMessageUseCase.execute({
     name: request.body.name,
     email: request.body.email,
     message: request.body.message,
-    submittedAt: new Date().toISOString()
+    captchaToken: request.body.captchaToken,
+    remoteIp: request.ip
   });
+
+  if (result.status === "captcha-rejected") {
+    response.status(400).json({
+      message: "Captcha validation failed"
+    });
+    return;
+  }
 
   response.status(201).json({
     message: "Contact message sent successfully"

@@ -17,17 +17,31 @@ interface ContactApiResponse {
   message: string;
 }
 
-async function run(): Promise<void> {
+/**
+ * Fails when the API health endpoint does not answer with a 2xx status.
+ *
+ * @async
+ * @returns Promise resolved when the API is healthy.
+ */
+async function checkHealth(): Promise<void> {
   const healthResponse = await fetch(`${API_BASE_URL}/health`);
 
   if (!healthResponse.ok) {
     throw new Error(`Health check failed with status ${healthResponse.status}`);
   }
+}
 
-  const uniqueEmail = `e2e.${Date.now()}@example.com`;
+/**
+ * Submits a test contact message and fails when the API rejects it.
+ *
+ * @async
+ * @param email - Unique sender email used later to find the stored row.
+ * @returns The API response body.
+ */
+async function submitContact(email: string): Promise<ContactApiResponse> {
   const payload = {
     name: "E2E Contact Tester",
-    email: uniqueEmail,
+    email,
     message: "This is an automated E2E contact test message from the API suite.",
     captchaToken: "e2e-captcha-token"
   };
@@ -46,9 +60,20 @@ async function run(): Promise<void> {
     throw new Error(`Contact submit failed (${submitResponse.status}): ${submitBody.message}`);
   }
 
+  return submitBody;
+}
+
+/**
+ * Finds the latest stored message for `email`, deletes it and returns it.
+ *
+ * @async
+ * @param email - Sender email of the submitted test message.
+ * @returns The stored message, as it was before deletion.
+ */
+async function findAndDeleteSavedMessage(email: string) {
   const savedMessage = await prisma.contactMessage.findFirst({
     where: {
-      email: uniqueEmail
+      email
     },
     orderBy: {
       id: "desc"
@@ -64,6 +89,22 @@ async function run(): Promise<void> {
       id: savedMessage.id
     }
   });
+
+  return savedMessage;
+}
+
+/**
+ * Checks health, submits a contact message and confirms it was stored.
+ *
+ * @async
+ * @returns Promise resolved when every step passes.
+ */
+async function run(): Promise<void> {
+  await checkHealth();
+
+  const uniqueEmail = `e2e.${Date.now()}@example.com`;
+  const submitBody = await submitContact(uniqueEmail);
+  const savedMessage = await findAndDeleteSavedMessage(uniqueEmail);
 
   console.log("E2E contact test passed:");
   console.log(`- API response: ${submitBody.message}`);

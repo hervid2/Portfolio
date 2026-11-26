@@ -1,36 +1,25 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { projects } from "@/data/projects";
+import { motion } from "motion/react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useProjectFilter } from "@/hooks/useProjectFilter";
-import { ProjectCard } from "@/components/ui/ProjectCard";
+import { PortfolioGrid } from "@/components/sections/PortfolioGrid";
+import { PortfolioModals } from "@/components/sections/PortfolioModals";
 import { ProjectFilterBar } from "@/components/ui/ProjectFilterBar";
-import { CredentialsModal } from "@/components/ui/CredentialsModal";
-import { VideoModal } from "@/components/ui/VideoModal";
-import { fadeUpVariants, LAYOUT_SPRING, REPLAY_VIEWPORT } from "@/utils/motionPresets";
+import { fadeUpVariants, REPLAY_VIEWPORT } from "@/utils/motionPresets";
 
 /**
- * Renders the filterable portfolio grid from typed project data.
+ * Renders the filterable portfolio section from typed project data.
  *
- * The grid stays a CSS grid at every breakpoint, so adding projects keeps the
- * existing column rhythm; Motion only animates each card to its new grid slot
- * when the filter changes.
+ * Owns the filter state and which modal is open; the grid and the modal layer
+ * are delegated to `PortfolioGrid` and `PortfolioModals`.
  *
  * @returns Portfolio section element.
  */
 export function PortfolioSection(): JSX.Element {
-  const { dictionary, language } = useLanguage();
+  const { dictionary } = useLanguage();
   const { categories, activeCategory, visibleProjects, selectCategory } = useProjectFilter();
   const [openCredentialsId, setOpenCredentialsId] = useState<string | null>(null);
   const [openVideoId, setOpenVideoId] = useState<string | null>(null);
-
-  const activeProject = openCredentialsId
-    ? projects.find((project) => project.id === openCredentialsId)
-    : null;
-
-  const activeVideoProject = openVideoId
-    ? projects.find((project) => project.id === openVideoId)
-    : null;
 
   return (
     <section id="portfolio" className="mx-auto w-full max-w-6xl px-5 py-24 md:px-8">
@@ -53,50 +42,18 @@ export function PortfolioSection(): JSX.Element {
         onSelect={selectCategory}
       />
 
-      <motion.div
-        layout
-        transition={{ layout: LAYOUT_SPRING }}
-        className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-      >
-        <AnimatePresence mode="popLayout">
-          {visibleProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              language={language}
-              dictionary={dictionary}
-              onOpenVideo={setOpenVideoId}
-              onOpenCredentials={setOpenCredentialsId}
-            />
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      <PortfolioGrid
+        visibleProjects={visibleProjects}
+        onOpenVideo={setOpenVideoId}
+        onOpenCredentials={setOpenCredentialsId}
+      />
 
-      <AnimatePresence>
-        {activeProject?.demoCredentials ? (
-          <CredentialsModal
-            key="credentials-modal"
-            projectId={activeProject.id}
-            onClose={() => setOpenCredentialsId(null)}
-            projectTitle={activeProject.title}
-            credentials={activeProject.demoCredentials}
-            language={language}
-            dictionary={dictionary}
-          />
-        ) : null}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {activeVideoProject?.demoVideoId ? (
-          <VideoModal
-            key="video-modal"
-            projectId={activeVideoProject.id}
-            onClose={() => setOpenVideoId(null)}
-            projectTitle={activeVideoProject.title}
-            videoId={activeVideoProject.demoVideoId[language]}
-          />
-        ) : null}
-      </AnimatePresence>
+      <PortfolioModals
+        openCredentialsId={openCredentialsId}
+        openVideoId={openVideoId}
+        onCloseCredentials={() => setOpenCredentialsId(null)}
+        onCloseVideo={() => setOpenVideoId(null)}
+      />
     </section>
   );
 }

@@ -18,6 +18,11 @@ interface NodemailerMailServiceConfig {
 export class NodemailerMailService implements MailService {
   private readonly transporter;
 
+  /**
+   * Creates the SMTP transporter from the given configuration.
+   *
+   * @param config - Sender, recipient and SMTP connection settings.
+   */
   constructor(private readonly config: NodemailerMailServiceConfig) {
     this.transporter = nodemailer.createTransport({
       host: config.smtpHost,
@@ -30,6 +35,13 @@ export class NodemailerMailService implements MailService {
     });
   }
 
+  /**
+   * Emails a plain-text notification for a new contact message via SMTP.
+   *
+   * @async
+   * @param contactMessage - Contact payload to notify about.
+   * @returns Promise resolved when the SMTP server accepts the email.
+   */
   async sendContactNotification(contactMessage: ContactMessageDTO): Promise<void> {
     await this.transporter.sendMail({
       from: this.config.mailFrom,

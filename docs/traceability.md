@@ -6,13 +6,13 @@
 | FR | BR | Spec | AC | Test(s) | Status |
 |---|---|---|---|---|---|
 | FR-001 | — | (existing) | — | — | ⚠️ Implemented, untested |
-| FR-002 | BR-001 | (existing) / 000 | — | — | ⚠️ Implemented, untested |
-| FR-003 | BR-002 | (existing) | — | — | ⚠️ Implemented, untested |
+| FR-002 | BR-001 | (existing) / 000 | AC-000-05(a), AC-000-05(e) | `frontend/src/i18n/dictionaries.test.ts`, `frontend/src/context/LanguageContext.test.tsx` | 🧪 Tested (spec 000, pending G-Merge) |
+| FR-003 | BR-002 | (existing) / 000 | AC-000-05(f) | `frontend/src/hooks/useThemeMode.test.ts` | 🧪 Tested (spec 000, pending G-Merge) |
 | FR-004 | — | (existing) | — | — | ⚠️ Implemented, untested |
 | FR-005 | — | (existing) | — | — | ⚠️ Implemented, untested |
 | FR-006 | — | (existing) | — | — | ⚠️ Implemented, untested |
 | FR-007 | BR-001 | (existing) | — | — | ⚠️ Implemented, untested |
-| FR-008 | BR-003, BR-004 | (existing) | — | `api/src/scripts/*` (manual) | ⚠️ Implemented, manual tests |
+| FR-008 | BR-003, BR-004 | (existing) / 000 | AC-000-06(a), AC-000-06(b) | `api/src/interfaces/http/validators/contactSchema.test.ts`, `api/src/application/use-cases/SubmitContactMessageUseCase.test.ts`; `api/src/scripts/*` (manual) | 🧪 BR-003 tested (spec 000, pending G-Merge); BR-004 manual |
 | FR-009 | — | (existing) | — | — | ⚠️ Implemented, untested |
 | FR-010 | BR-005 | 002 | — | — | Planned |
 | FR-011 | — | 002 | — | — | Planned |

@@ -14,6 +14,14 @@ interface TurnstileVerifyResponse {
 export class TurnstileCaptchaVerifier implements CaptchaVerifier {
   constructor(private readonly config: TurnstileCaptchaVerifierConfig) {}
 
+  /**
+   * Checks a Turnstile token with Cloudflare's siteverify endpoint.
+   *
+   * @async
+   * @param token - Token produced by the Turnstile widget.
+   * @param remoteIp - Optional client IP forwarded to Cloudflare.
+   * @returns Promise resolved with `true` only when Cloudflare reports success.
+   */
   async verifyToken(token: string, remoteIp?: string): Promise<boolean> {
     const body = new URLSearchParams({
       secret: this.config.secretKey,
