@@ -292,13 +292,16 @@ id; expectations are derived from the data (CL-15, CL-17).
     `npm run format:check --prefix api` → exit 0. Long single-specifier imports are wrapped
     behind `// prettier-ignore` (Prettier will not wrap them; max-len needs ≤ 100)
 
-- [ ] **T-18** [P] — `contactSchema.test.ts`: the 11 BR-003 boundary cases of AC-000-06(a), with
+- [x] **T-18** [P] — `contactSchema.test.ts`: the 11 BR-003 boundary cases of AC-000-06(a), with
   lengths built from `"a".repeat(n)`; missing `captchaToken` parses to `""`.
   - AC: AC-000-06(a)
   - Files: `api/src/interfaces/http/validators/contactSchema.test.ts`
   - Verify: `npm test --prefix api -- src/interfaces/http/validators/contactSchema.test.ts &&
     (cd api && npx eslint src/interfaces/http/validators/contactSchema.test.ts --max-warnings 0)`
   - Depends on: T-10
+  - Evidence: cea2d0a · Verify → exit 0 (11/11 passed); characterization of existing code, so
+    red was shown by mutation (name `min(1)`, message `max(1201)` → 3 failed), then reverted.
+    Full `npm test --prefix api` (13/13), `format:check` and `typecheck --prefix api` → exit 0
 
 - [ ] **T-19** — API JSDoc and wrapping: JSDoc on class methods, helpers and the two
   constructors with logic (`NodemailerMailService`, `ResendMailService`); wrap lines over 100.
