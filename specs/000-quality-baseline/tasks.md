@@ -24,7 +24,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
 
 ## Phase A — Baseline and repository hygiene
 
-- [ ] **T-01** — Capture the visual baseline and the `main` bundle size, before any other
+- [x] **T-01** — Capture the visual baseline and the `main` bundle size, before any other
   implementation commit (spec §4.1b). Create a worktree of `main` at
   `git merge-base main HEAD` in `../portfolio-main-baseline`; there, `npm ci && npm run build`
   (no `.env` in the worktree, so no `VITE_*` values, as in CI) and
@@ -44,6 +44,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     grep -Eq '[0-9.]+ kB' specs/000-quality-baseline/visual-baseline.md &&
     git check-ignore -q .evidence/x`
   - Depends on: — (G-Plan approved)
+  - Evidence: 4a6ac70 · Verify → exit 0 (40 PNGs; main ed051a4; JS 96.46 kB / CSS 4.24 kB gzip)
 
 - [ ] **T-02** — Add the root `.gitattributes` (`* text=auto eol=lf`; `binary` for
   `*.png *.jpg *.jpeg *.gif *.webp *.ico *.mp4 *.webm *.woff *.woff2 *.ttf *.otf *.pdf`; SVG stays
