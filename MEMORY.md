@@ -1,13 +1,13 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-26)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-26, spec 000 G-Plan)
 
 ## Current status
-- **Stage:** Genesis G5 (next) · Active feature: 000-quality-baseline (not started) · SDD phase: 1
-- **Branch:** `docs/oq-001-consent` (OQ-001 closure; not pushed, no PR yet). Harness is in `main`
-  (PR #2); `chore/genesis-harness` can be deleted.
-- **Last completed step:** OQ-001 closed in docs (2026-11-26)
-- **Next step:**
-  1. Hernán pushes `docs/oq-001-consent` and merges its PR.
-  2. G5: `/feature 000` (quality baseline) in a new session → `feat/000-quality-baseline` from `main`.
+- **Stage:** G5 · Active feature: 000-quality-baseline · SDD phase: 6 (Implement)
+- **Branch:** `feat/000-quality-baseline` (not pushed). PR #3 (OQ-001) is merged in `main`.
+- **Last completed step:** G-Spec (spec v1.0) and G-Plan (spec v1.1, plan, 38 tasks) approved
+  2026-11-26 (commits 0fc7481, 3207ae3).
+- **Next step:** implementer runs T-01…T-38 one by one (`specs/000-quality-baseline/tasks.md`);
+  draft PR before validation (ask Hernán to push).
+- Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
 - ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; the upgrade is optional (DEBT-007).
@@ -27,4 +27,6 @@
 ## Active blockers and open questions
 - OQ-001 closed 2026-11-26 (FR-021): spec 008 unblocked; EN translation pre-authorized.
 - OQ-005: retention policy for contact messages.
+- OQ-000-01: Hernán runs `gh auth login` (admin on repo) before the branch-protection step
+  (agent applies it after G-Merge, `enforce_admins: false` by owner choice).
 - ASM-008: the FlyWorkFlow Super Admin demo account may be invalid → to be checked in the PO-9 audit (spec 001).
