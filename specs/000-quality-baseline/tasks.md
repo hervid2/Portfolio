@@ -426,7 +426,7 @@ whole test suite (Phase E net) and the build.
     (initial `scale(0.774, 1.272)` = card/panel ratio → `transform: none`). The `PopChild` ref
     warning on `ProjectCard` is pre-existing (seen on baseline).
 
-- [ ] **T-28** [P] — Split the modals: `CredentialsModal` (110 lines) and `VideoModal` (72
+- [x] **T-28** [P] — Split the modals: `CredentialsModal` (110 lines) and `VideoModal` (72
   lines). Extract `useModalBehavior(onClose)` only if both Esc + scroll-lock effects are
   character-identical (otherwise keep one effect per modal, with JSDoc on each `handleEsc`);
   `CredentialRow` to its own file; `ModalHeader` only if the header markup is identical in both.
@@ -439,6 +439,11 @@ whole test suite (Phase E net) and the build.
     $(ls src/components/ui/ModalHeader.tsx src/hooks/useModalBehavior.ts 2>/dev/null)
     --max-warnings 0) && npm test --prefix frontend && npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
+  - Evidence: bbccba6 · Verify → exit 0 (eslint 0 problems, was 15; 36/36 tests; build ok;
+    typecheck ok; prettier ok). Conditional files: `useModalBehavior.ts` created (effects were
+    character-identical); `ModalHeader.tsx` not created (headers differ). Modal DOM (EN+ES, all
+    projects, copy state) identical before/after except mid-animation opacity; Esc, backdrop,
+    scroll lock unchanged. Browser: both modals open, Esc closes, focus stays out (F-2 as-is).
 
 - [ ] **T-29** [P] — Split `HeroSection` (98 lines): `HeroIntro`, `HeroActions`,
   `HeroProfileCard`.
