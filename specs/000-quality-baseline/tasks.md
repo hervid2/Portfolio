@@ -81,7 +81,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
 
 ## Phase B — Prettier
 
-- [ ] **T-04** — Frontend Prettier setup: `npm install -D prettier@^3.10.1 --prefix frontend`;
+- [x] **T-04** — Frontend Prettier setup: `npm install -D prettier@^3.10.1 --prefix frontend`;
   create `frontend/.prettierrc.json` (the 5 options of spec §2) and `frontend/.prettierignore`
   (`dist`, `coverage`, `package-lock.json`, `*.tsbuildinfo`, generated configs); add the `format`
   and `format:check` scripts (plan §1.3). No file is reformatted in this commit.
@@ -92,6 +92,8 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
     (npm run format:check --prefix frontend; test $? -eq 1)` — exit 1 is expected here; record
     the count of listed files in Evidence (the residue T-06 fixes).
   - Depends on: T-03
+  - Evidence: 57af1fd · Verify → prettier 3.10.1, `format:check` exit 1 with 21 files listed
+    (plan measured 22; all under `src/`); build OK, bundle JS 96.46 kB / CSS 4.24 kB gzip
 
 - [ ] **T-05** — API Prettier setup: same as T-04 for `api/`, with `api/.prettierrc.json`
   byte-identical to the frontend copy. The plan measured `api/` as already conformant; if
