@@ -1,12 +1,12 @@
 # MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-26)
 
 ## Current status
-- **Stage:** Genesis G4 (harness), awaiting G-Harness · Active feature: — · SDD phase: —
-- **Branch:** `chore/genesis-harness` (from `main` @ 09c41ef)
-- **Last completed step:** G-Foundational approved (2026-11-26)
+- **Stage:** Genesis G5 (next) · Active feature: 000-quality-baseline (not started) · SDD phase: 1
+- **Branch:** `chore/genesis-harness` @ fe9da4a (bootstrap commit; not pushed, no PR yet)
+- **Last completed step:** G-Harness approved and committed (2026-11-26)
 - **Next step:**
-  1. G-Harness approval, then the bootstrap commit.
-  2. G5: spec 000, quality baseline.
+  1. Hernán decides on pushing and opening the PR for `chore/genesis-harness`.
+  2. G5: `/feature 000` (quality baseline), in a new session.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
 - ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; the upgrade is optional (DEBT-007).
@@ -19,6 +19,7 @@
 - `npm run lint` fails today: `eslint` is not installed (DEBT-001).
 - The `gh` CLI token is invalid. Read public repos via REST or `git clone`, or have Hernán run `gh auth login`.
 - Cloning `sushiBurritoJava` on Windows fails on long paths. Use `git show HEAD:<file>`.
+- Playwright MCP uses the installed Google Chrome; a Chromium cache also exists in `%LOCALAPPDATA%\ms-playwright`.
 - LinkedIn cannot be read automatically: Hernán pastes posts if they are needed.
 - Production API: `api-portfolio.hernan-cardona.com` (`/health` 200). Frontend: `portfolio-hernan-cardona.vercel.app`.
 
