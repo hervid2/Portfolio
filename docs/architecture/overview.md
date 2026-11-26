@@ -53,11 +53,34 @@ flowchart LR
 - **Observability:** None beyond host logs (debt DEBT-003).
 
 ## Testing strategy
-Introduced in spec 000 (today there are no automated tests):
-- **Unit / component** — Vitest + Testing Library: hooks, utils, data invariants (bilingual parity, kind rules, references).
-- **e2e** — Playwright with axe: critical flows (hero CTAs, card actions, modals, case study routes) on desktop and mobile viewports.
-- **Pre-render check** — a script asserting content is present in the built HTML (NFR-005).
-- **API** — the existing tsx scripts stay as manual diagnostics; automated API tests only if a spec touches the API.
+Set up in spec 000. Conventions (test names with AC ids, fakes, jsdom shims): the
+`testing-conventions` skill (`.harness/skills/testing-conventions/`).
+- **Frontend unit / component** — Vitest 3 + Testing Library in jsdom
+  (`frontend/vitest.config.ts`, which extends the Vite config; setup in `frontend/src/test/`).
+  Tests sit next to the code as `*.test.ts(x)`: dictionary parity, project filter, card identity,
+  filter bar, language context, theme mode.
+- **API unit** — Vitest 3 in Node (`api/vitest.config.ts`): the contact schema at the BR-003
+  boundaries, the submit use case with fakes, and the env config. HTTP-level and middleware tests
+  are deferred (ASM-000-04). The tsx scripts (`test:e2e`, `test:persistence`, `test:smtp`) stay
+  as manual diagnostics.
+- **Coverage** — v8, text table plus `coverage/lcov.info` in each package; reported, not gated
+  (ASM-011).
+- **CI** — `.github/workflows/ci.yml`, jobs `frontend` and `api` on pull requests and pushes to
+  `main`: `npm ci`, `format:check`, `lint`, `typecheck`, `test` (coverage uploaded as
+  `coverage-frontend` / `coverage-api`), `build`, then guards (DEBT-005, `no-console` disables,
+  this bundle baseline, harness docs, Prettier parity). Both jobs are the required checks.
+- **e2e** — Playwright with axe on desktop and mobile viewports: spec 004, together with the
+  check that pre-rendered HTML holds the content (NFR-005). Not part of spec 000.
+
+### Bundle baseline (NFR-002)
+"Initial JS / CSS" = the gzip sizes, as printed by `vite build`, of the JS chunks and the CSS file
+that `dist/index.html` references (module script + `modulepreload` links). Lazy section chunks
+are excluded. Measured from a clean checkout with no `.env`, as in CI.
+
+| Measured on | Commit | Initial JS (gzip) | Initial CSS (gzip) | Notes |
+|---|---|---|---|---|
+| main before spec 000 | ed051a4 | 96.46 kB | 4.24 kB | reference only |
+| spec 000 baseline | 5cb5e13 | 96.62 kB | 4.24 kB | NFR-002 baseline (CI build, no VITE_* values) |
 
 ## Decisions (ADR index)
 | ADR | Title | Status |
