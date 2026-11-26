@@ -267,7 +267,7 @@ id; expectations are derived from the data (CL-15, CL-17).
     typecheck --prefix api`, `npm run build --prefix api` → exit 0. API has no test files yet
     (T-17/T-18), so `npm test --prefix api` exits 1 "No test files found", same as before T-16
 
-- [ ] **T-17** — Captcha seam (CL-01), test first: write
+- [x] **T-17** — Captcha seam (CL-01), test first: write
   `SubmitContactMessageUseCase.test.ts` (plan §6 AC-000-06(b): spies on
   `InMemoryContactRepository.save` and `NoopMailService.sendContactNotification`, fake verifier,
   `invocationCallOrder`, `vi.setSystemTime` for `submittedAt`) and run it red; record the failing
@@ -286,6 +286,11 @@ id; expectations are derived from the data (CL-15, CL-17).
     && (cd api && npx eslint src/application/use-cases src/types/contact.ts
     src/interfaces/http/controllers/contactController.ts --max-warnings 0)`
   - Depends on: T-16
+  - Evidence: c93f4ba · Verify (with `npm run typecheck --prefix api` for the tsc step) → exit 0;
+    red first: the new test file ran 2 failed ("expected undefined to deeply equal { status:
+    'accepted' }" / "'captcha-rejected'"); then 2/2 passed. Full `npm test --prefix api` and
+    `npm run format:check --prefix api` → exit 0. Long single-specifier imports are wrapped
+    behind `// prettier-ignore` (Prettier will not wrap them; max-len needs ≤ 100)
 
 - [ ] **T-18** [P] — `contactSchema.test.ts`: the 11 BR-003 boundary cases of AC-000-06(a), with
   lengths built from `"a".repeat(n)`; missing `captchaToken` parses to `""`.
