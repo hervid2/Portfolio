@@ -195,13 +195,15 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
 Written before the Phase G refactors so they guard them (plan R-1). Test names start with the AC
 id; expectations are derived from the data (CL-15, CL-17).
 
-- [ ] **T-11** [P] — `dictionaries.test.ts`: recursive deep key-set equality of `enDictionary` /
+- [x] **T-11** [P] — `dictionaries.test.ts`: recursive deep key-set equality of `enDictionary` /
   `esDictionary` and no empty string at any depth.
   - AC: AC-000-05(a)
   - Files: `frontend/src/i18n/dictionaries.test.ts`
   - Verify: `npm test --prefix frontend -- src/i18n/dictionaries.test.ts &&
     (cd frontend && npx eslint src/i18n/dictionaries.test.ts --max-warnings 0)`
   - Depends on: T-09
+  - Evidence: cc7d2a0 · Verify → exit 0 (5/5 pass; red check: a dropped key and a blanked value
+    in a scratch `es.ts` failed 2 tests naming `portfolio.filterLabel` / `nav.home`, then reverted)
 
 - [ ] **T-12** [P] — `useProjectFilter.test.ts` with `renderHook`: `categories` =
   `["all", ...new Set(projects.map(p => p.category))]`; `"all"` → `projects` in order; each
