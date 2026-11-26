@@ -467,7 +467,7 @@ whole test suite (Phase E net) and the build.
     typecheck ok; prettier ok). About markup byte-identical before/after in EN and ES (temp
     SSR dump, not committed). `AboutSkillsGrid` includes the skills h3.
 
-- [ ] **T-31** [P] — Split `PortfolioSection` (75 lines): `PortfolioGrid` (filtered grid +
+- [x] **T-31** [P] — Split `PortfolioSection` (75 lines): `PortfolioGrid` (filtered grid +
   `AnimatePresence`), `PortfolioModals` (the two modal `AnimatePresence` blocks). Modal and card
   props unchanged.
   - AC: AC-000-01 (CL-06)
@@ -475,6 +475,9 @@ whole test suite (Phase E net) and the build.
   - Verify: `(cd frontend && npx eslint src/components/sections/Portfolio*.tsx --max-warnings 0)
     && npm test --prefix frontend && npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
+  - Evidence: 7bd6663 · Verify → exit 0 (eslint 0 problems; 36/36 tests; build ok; typecheck
+    ok; prettier ok). Section, EN/ES markup and opened-modal markup byte-identical (temp jsdom/SSR
+    dump, not committed). `findProject` helper keeps `PortfolioModals` under 40 lines.
 
 - [ ] **T-32** — Remaining frontend fixes: `App.tsx` long lazy-import lines (manual split if
   Prettier left any over 100; `MotionConfig reducedMotion="user"` still wraps the tree);
