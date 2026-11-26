@@ -445,13 +445,17 @@ whole test suite (Phase E net) and the build.
     projects, copy state) identical before/after except mid-animation opacity; Esc, backdrop,
     scroll lock unchanged. Browser: both modals open, Esc closes, focus stays out (F-2 as-is).
 
-- [ ] **T-29** [P] — Split `HeroSection` (98 lines): `HeroIntro`, `HeroActions`,
+- [x] **T-29** [P] — Split `HeroSection` (98 lines): `HeroIntro`, `HeroActions`,
   `HeroProfileCard`.
   - AC: AC-000-01 (CL-06)
   - Files: `frontend/src/components/sections/{HeroSection,HeroIntro,HeroActions,HeroProfileCard}.tsx`
   - Verify: `(cd frontend && npx eslint src/components/sections/Hero*.tsx --max-warnings 0) &&
     npm test --prefix frontend && npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
+  - Evidence: d871ba4 · Verify → exit 0 (eslint 0 problems, was 4; 36/36 tests; build ok;
+    typecheck ok; prettier ok). Hero markup byte-identical before/after in EN and ES (temp
+    render dump, not committed). `HeroProfileCard` = the GitHub/LinkedIn row (the hero has no
+    right column). Browser: hero renders, primary CTA scrolls to Portfolio, links keep `rel`.
 
 - [ ] **T-30** [P] — Split `AboutSection` (78 lines): `AboutBio`, `AboutSkillsGrid`.
   - AC: AC-000-01 (CL-06)
