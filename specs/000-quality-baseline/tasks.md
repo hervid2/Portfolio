@@ -385,7 +385,7 @@ whole test suite (Phase E net) and the build.
   - Evidence: 89c906d · Verify → exit 0 (4/4 tests; eslint 0 problems; prettier ok; typecheck ok;
     full suite 36/36). Mutation (drop light `setItem`) → toggle test fails, then reverted.
 
-- [ ] **T-25** [P] — Split `ContactSection` (177 lines): `useTurnstileWidget(siteKey, onToken)`
+- [x] **T-25** [P] — Split `ContactSection` (177 lines): `useTurnstileWidget(siteKey, onToken)`
   (effect unchanged, JSDoc on `renderWidget`); `ContactAlternatives`; `ContactForm` +
   `ContactFormField`. Fix `exhaustive-deps` at `ContactSection.tsx:113`: wrap `updateField` in
   `useCallback([])` in `useContactForm` and list it in the effect deps (R-10).
@@ -396,6 +396,9 @@ whole test suite (Phase E net) and the build.
     src/hooks/useTurnstileWidget.ts --max-warnings 0) && npm test --prefix frontend &&
     npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
+  - Evidence: 8dbedd3 · Verify → exit 0 (eslint 0 problems; 36/36 tests; build ok; typecheck ok).
+    #contact DOM (styles stripped) byte-identical before/after; widget not re-mounted on typing
+    or EN→ES. `useContactForm` is 47 lines (was 43) until T-26.
 
 - [ ] **T-26** — `useContactForm` (43 lines): extract module-level
   `resolveValidationError(values, captchaEnabled, dictionary): string | null`, with JSDoc.
