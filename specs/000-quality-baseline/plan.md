@@ -522,7 +522,9 @@ category", …)`. Expectations are derived from `projects`, `enDictionary` / `es
    - a contact client-side validation error;
    - API unreachable (route `**/api/contact` → abort);
    - the `MotionConfig` check through the React tree in DevTools is replaced by a DOM-free check:
-     with reduced motion emulated, no element keeps a non-identity `transform` after settling;
+     with reduced motion emulated, the branch reports the same list of elements that keep a
+     non-identity `transform` after settling as the `main` baseline (no regression; see the note
+     below);
    - language and theme kept after reload.
 5. **Diff:** one Playwright MCP `browser_run_code_unsafe` script takes the same shot from 4173
    and 4174 as PNG buffers and decodes both into an `OffscreenCanvas` in the page. A pixel counts
@@ -534,6 +536,14 @@ category", …)`. Expectations are derived from `projects`, `enDictionary` / `es
 6. **Evidence:** in `.evidence/000-quality-baseline/{baseline,branch}/` (gitignored). The ~44
    PNGs exceed the 5 MB rule in spec §7.4, so they stay outside git. Only `visual-baseline.md`
    (SHA, list, numbers) is tracked.
+
+> **Note (2026-11-26, approved by Hernán; T-01 finding F-1):** the reduced-motion check in step 4
+> was "no element keeps a non-identity `transform` after settling". On `main` it fails: 32
+> elements keep `translateY(24px)` (the 4 project cards also `scale(0.96)`), see
+> `visual-baseline.md` § Findings. The check is redefined as: **the branch reports the same list of
+> elements that keep a transform under reduced motion as the `main` baseline (no regression).**
+> The bug itself is DEBT-010 in `docs/roadmap.md`, to be fixed in a later spec (spec 000 forbids
+> behavior changes). ASM-000-15's "no lingering transforms" wording is read the same way.
 
 **NFR-002 measurement.**
 - **Definition:** "initial JS / CSS" = the gzip sizes (as printed by `vite build`) of the JS chunks

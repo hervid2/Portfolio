@@ -51,6 +51,9 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   text) and run `git add --renormalize .`. The commit contains only this (plan §1.9, R-2).
   - AC: AC-000-03 (line-ending policy)
   - Files: `.gitattributes` (path exception) + the files the renormalize re-stages (EOL only)
+    + root `.gitignore` (add `.playwright-mcp/`, the Playwright MCP output folder)
+  - Scope addition: `.playwright-mcp/` in the root `.gitignore`, approved by Hernán 2026-11-26
+    (T-01 follow-up).
   - Verify: `test -z "$(git ls-files --eol | grep 'i/crlf')" &&
     test -z "$(git diff HEAD~1 HEAD --ignore-cr-at-eol --name-only -- . ':!.gitattributes')"`
   - Depends on: T-01
