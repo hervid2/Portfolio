@@ -555,13 +555,15 @@ whole test suite (Phase E net) and the build.
     run build`: initial JS `index-BKnSKt4S.js` 96.62 kB, CSS `index-BFX6Q03Z.css` 4.24 kB gzip
     (no `modulepreload` links); worktree removed
 
-- [ ] **T-36** [P] — `docs/traceability.md`: FR-002/BR-001 → AC-000-05(a)(e); FR-003/BR-002 →
+- [x] **T-36** [P] — `docs/traceability.md`: FR-002/BR-001 → AC-000-05(a)(e); FR-003/BR-002 →
   AC-000-05(f); FR-008/BR-003 → AC-000-06, each with its test file path.
   - AC: AC-000-05, AC-000-06 (traceability, CL-21)
   - Files: `docs/traceability.md` (path exception)
   - Verify: `grep -q 'AC-000-05' docs/traceability.md && grep -q 'AC-000-06' docs/traceability.md &&
     grep -q 'useThemeMode.test.ts' docs/traceability.md`
   - Depends on: T-24, T-17, T-18
+  - Evidence: 4fc5326 · Verify → exit 0. Rows FR-002 (AC-000-05(a)(e)), FR-003
+    (AC-000-05(f)), FR-008 (AC-000-06(a)(b)) with their test file paths
 
 - [ ] **T-37** [P] — `docs/roadmap.md`: DEBT-001 and DEBT-005 → `Closed (spec 000)`; add
   DEBT-009 with the plan R-6 wording.
