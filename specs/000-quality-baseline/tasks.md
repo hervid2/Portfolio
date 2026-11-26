@@ -539,7 +539,7 @@ whole test suite (Phase E net) and the build.
 
 ## Phase I — Documentation
 
-- [ ] **T-35** [P] — NFR-002 baseline and testing strategy in `docs/architecture/overview.md`:
+- [x] **T-35** [P] — NFR-002 baseline and testing strategy in `docs/architecture/overview.md`:
   measure the initial JS / CSS gzip sizes (plan §6 definition) from a clean worktree of the
   current branch HEAD (no `.env`, matching CI); add the "Bundle baseline (NFR-002)" table under
   "Testing strategy" with the `main` row (from `visual-baseline.md`) and the `spec 000 baseline`
@@ -551,6 +551,9 @@ whole test suite (Phase E net) and the build.
     docs/architecture/overview.md &&
     grep -Eq '^\| main before spec 000 \| [0-9a-f]{7,40} \|' docs/architecture/overview.md`
   - Depends on: T-32
+  - Evidence: 502e426 · Verify → exit 0. Clean worktree of 5cb5e13 (no `.env`), `npm ci && npm
+    run build`: initial JS `index-BKnSKt4S.js` 96.62 kB, CSS `index-BFX6Q03Z.css` 4.24 kB gzip
+    (no `modulepreload` links); worktree removed
 
 - [ ] **T-36** [P] — `docs/traceability.md`: FR-002/BR-001 → AC-000-05(a)(e); FR-003/BR-002 →
   AC-000-05(f); FR-008/BR-003 → AC-000-06, each with its test file path.
