@@ -1,8 +1,9 @@
-# CI for the portfolio (spec 000, plan §1.8, AC-000-07). Runs on every PR and on pushes to main.
+# CI for the portfolio (spec 000, plan §1.8, AC-000-07). Runs on PRs into main and pushes to main.
 name: CI
 
 on:
   pull_request:
+    branches: [main]
   push:
     branches: [main]
 
