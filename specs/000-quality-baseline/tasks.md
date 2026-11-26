@@ -138,6 +138,9 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Evidence: e0dee46 · Verify → exit 0 (lint exit 1, 43 problems, only allowed rules):
     27 max-len, 10 max-lines-per-function, 4 jsdoc/require-jsdoc, 1 exhaustive-deps,
     1 no-unused-vars; format:check and build OK (JS 96.46 kB / CSS 4.24 kB gzip)
+  - Deviation (Coordinator-approved, recorded at closeout per C-07): both configs export
+    `defineConfig(...)` from `eslint/config` instead of the plan's bare flat array. Same
+    behavior, part of ESLint 10 core, no new dependency. Applies to T-08 too.
 
 - [x] **T-08** [P] — API ESLint: install the same packages minus `eslint-plugin-react-hooks`;
   create `api/eslint.config.js` (plan §1.2, with `no-console` off in `src/scripts/**`); set `lint`
@@ -153,6 +156,7 @@ Source: `specs/000-quality-baseline/plan.md` (Approved) · Spec: `spec.md` v1.1 
   - Evidence: b715ce3 · Verify → exit 0 (lint exit 1, 27 problems, only allowed rules):
     14 jsdoc/require-jsdoc, 4 max-len, 3 max-lines-per-function, 6 no-console (server.ts ×5,
     errorHandler.ts ×1; none in src/scripts); format:check, `tsc --noEmit` and build OK
+  - Deviation: `defineConfig` from `eslint/config`, as in T-07 (C-07).
 
 ## Phase D — Vitest
 
