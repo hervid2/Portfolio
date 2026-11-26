@@ -361,7 +361,7 @@ concatenation), Motion props, ARIA, handlers and effect timing. New subcomponent
 parent's folder as `<Parent><Part>.tsx`, one component per file, with JSDoc. Every task runs the
 whole test suite (Phase E net) and the build.
 
-- [ ] **T-23** [P] — Split `Navbar` (145 lines): `ThemeMode` to `types/theme.ts`; `useThemeMode`
+- [x] **T-23** [P] — Split `Navbar` (145 lines): `ThemeMode` to `types/theme.ts`; `useThemeMode`
   hook (BR-002 logic unchanged); `NavbarSectionLinks` and `NavbarMobileMenu` map a
   `NAV_SECTION_IDS` list (same order and classes); `NavbarControls`.
   - AC: AC-000-01 (CL-06)
@@ -371,6 +371,8 @@ whole test suite (Phase E net) and the build.
     src/types/theme.ts --max-warnings 0) && npm test --prefix frontend &&
     npm run build --prefix frontend`
   - Depends on: T-11, T-12, T-13, T-14, T-15
+  - Evidence: 2145970 · Verify → exit 0 (eslint 0 problems; typecheck ok; 32/32 tests; build ok;
+    `format:check` ok). Browser 360 px: menu toggles and closes on nav, theme class + storage, ES/EN ok.
 
 - [ ] **T-24** — `useThemeMode.test.ts` with `renderHook`: stored `"light"` → light and
   `theme-light` on `<html>`; nothing and `"blue"` → dark; toggle persists (ASM-000-10 resolved as
