@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { KeyIcon, PlayIcon } from "@/components/ui/ProjectActionIcons";
+import { KeyIcon } from "@/components/ui/KeyIcon";
+import { PlayIcon } from "@/components/ui/PlayIcon";
 import { INTERACTIVE_BASE_CLASSES, ProjectLink } from "@/components/ui/ProjectLink";
 import { HOVER_SPRING } from "@/utils/motionPresets";
 import type { Project } from "@/types/project";
