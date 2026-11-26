@@ -216,13 +216,15 @@ id; expectations are derived from the data (CL-15, CL-17).
   - Evidence: c782425 · Verify → exit 0 (8/8 pass; red check: inverted filter and reversed
     categories in a scratch hook failed 6 tests, then reverted)
 
-- [ ] **T-13** [P] — `projectCardIdentity.test.ts`: `buildCardLayoutId` returns
+- [x] **T-13** [P] — `projectCardIdentity.test.ts`: `buildCardLayoutId` returns
   `project-card-<id>`, is deterministic, and `new Set(ids.map(build)).size === projects.length`.
   - AC: AC-000-05(c)
   - Files: `frontend/src/utils/projectCardIdentity.test.ts`
   - Verify: `npm test --prefix frontend -- src/utils/projectCardIdentity.test.ts &&
     (cd frontend && npx eslint src/utils/projectCardIdentity.test.ts --max-warnings 0)`
   - Depends on: T-09
+  - Evidence: 8afc2e2 · Verify → exit 0 (3/3 pass; red check: constant `project-card` return in
+    the scratch-mutated util failed 2 tests, then reverted)
 
 - [ ] **T-14** [P] — `ProjectFilterBar.test.tsx`: renders `categories.length` buttons; the "all"
   chip text equals `allLabel`; `aria-pressed="true"` only on the active chip;
