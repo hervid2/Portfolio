@@ -29,6 +29,38 @@ if (typeof window.matchMedia !== "function") {
   });
 }
 
+/**
+ * No-op `IntersectionObserver` for jsdom, which does not implement it. `motion`'s `whileInView`
+ * observes elements on mount; the stub never reports an intersection (plan 001 R-7).
+ */
+class IntersectionObserverStub implements IntersectionObserver {
+  readonly root = null;
+  readonly rootMargin = "0px";
+  readonly thresholds: ReadonlyArray<number> = [0];
+  /** Starts observing nothing. */
+  observe(): void {}
+  /** Stops observing nothing. */
+  unobserve(): void {}
+  /** Disconnects nothing. */
+  disconnect(): void {}
+  /**
+   * Returns no pending entries.
+   *
+   * @returns An empty list.
+   */
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+}
+
+if (typeof window.IntersectionObserver !== "function") {
+  Object.defineProperty(window, "IntersectionObserver", {
+    configurable: true,
+    writable: true,
+    value: IntersectionObserverStub
+  });
+}
+
 afterEach(() => {
   cleanup();
   localStorage.clear();

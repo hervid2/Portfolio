@@ -70,3 +70,31 @@ describe("AC-000-05(a) dictionary walkers detect drift", () => {
     expect(collectEmptyStringPaths(dictionary)).toEqual(["contact.form.email", "list.0"]);
   });
 });
+
+describe("AC-001-11 spec 001 copy K-01 … K-04 is pinned to the approved literals", () => {
+  it("AC-001-11 en portfolio copy matches spec §7 byte for byte", () => {
+    const { kind, coldStartNotice, subtitle } = enDictionary.portfolio;
+    expect(kind.client).toBe("Client project");
+    expect(kind.personal).toBe("Personal project");
+    expect(kind.personalQualifier).toBe("deployed");
+    expect(subtitle).toBe(
+      "A selection of client work and personal projects deployed to production."
+    );
+    expect(coldStartNotice).toBe(
+      "Heads-up: the first load may be slow while the demo server wakes up."
+    );
+  });
+
+  it("AC-001-11 es portfolio copy matches spec §7 byte for byte", () => {
+    const { kind, coldStartNotice, subtitle } = esDictionary.portfolio;
+    expect(kind.client).toBe("Proyecto de cliente");
+    expect(kind.personal).toBe("Proyecto personal");
+    expect(kind.personalQualifier).toBe("desplegado");
+    expect(subtitle).toBe(
+      "Una selección de trabajo para clientes y proyectos personales desplegados en producción."
+    );
+    expect(coldStartNotice).toBe(
+      "Aviso: la primera carga puede ser lenta mientras el servidor de la demo se activa."
+    );
+  });
+});

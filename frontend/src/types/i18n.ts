@@ -25,6 +25,12 @@ export interface AppDictionary {
     watchDemo: string;
     filterAll: string;
     filterLabel: string;
+    kind: {
+      client: string;
+      personal: string;
+      personalQualifier: string;
+    };
+    coldStartNotice: string;
   };
   about: {
     title: string;
