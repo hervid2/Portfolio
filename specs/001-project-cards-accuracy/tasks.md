@@ -85,7 +85,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 
 ## Phase B — i18n and card UI
 
-- [ ] **T-06** [P] — Add `portfolio.kind.{client,personal,personalQualifier}` and
+- [x] **T-06** [P] — Add `portfolio.kind.{client,personal,personalQualifier}` and
   `portfolio.coldStartNotice` to `AppDictionary`, `en.ts`, `es.ts`; change `portfolio.subtitle`
   to K-03; pin K-01 … K-04 to the approved literals in `dictionaries.test.ts`; create
   `frontend/src/components/sections/PortfolioSection.test.tsx` with the subtitle test (EN, and ES
@@ -99,6 +99,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     src/components/sections/PortfolioSection.test.tsx &&
     grep -c "AC-001-11" frontend/src/components/sections/PortfolioSection.test.tsx`
   - Depends on: T-01 (the section renders the grid, which needs `kind`)
+  - Evidence: 850fe26 · Verify → exit 0 (9/9 tests; grep 3); red 2 failed first (pin);
+    R-7 occurred → setup.ts shim; 181/181 all tests; format, lint, typecheck, build OK
 
 - [ ] **T-07** [P] — Create `ProjectKindLabel` (plan §1.5: `<p>`, chip palette, `rounded-md`,
   "·" in `aria-hidden="true"` with spaces outside) and its test (EN/ES per kind, `aria-hidden`).
