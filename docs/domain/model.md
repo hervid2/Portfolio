@@ -37,9 +37,11 @@
   - `role` (`{ en; es }`)
   - `username` (string | null)
   - `password` (string | null)
-  - Sensitivity: public by design (fictional data).
-- **Invariants:** Published only if verified by the demo audit (FR-019).
-- **Data owner / source of truth:** Each project's README.
+  - Sensitivity: public by design (fictional or seeded demo data).
+- **Invariants:** Published only if verified by the demo audit (FR-019, BR-008). Spec 001 records
+  one owner exception pending investigation (FlyWorkFlow Super Admin, ASM-008).
+- **Data owner / source of truth:** Owner. The demo audit (`docs/discovery/demo-audit.md`) is the
+  publishing gate; each project's README is informative and may lag (spec 001, OQ-001-06).
 
 ### CaseStudy (new)
 - **Description:** Long-form narrative of a project.

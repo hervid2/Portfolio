@@ -68,3 +68,13 @@
 - **Exceptions:** —
 - **Origin and date:** GENESIS Art. 8, brief §5, 2026-11-26
 - **Requirements that use it:** FR-021
+
+
+## BR-008 — Live demo audit safety
+- **Type:** constraint
+- **Rule:** A live demo audit performs only: open the demo, at most one login attempt per published demo account per audit run, observe the landing page, log out. It never submits another form, never creates, edits or deletes data, never retries a failed login, never uses a password-reset link, and never records third-party or real data. If a login lands on data that looks real, the auditor logs out at once, records "possible production data" without copying it, and escalates to the owner.
+- **Formula / decision table:** login succeeds → record role and landing page, log out · login fails → record the visible message, no retry in this run, credential not published · real-looking data → log out, record without copying, escalate
+- **Examples:** FlyWorkFlow Admin login succeeds → "lands on dashboard, role Admin", log out · a password-reset link is offered after a failure → not used (edge case) · an audit re-run after the 7-day window → one new attempt per account still published
+- **Exceptions:** An account the owner excludes from the audit is not logged into and is listed as not audited (spec 001: FlyWorkFlow Super Admin, ASM-008).
+- **Origin and date:** Spec 001 (BR-A1, CL-02, CL-14), promoted by the owner 2026-11-27 (OQ-001-10)
+- **Requirements that use it:** FR-019, NFR-013
