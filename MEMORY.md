@@ -1,14 +1,14 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, PE-01 fixed)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, PE-01 merged, PE-02 fixed)
 
 ## Current status
 - **Stage:** G5 · Spec 000 **Implemented** (PR #4, closeout PR #5 merged f86dcf8).
-- **Branch:** `fix/api-runtime-advisories` (BUG PE-01, G-Merge approved 2026-11-27; pushed,
-  Hernán opens the PR as draft). Runtime advisories in api 9 → 2; rest = DEBT-019 (majors).
+- **Branch:** `fix/api-trust-proxy` (BUG PE-02: `trust proxy` = loopback; G-Merge pending
+  Hernán's yes). nginx on the droplet already sets X-Forwarded-For/X-Real-IP = $remote_addr
+  (verified 2026-11-27). PE-01 merged as PR #6 (341520f).
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
-- **Next step:** after PR merge, send one real contact form submit (Resend path, QS-B-03).
-  Then `/bug` PE-02 (no `trust proxy` behind nginx → shared rate limit, Turnstile gets proxy
-  IP). Then spec 001. Spec 009 (mail fallback, DEBT-020) is Planned for later.
+- **Next step:** after the PE-02 merge, run the 6× spoofed-XFF curl (expect 5×400 then 429)
+  and one real contact submit (Resend path). Then spec 001. Spec 009 (mail fallback) is Planned.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
@@ -35,15 +35,15 @@
 - `npm audit fix` takes the newest in-range version (resend 6.41.0 was 6 h old): check publish
   date and provenance. A parent pin (express → qs) may need `npm update <parent>`.
 - LinkedIn cannot be read automatically: Hernán pastes posts if they are needed.
+- Droplet: nginx `/etc/nginx/sites-enabled/api-portfolio` → localhost:4000 (also 4001, 4002
+  for other apps). Proxy/header changes must go live before code that trusts them deploys.
 - Production API: `api-portfolio.hernan-cardona.com` (`/health` 200). Frontend: `portfolio-hernan-cardona.vercel.app`.
 
 ## Retrospective spec 000 (GENESIS §C.9)
 - Missing instruction: the PR step didn't say "draft" loudly enough → PR #4 merged before
   validation (G-Merge skipped). Now prevented by branch protection; ask for draft explicitly.
-- Repeated error: root `npx tsc` reported by 8 implementer runs → fixed in AGENTS.md/skills.
 - Make deterministic: "one component per file" is not linted (C-02 slipped) → consider a lint
   rule (e.g. react/no-multi-comp once eslint-plugin-react supports ESLint 10).
-- No correction cycle hit the limit (max 1 per task).
 
 ## Active blockers and open questions
 - OQ-005: retention policy for contact messages.
