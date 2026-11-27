@@ -1,5 +1,5 @@
 # Spec 001 — Project cards accuracy
-Status: Approved (G-Spec 2026-11-27) · Version: 1.0 · Branch: feat/001-project-cards-accuracy ·
+Status: Planned (G-Plan 2026-11-27) · Version: 1.1 · Branch: feat/001-project-cards-accuracy ·
 FR: FR-014, FR-015, FR-016, FR-019 · BR: BR-006, BR-007, BR-008 · NFR: NFR-002, NFR-003,
 NFR-004, NFR-006, NFR-007, NFR-008, NFR-011, NFR-012, NFR-013 · Backlog: PO-4, PO-5, PO-6, PO-9 ·
 Debt: DEBT-013 (folded in, OQ-001-07) · Depends on: 000
@@ -182,7 +182,7 @@ No new roles or API permissions. The contact API is not touched.
 | Field | Type | Required | Rule |
 |---|---|---|---|
 | `kind` | `ProjectKind` = `"client" \| "personal"` | Yes | BR-006 table (§5). New type in `frontend/src/types/project.ts`; already in the glossary and domain model |
-| `coldStartNotice` | `boolean` (optional, absent = `false`) | No | `true` only for the project ids in the audit summary's `coldStartProjectIds` (FR-019). Name proposed; the plan may refine it but must update the glossary |
+| `coldStartNotice` | `boolean` (optional, absent = `false`) | No | `true` only for the project ids in the audit summary's `coldStartProjectIds` (FR-019). Name confirmed by the plan (§1.1); the glossary drops its "proposed" note (T-19) |
 | `stack` | `string[]` | Yes (existing) | Changed values, §6 table below; ≤ 10 items; official names without version numbers (ASM-001-01) |
 | `description` | `{ en; es }` | Yes (existing) | Changed values, §7 K-10 … K-17 |
 | `demoCredentials` | `DemoCredential[]` | No (existing) | Exactly the usernames in the audit summary's `verifiedUsernames` plus `ownerExceptionUsernames` for that project (§8.2 item 6) |
@@ -220,8 +220,9 @@ change).
     tinted background (4.62:1 on the white card in light).
   - Not allowed: `text-accent-cyan` in the light theme, or any `bg-accent-cyan/*` tint behind
     accent text (3.38–3.58:1, fails AA).
-  The "·" in K-02 is wrapped in an element with `aria-hidden="true"`, so screen readers read
-  "Personal project, deployed" / "Proyecto personal, desplegado" (CL-10). No ARIA role is added;
+  The "·" in K-02 is wrapped in an element with `aria-hidden="true"`, with the spaces outside it,
+  so screen readers read "Personal project deployed" / "Proyecto personal desplegado" as separate
+  words (CL-10, ASM-001-15). No ARIA role is added;
   the label stays before the `<h3>` in DOM order (eyebrow pattern). Placement is ASM-001-05.
 - **Cold-start notice:** one line of small static text with `role="note"`, placed above the action
   row, only on flagged cards. Color: `text-text-secondary` (CL-06).
@@ -275,7 +276,10 @@ audit records it and the label follows the app). The Super Admin credential is n
 These are availability samples, not the audit: no login, no latency method, no YouTube check.
 
 ### 8.2 Deliverable contract: `docs/discovery/demo-audit.md`
-Required sections, with these headings (AC-001-13):
+Required sections, with these exact headings, in this order (AC-001-13; the unit test matches
+them literally):
+`## 1. Header`, `## 2. Method`, `## 3. Per-project results`, `## 4. Credentials`,
+`## 5. Findings and follow-ups for Hernán`, `## 6. Machine-readable summary`.
 1. **Header:** audit date (`YYYY-MM-DD`), auditor, method version, links to this spec, FR-019 and
    BR-008, and the owner confirmations it relies on with their dates (Sushi Burrito Web demo
    clone, OQ-001-04; Slicing Edge non-real data and Stripe test mode, OQ-001-12; both 2026-11-27).
@@ -467,6 +471,9 @@ reviewer. Each AC names its verification.
 | ASM-001-11 | ASM | Data-invariant tests compare stacks, copy and kinds against constants in the test file; the reviewer cross-checks them with this spec. Withdrawn for credentials and notices, which the tests read from the audit summary (CL-05) | agent | Proposed |
 | ASM-001-12 | ASM | The Sushi Burrito Web deployment linked on the card (`sushi-burrito-final.vercel.app` + `api-sushi-burrito.hernan-cardona.com`) is a demo clone with seeded data; the restaurant's real instance is a separate repo, VPS and database | human | Confirmed (Hernán, 2026-11-27) |
 | ASM-001-13 | ASM | All Slicing Edge data is non-real, no real client uses it, and Stripe runs in test mode | human | Confirmed (Hernán, 2026-11-27) |
+| ASM-001-14 | ASM | An audit run starts with the preflight task; `auditDate` is the **first** day of the run. Every link, video, login and latency record is dated on or after `auditDate` and within 7 days of it, and G-Merge happens within 7 days of `auditDate`; otherwise §4.2 B4 applies (re-run). Alternative discarded: `auditDate` = last day of the run (evidence up to 14 days old at G-Merge) | human | Confirmed (Hernán, G-Plan 2026-11-27, plan D-1) |
+| ASM-001-15 | ASM | K-02 accessible text: the "·" is inside an `aria-hidden="true"` element with the spaces outside it, and no visually hidden comma is added, so the visible text stays "Personal project · deployed" (AC-001-09) and screen readers hear "Personal project deployed" / "Proyecto personal desplegado" as separate words | agent | Accepted (G-Plan 2026-11-27) |
+| ASM-001-16 | ASM | Icon file convention (as the existing icons): the light file is the Simple Icons SVG unchanged (default black fill); the `-dark` file is the same SVG with `fill="white"` on the `<svg>` element (as `nextjs-dark.svg`); no brand hex colors. The generic icon follows the same convention | agent | Accepted (G-Plan 2026-11-27) |
 | OQ-001-01 | OQ | Align the stack and description of all four cards in 001? | Hernán | Closed 2026-11-27: yes, all four |
 | OQ-001-02 | OQ | Approve the proposed stacks (§6) and the EN/ES copy K-01 … K-17 (§7)? | Hernán | Closed 2026-11-27: approved as drafted |
 | OQ-001-03 | OQ | Icons for the 16 labels without an icon-map key (§8.3 D-10)? | Hernán | Closed 2026-11-27: brand SVGs from a license-clean source (Simple Icons, CC0, no npm dependency), a neutral generic icon otherwise; ≤ 2 tasks. The plan lists each file, its source and license |
@@ -489,3 +496,4 @@ reviewer. Each AC names its verification.
 | 0.1 | 2026-11-27 | Initial draft from the roadmap row, FR-014/015/016/019, the profile README (fetched 2026-11-27) and the four project READMEs | — |
 | 0.2 | 2026-11-27 | Applied CL-01 … CL-19 and the owner's answers: all four cards aligned; stacks and copy approved; 16 icon labels via Simple Icons or a generic icon (≤ 2 tasks) and a map-key test; Sushi Burrito Web confirmed as a demo clone; Super Admin kept, not audited, ASM-008 open (OQ-001-15 for the Title III exception); Slicing Edge accounts kept; BR-A1 promoted to BR-008; curl-based latency and link methods; audit summary block read by unit tests and a named recorded-verification exception; token pairs, aria-hidden middle dot, NFR-004 checks; DEBT-013 folded in; documentation deliverables and NFR header completed; DEBT-021 … DEBT-023 logged | Answers: Hernán 2026-11-27 · G-Spec pending |
 | 1.0 | 2026-11-27 | Approved at G-Spec. OQ-001-15 closed: one-off Title III exception for the FlyWorkFlow Super Admin only (ASM-008, no constitution amendment); §5 and §8.3 D-2 reworded to match. OQ-001-11 stays open (blocks only the latency tasks) | Hernán (G-Spec) |
+| 1.1 | 2026-11-27 | G-Plan approved with plan decisions D-1 … D-4. Added ASM-001-14 (audit date = first day of the run, 7-day window including G-Merge), ASM-001-15 (K-02 "·" `aria-hidden`, screen readers hear "Personal project deployed"; §7 reworded, the comma dropped) and ASM-001-16 (light/dark icon file convention); §8.2 names the six exact headings; §6 `coldStartNotice` name confirmed. Status → Planned | Hernán (G-Plan) |

@@ -1,8 +1,8 @@
 # Tasks — Spec 001
 > [P] = parallelizable (does not share files with other pending [P] tasks).
 
-Source: `specs/001-project-cards-accuracy/plan.md` (Draft, G-Plan pending) · Spec: `spec.md` v1.0 ·
-Written: 2026-11-27.
+Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27) · Spec:
+`spec.md` v1.1 · Written: 2026-11-27.
 
 **Conventions for every task**
 - One task = one commit: `<type>(<scope>): <description> [T-NN]` (Conventional Commits), ending
@@ -18,8 +18,8 @@ Written: 2026-11-27.
   explicit go-ahead in the conversation, for that task (and, for T-13 … T-15, for that demo).
   They touch live third-party deployments under BR-008. They are documentation tasks, separate
   from the code tasks, and they never edit `frontend/`.
-- **Audit window (plan §1.6, D-1):** T-12 … T-17 run within 7 days of `auditDate` (the T-12 date),
-  and G-Merge happens within 7 days of it; otherwise spec §4.2 B4 (re-run) applies.
+- **Audit window (plan §1.6, D-1, ASM-001-14):** T-12 … T-17 run within 7 days of `auditDate`
+  (the T-12 date), and G-Merge happens within 7 days of it; otherwise spec §4.2 B4 (re-run) applies.
 
 ## Phase A — Data model and content
 
@@ -32,7 +32,7 @@ Written: 2026-11-27.
     `frontend/src/data/projects.test.ts`
   - Verify: `npm test --prefix frontend -- src/data/projects.test.ts &&
     npm run typecheck --prefix frontend && grep -c "AC-001-08" frontend/src/data/projects.test.ts`
-  - Depends on: — (G-Plan approved)
+  - Depends on: — (G-Plan approved 2026-11-27)
 
 - [ ] **T-02** — Replace the four stacks with the approved lists of spec §6 (order exact, no
   versions); add the stack tests.

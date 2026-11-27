@@ -1,6 +1,6 @@
 # Plan — Spec 001
-Spec: `specs/001-project-cards-accuracy/spec.md` v1.0 (Approved, G-Spec 2026-11-27) ·
-Planned: 2026-11-27 · Status: Draft — G-Plan pending
+Spec: `specs/001-project-cards-accuracy/spec.md` v1.1 (Planned, G-Plan 2026-11-27) ·
+Planned: 2026-11-27 · Status: Approved (G-Plan 2026-11-27, Hernán; D-1 … D-4 as recommended)
 
 Checked on 2026-11-27 (Art. 14): `npm view simple-icons version license time` → latest 16.38.1
 (published 2026-11-22, CC0-1.0). The icons are copied from **16.37.0** (published 2026-11-08, more
@@ -191,7 +191,7 @@ nominatively next to the technology name, as the existing icons are. 26 new file
 ## 2. Files to create / modify
 | Path | Action | Reason |
 |---|---|---|
-| `specs/001-project-cards-accuracy/spec.md` | Modify | Status Approved, OQ-001-15 closed (this commit); at G-Plan: v1.1 with ASM-001-14 … -16 (§8, D-4) |
+| `specs/001-project-cards-accuracy/spec.md` | Modify | Done before implementation: v1.0 at G-Spec (OQ-001-15 closed); v1.1 at G-Plan with ASM-001-14 … -16 and the six §8.2 headings (§8, D-4) |
 | `frontend/src/types/project.ts` | Modify | `ProjectKind`, `kind`, `coldStartNotice?` (AC-001-08, -16) |
 | `frontend/src/data/projects.ts` | Modify | `kind`, stacks, descriptions (T-01 … T-03); credentials and `coldStartNotice` from the audit (T-18) |
 | `frontend/src/data/projects.test.ts` | Create | Data invariants AC-001-01 … -04, -06 (U), -07, -08; audit summary AC-001-13 (U), -14, -15, -16 |
@@ -336,19 +336,20 @@ change.
 | R-12 | Icon trademarks | CC0 covers the drawings; marks are used nominatively beside the name, as the existing icons; no brand colors added |
 | R-13 | A demo link or video fails in the audit | B-E1/B-E4: re-check once, then escalate; the plan never hides a demo or swaps a video on its own |
 
-**Decisions that need Hernán at G-Plan**
-- **D-1 — `auditDate` = first day of the audit run** (ASM-001-14). Recommended. Alternative: last
-  day of the run (evidence may be up to 14 days old at G-Merge).
+**Decisions (approved by Hernán at G-Plan, 2026-11-27, all as recommended)**
+- **D-1 — `auditDate` = first day of the audit run** (ASM-001-14). **Decided.** The 7-day window
+  covers every audit record and G-Merge. Discarded: last day of the run (evidence may be up to 14
+  days old at G-Merge).
 - **D-2 — Kind label uses the stack-chip palette** (`text-text-secondary` on `bg-surface-muted`,
-  `rounded-md`). Recommended. Alternative: accent eyebrow, which needs a new theme-conditional CSS
-  rule because `dark:` is not wired to `html.theme-light`.
-- **D-3 — Neutral generic icon authored in the repo** (AWS Lambda, Amazon S3, LLM tool calling
-  (Groq)). Recommended. Alternative: an ISC/MIT icon set glyph with a notice file.
-- **D-4 — Spec v1.1 (minor, at G-Plan):** add ASM-001-14 (audit date and window, §1.6),
-  ASM-001-15 (K-02 accessible text: the "·" is `aria-hidden` with spaces outside it; no visually
-  hidden comma, so AC-001-09's visible-text check holds; screen readers get "Personal project
-  deployed" as two words) and ASM-001-16 (icon light/dark file convention, §1.3); name the six
-  exact §8.2 headings. Status → Planned.
+  `border-border-subtle`, `rounded-md`; §1.5). **Decided.** Discarded: accent eyebrow, which needs
+  a new theme-conditional CSS rule because `dark:` is not wired to `html.theme-light`.
+- **D-3 — Neutral generic icon drawn in the repo** (AWS Lambda, Amazon S3, LLM tool calling
+  (Groq); §1.3). **Decided.** Discarded: an ISC/MIT icon set glyph with a notice file.
+- **D-4 — Spec v1.1 (minor):** ASM-001-14 (audit date and window, §1.6), ASM-001-15 (K-02
+  accessible text: the "·" is `aria-hidden` with spaces outside it; no visually hidden comma, so
+  AC-001-09's visible-text check holds; screen readers hear "Personal project deployed") and
+  ASM-001-16 (icon light/dark file convention, §1.3); the six exact §8.2 headings. **Applied**
+  (spec v1.1, status Planned).
 
 ## 9. New or affected ADRs
 - **No new ADR.** The changes follow existing patterns: typed static data, dictionary keys,
@@ -358,4 +359,4 @@ change.
   build the pre-render, the new label and notice are plain text and pre-render as is.
 - ADR-0004 (native SVG architecture maps): not affected (specs 006/007).
 
-Next step: `/sdd-tasks 001` → `tasks.md`, then 🚦 G-Plan through the coordinator.
+Next step: G-Plan approved (2026-11-27); `/sdd-implement 001` starting with T-01 (`tasks.md`).
