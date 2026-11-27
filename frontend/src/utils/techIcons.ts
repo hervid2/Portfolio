@@ -114,6 +114,54 @@ const techIconPathByLabel: Record<string, IconSet> = {
   playwright: {
     iconPath: "/assets/icons/tech/playwright.svg",
     iconPathDark: "/assets/icons/tech/playwright-dark.svg"
+  },
+  nestjs: {
+    iconPath: "/assets/icons/tech/nestjs.svg",
+    iconPathDark: "/assets/icons/tech/nestjs-dark.svg"
+  },
+  prisma: {
+    iconPath: "/assets/icons/tech/prisma.svg",
+    iconPathDark: "/assets/icons/tech/prisma-dark.svg"
+  },
+  "upstash redis": {
+    iconPath: "/assets/icons/tech/upstash.svg",
+    iconPathDark: "/assets/icons/tech/upstash-dark.svg"
+  },
+  turborepo: {
+    iconPath: "/assets/icons/tech/turborepo.svg",
+    iconPathDark: "/assets/icons/tech/turborepo-dark.svg"
+  },
+  vite: {
+    iconPath: "/assets/icons/tech/vite.svg",
+    iconPathDark: "/assets/icons/tech/vite-dark.svg"
+  },
+  sequelize: {
+    iconPath: "/assets/icons/tech/sequelize.svg",
+    iconPathDark: "/assets/icons/tech/sequelize-dark.svg"
+  },
+  "socket.io": {
+    iconPath: "/assets/icons/tech/socketio.svg",
+    iconPathDark: "/assets/icons/tech/socketio-dark.svg"
+  },
+  nginx: {
+    iconPath: "/assets/icons/tech/nginx.svg",
+    iconPathDark: "/assets/icons/tech/nginx-dark.svg"
+  },
+  digitalocean: {
+    iconPath: "/assets/icons/tech/digitalocean.svg",
+    iconPathDark: "/assets/icons/tech/digitalocean-dark.svg"
+  },
+  "spring data jpa": {
+    iconPath: "/assets/icons/tech/spring.svg",
+    iconPathDark: "/assets/icons/tech/spring-dark.svg"
+  },
+  flyway: {
+    iconPath: "/assets/icons/tech/flyway.svg",
+    iconPathDark: "/assets/icons/tech/flyway-dark.svg"
+  },
+  "junit 5": {
+    iconPath: "/assets/icons/tech/junit5.svg",
+    iconPathDark: "/assets/icons/tech/junit5-dark.svg"
   }
 };
 
@@ -125,4 +173,15 @@ const techIconPathByLabel: Record<string, IconSet> = {
  */
 export function resolveTechIconPath(stackLabel: string): IconSet {
   return techIconPathByLabel[stackLabel.toLowerCase()] ?? { iconPath: FALLBACK_ICON_PATH };
+}
+
+/**
+ * Tells whether a technology label has its own entry in the icon map, so it does not
+ * fall back to the default icon.
+ *
+ * @param stackLabel - Technology label as shown on the card (case-insensitive).
+ * @returns `true` when the label is an explicit icon-map key.
+ */
+export function hasTechIcon(stackLabel: string): boolean {
+  return Object.prototype.hasOwnProperty.call(techIconPathByLabel, stackLabel.toLowerCase());
 }
