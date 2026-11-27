@@ -8,6 +8,8 @@
 | Stack | `Project.stack` | Ordered list of technologies shown on a card | Tags, techs | Existing code |
 | Live demo | `Project.liveDemoUrl` | Public URL of the running project | Preview, deploy | Existing code |
 | Demo credential | `DemoCredential` | A public demo account (role, username, password) with fictional data, published on purpose | Login, user | Existing code |
+| Cold-start notice | `Project.coldStartNotice` (name proposed in spec 001; the plan may refine it) | A bilingual note on a card warning that the demo's first load may be slow; set only where the demo audit measured a first load > 10 s | Warning, banner, delay flag | Spec 001, FR-019 |
+| Demo audit | `docs/discovery/demo-audit.md` | Dated record of checking every live demo, code link, demo video and demo credential, plus first-load latency; the gate for publishing credentials and cold-start notices | Demo test, QA report | Spec 001, FR-019 |
 | Demo video | `Project.demoVideoId` | YouTube video id per language | Trailer | Existing code |
 | Preview clip | `Project.previewVideoUrl` | Muted looping clip played on card hover | GIF | Existing code |
 | Case study | `CaseStudy` | Long-form narrative of a project: Problem → Role → Decisions (and why) → Mistakes and fixes → Result | Article, post, blog | PO-3 |
