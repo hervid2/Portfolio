@@ -2,12 +2,12 @@
 
 ## Current status
 - **Stage:** G6 · Spec 001 **Planned** (G-Spec + G-Plan approved 2026-11-27, spec v1.1).
-- **Branch:** `feat/001-project-cards-accuracy`. Next: `/sdd-implement 001` T-01…T-11 (code),
+- **Branch:** `feat/001-project-cards-accuracy`. T-01 done (5012f6f). Next T-02…T-11 (code),
   then stop: T-12…T-17 (live demo audit) need Hernán's go-ahead per demo; OQ-001-11 open.
 - PE-01 (PR #6) and PE-02 (PR #7) deployed and verified in prod 2026-11-27 (5×400 then 429).
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
-- Pending from Hernán: one real contact submit (Resend path). Spec 009 (mail fallback) Planned.
+- Real contact submit OK in prod (Resend, 2026-11-27): PE-01/02 closed. Spec 009 Planned.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
