@@ -53,7 +53,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Depends on: T-02
   - Evidence: eefc79f · Verify → exit 0 (18/18 tests; grep none); red 9 failed first; 54/54 all
 
-- [ ] **T-04** [P] — Icons, part 1 of 2: copy the 12 Simple Icons glyphs from
+- [x] **T-04** [P] — Icons, part 1 of 2: copy the 12 Simple Icons glyphs from
   `simple-icons@16.37.0` (plan §1.3 table, light file unchanged, `-dark` with `fill="white"`);
   add their 12 map keys; export `hasTechIcon`; create `frontend/src/utils/techIcons.test.ts` that
   checks the 12 labels are explicit keys and their files exist.
@@ -66,6 +66,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     flyway junit5; do grep -q 'fill="white"' frontend/public/assets/icons/tech/$f-dark.svg || exit 1;
     done`
   - Depends on: — (G-Plan approved)
+  - Evidence: 636df58 · Verify → exit 0 (37/37 tests; 24 files; 12 fill="white"); red 37
+    failed first; 91/91 all tests; format, lint, typecheck, build OK
 
 - [ ] **T-05** — Icons, part 2 of 2: author `generic-tech.svg` / `generic-tech-dark.svg` (original
   24×24 cube outline, `<title>Technology</title>`); add the keys `aws lambda`, `amazon s3`,
