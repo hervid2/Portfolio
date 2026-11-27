@@ -162,6 +162,21 @@ const techIconPathByLabel: Record<string, IconSet> = {
   "junit 5": {
     iconPath: "/assets/icons/tech/junit5.svg",
     iconPathDark: "/assets/icons/tech/junit5-dark.svg"
+  },
+  "aws lambda": {
+    iconPath: "/assets/icons/tech/generic-tech.svg",
+    iconPathDark: "/assets/icons/tech/generic-tech-dark.svg"
+  },
+  "amazon s3": {
+    iconPath: "/assets/icons/tech/generic-tech.svg",
+    iconPathDark: "/assets/icons/tech/generic-tech-dark.svg"
+  },
+  "llm tool calling (groq)": {
+    iconPath: "/assets/icons/tech/generic-tech.svg",
+    iconPathDark: "/assets/icons/tech/generic-tech-dark.svg"
+  },
+  "vanilla js": {
+    iconPath: "/assets/icons/tech/javascript.svg"
   }
 };
 
