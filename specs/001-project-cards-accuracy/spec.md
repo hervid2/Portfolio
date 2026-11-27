@@ -1,5 +1,5 @@
 # Spec 001 — Project cards accuracy
-Status: Ready for G-Spec · Version: 0.2 · Branch: feat/001-project-cards-accuracy ·
+Status: Approved (G-Spec 2026-11-27) · Version: 1.0 · Branch: feat/001-project-cards-accuracy ·
 FR: FR-014, FR-015, FR-016, FR-019 · BR: BR-006, BR-007, BR-008 · NFR: NFR-002, NFR-003,
 NFR-004, NFR-006, NFR-007, NFR-008, NFR-011, NFR-012, NFR-013 · Backlog: PO-4, PO-5, PO-6, PO-9 ·
 Debt: DEBT-013 (folded in, OQ-001-07) · Depends on: 000
@@ -168,11 +168,12 @@ No new roles or API permissions. The contact API is not touched.
   - Example: FlyWorkFlow Admin login succeeds → note "lands on dashboard, role Admin", log out.
   - Edge case: a password-reset link is offered after a failure → not used.
 - **Constitution Title III — "Demo credentials are published only after they are verified."**
-  Applied to every credential, with one owner exception pending confirmation at G-Spec
-  (OQ-001-15): the FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`) stays on the card
-  without being audited, because Hernán is investigating that access in the FlyWorkFlow project
+  Applied to every credential, with one owner exception confirmed at G-Spec on 2026-11-27
+  (OQ-001-15, one-off, no constitution amendment): the FlyWorkFlow Super Admin
+  (`camila.rojas@flyworkflow.io`) stays on the card without being audited, because Hernán is investigating that access in the FlyWorkFlow project
   (OQ-001-05). The audit lists it as "not audited — owner investigation pending"; ASM-008 stays
-  open and tracks it.
+  open and tracks it. The exception covers only this credential and ends when Hernán's
+  investigation verifies or removes the account.
 
 ## 6. Data
 **Affected entity:** `Project` (`frontend/src/types/project.ts`, `frontend/src/data/projects.ts`).
@@ -313,7 +314,7 @@ card already publishes on purpose.
 | # | Where | Finding | Handling |
 |---|---|---|---|
 | D-1 | FlyWorkFlow card vs profile | Card: "Next.js 14", no NestJS / Lambda / Prisma / PostgreSQL / S3. Profile: Next.js 16, NestJS 11, Lambda + API Gateway + SAM, Prisma + PostgreSQL, S3 | Fixed by §6, §7 (AC-001-01, -02) |
-| D-2 | FlyWorkFlow card vs repo README | Card publishes a Super Admin account; the repo README lists only Admin and Member (ASM-008) | Owner decision (OQ-001-05): kept unchanged, not audited, listed as "owner investigation pending"; ASM-008 open outside 001; Title III exception at G-Spec (OQ-001-15) |
+| D-2 | FlyWorkFlow card vs repo README | Card publishes a Super Admin account; the repo README lists only Admin and Member (ASM-008) | Owner decision (OQ-001-05): kept unchanged, not audited, listed as "owner investigation pending"; ASM-008 open outside 001; one-off Title III exception confirmed at G-Spec (OQ-001-15) |
 | D-3 | Slicing Edge card vs profile | AI assistant is mid-list; card lists React, Tailwind CSS, Google OAuth and Docker as chips but not Prisma, Upstash Redis, Turborepo or the LLM | Fixed by §6, §7 (AC-001-06, -07) |
 | D-4 | Slicing Edge repo README | The demo accounts are documented as "Test accounts (after seed)" for local development; production validity unknown | Audit; all accounts stay publishable, including Admin (OQ-001-12: non-real data, Stripe test mode) |
 | D-5 | Sushi Burrito Web card vs profile | Card: "WebSockets", "SQL", "Vanilla.js"; profile: Socket.IO, MySQL, "Vanilla JS", plus Vite, Sequelize, Nginx, DigitalOcean | Fixed by §6 (OQ-001-01 = yes) |
@@ -480,10 +481,11 @@ reviewer. Each AC names its verification.
 | OQ-001-12 | OQ | Publish Admin accounts for demos with open public sign-up (Slicing Edge)? | Hernán | Closed 2026-11-27: yes; all Slicing Edge demo accounts stay publishable, including Admin (ASM-001-13), subject to the audit |
 | OQ-001-13 | OQ | Keep publishing usernames on their current domains? | Hernán | Closed 2026-11-27: keep exactly as they are (owner states they are not real domains); no reseed follow-up |
 | OQ-001-14 | OQ | Fix the light-theme contrast of the accent card buttons in 001? | Hernán | Closed 2026-11-27: no; DEBT-021, target spec 004 |
-| OQ-001-15 | OQ | Keeping the FlyWorkFlow Super Admin on the card without verification (OQ-001-05) departs from constitution Title III ("Demo credentials are published only after they are verified"). Confirm it as a one-off, named exception for this spec? | Hernán | **Open — decide at G-Spec.** Recommended: confirm as a one-off exception scoped to this one credential (like spec 000's NFR-007 exception), tracked by ASM-008, with no constitution amendment; it ends when Hernán's investigation verifies or removes the account. Alternative: remove the credential until it is verified |
+| OQ-001-15 | OQ | Keeping the FlyWorkFlow Super Admin on the card without verification (OQ-001-05) departs from constitution Title III ("Demo credentials are published only after they are verified"). Confirm it as a one-off, named exception for this spec? | Hernán | Closed 2026-11-27 (G-Spec): confirmed as a one-off owner exception to constitution Title III for the FlyWorkFlow Super Admin credential only, tracked by ASM-008, with no constitution amendment; it ends when Hernán's investigation verifies or removes the account |
 
 ## 12. Change log
 | Version | Date | Change | Approved by |
 |---|---|---|---|
 | 0.1 | 2026-11-27 | Initial draft from the roadmap row, FR-014/015/016/019, the profile README (fetched 2026-11-27) and the four project READMEs | — |
 | 0.2 | 2026-11-27 | Applied CL-01 … CL-19 and the owner's answers: all four cards aligned; stacks and copy approved; 16 icon labels via Simple Icons or a generic icon (≤ 2 tasks) and a map-key test; Sushi Burrito Web confirmed as a demo clone; Super Admin kept, not audited, ASM-008 open (OQ-001-15 for the Title III exception); Slicing Edge accounts kept; BR-A1 promoted to BR-008; curl-based latency and link methods; audit summary block read by unit tests and a named recorded-verification exception; token pairs, aria-hidden middle dot, NFR-004 checks; DEBT-013 folded in; documentation deliverables and NFR header completed; DEBT-021 … DEBT-023 logged | Answers: Hernán 2026-11-27 · G-Spec pending |
+| 1.0 | 2026-11-27 | Approved at G-Spec. OQ-001-15 closed: one-off Title III exception for the FlyWorkFlow Super Admin only (ASM-008, no constitution amendment); §5 and §8.3 D-2 reworded to match. OQ-001-11 stays open (blocks only the latency tasks) | Hernán (G-Spec) |
