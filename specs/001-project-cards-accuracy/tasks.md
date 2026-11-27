@@ -69,7 +69,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: 636df58 · Verify → exit 0 (37/37 tests; 24 files; 12 fill="white"); red 37
     failed first; 91/91 all tests; format, lint, typecheck, build OK
 
-- [ ] **T-05** — Icons, part 2 of 2: author `generic-tech.svg` / `generic-tech-dark.svg` (original
+- [x] **T-05** — Icons, part 2 of 2: author `generic-tech.svg` / `generic-tech-dark.svg` (original
   24×24 cube outline, `<title>Technology</title>`); add the keys `aws lambda`, `amazon s3`,
   `llm tool calling (groq)` (→ generic) and `vanilla js` (→ `javascript.svg`); extend the test to
   every label of every stack in `projects.ts` plus the explicit list of the 16 D-10 labels.
@@ -80,6 +80,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     grep -q "<title>Technology</title>" frontend/public/assets/icons/tech/generic-tech.svg &&
     grep -c "AC-001-05" frontend/src/utils/techIcons.test.ts`
   - Depends on: T-02, T-04
+  - Evidence: 7699e85 · Verify → exit 0 (123/123 tests; title found; grep 16); red 16 failed
+    first; 177/177 all tests; format, lint, typecheck, build OK
 
 ## Phase B — i18n and card UI
 
