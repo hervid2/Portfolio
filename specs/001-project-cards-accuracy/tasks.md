@@ -102,7 +102,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: 850fe26 · Verify → exit 0 (9/9 tests; grep 3); red 2 failed first (pin);
     R-7 occurred → setup.ts shim; 181/181 all tests; format, lint, typecheck, build OK
 
-- [ ] **T-07** [P] — Create `ProjectKindLabel` (plan §1.5: `<p>`, chip palette, `rounded-md`,
+- [x] **T-07** [P] — Create `ProjectKindLabel` (plan §1.5: `<p>`, chip palette, `rounded-md`,
   "·" in `aria-hidden="true"` with spaces outside) and its test (EN/ES per kind, `aria-hidden`).
   - AC: AC-001-09 (component)
   - Files: `frontend/src/components/ui/ProjectKindLabel.tsx`,
@@ -110,6 +110,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `npm test --prefix frontend -- src/components/ui/ProjectKindLabel.test.tsx &&
     ! grep -n "motion" frontend/src/components/ui/ProjectKindLabel.tsx`
   - Depends on: T-01, T-06
+  - Evidence: c60fc42 · Verify → exit 0 (7/7 tests; no "motion" in source); red first (module
+    missing); 188/188 all tests; format, lint, typecheck, build OK; browser check → validation
 
 - [ ] **T-08** [P] — Create `ColdStartNotice` (`<p role="note">`, `text-xs text-text-secondary`)
   and its test (K-04 EN/ES).
