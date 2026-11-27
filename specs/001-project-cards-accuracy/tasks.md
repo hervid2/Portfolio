@@ -113,7 +113,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: c60fc42 · Verify → exit 0 (7/7 tests; no "motion" in source); red first (module
     missing); 188/188 all tests; format, lint, typecheck, build OK; browser check → validation
 
-- [ ] **T-08** [P] — Create `ColdStartNotice` (`<p role="note">`, `text-xs text-text-secondary`)
+- [x] **T-08** [P] — Create `ColdStartNotice` (`<p role="note">`, `text-xs text-text-secondary`)
   and its test (K-04 EN/ES).
   - AC: AC-001-17 (component)
   - Files: `frontend/src/components/ui/ColdStartNotice.tsx`,
@@ -121,6 +121,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `npm test --prefix frontend -- src/components/ui/ColdStartNotice.test.tsx &&
     ! grep -n "motion" frontend/src/components/ui/ColdStartNotice.tsx`
   - Depends on: T-06
+  - Evidence: af9a095 · Verify → exit 0 (3/3 tests; no "motion" in source); red first (module
+    missing); 191/191 all tests; format, lint, typecheck, build OK; browser check → T-09/validation
 
 - [ ] **T-09** — Extract `ProjectCardBody` from `ProjectCard` and render, in order: kind label,
   title, description, stack, footer `mt-auto flex flex-col gap-3` (notice when
