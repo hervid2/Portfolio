@@ -10,6 +10,7 @@ export const projects: Project[] = [
     },
     stack: ["Java", "Spring Boot", "Swing", "SQL"],
     category: "Desktop",
+    kind: "client",
     imageUrl: "/assets/images/projects/java-desktop-app.webp",
     previewVideoUrl: "/assets/videos/projects/java-desktop-app.mp4",
     liveDemoUrl: null,
@@ -28,6 +29,7 @@ export const projects: Project[] = [
     },
     stack: ["Vanilla.js", "Node.js", "Express", "WebSockets", "SQL"],
     category: "Web SPA",
+    kind: "client",
     imageUrl: "/assets/images/projects/sushi-burrito-web-app.webp",
     previewVideoUrl: "/assets/videos/projects/sushi-burrito-spa.mp4",
     liveDemoUrl: "https://sushi-burrito-final.vercel.app/",
@@ -70,6 +72,7 @@ export const projects: Project[] = [
       "GitHub Actions"
     ],
     category: "E-commerce",
+    kind: "personal",
     imageUrl: "/assets/images/projects/slicing-edge.png",
     previewVideoUrl: "/assets/videos/projects/the-slicing-edge.mp4",
     liveDemoUrl: "https://slicing-edge-e-commerce-web.vercel.app/",
@@ -107,6 +110,7 @@ export const projects: Project[] = [
       "GitHub Actions"
     ],
     category: "Web App",
+    kind: "personal",
     imageUrl: "/assets/images/projects/flyworkflow.webp",
     previewVideoUrl: "/assets/videos/projects/flyworkflow-incidents.mp4",
     liveDemoUrl: "https://flyworkflowapp.vercel.app/",
