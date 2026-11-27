@@ -1,18 +1,21 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-26, spec 000 closed)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, PE-01 fixed)
 
 ## Current status
-- **Stage:** G5 · Spec 000 **Implemented** (PR #4 merged e11bf10; validation APPROVED ×3).
-- **Branch:** `chore/000-closeout` (closeout docs + C-02 + CI filter; push and PR pending).
+- **Stage:** G5 · Spec 000 **Implemented** (PR #4, closeout PR #5 merged f86dcf8).
+- **Branch:** `fix/api-runtime-advisories` (BUG PE-01, G-Merge approved 2026-11-27; pushed,
+  Hernán opens the PR as draft). Runtime advisories in api 9 → 2; rest = DEBT-019 (majors).
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
-- **Next step (new session):** `/bug` PE-01 (9 runtime npm advisories in api, 1 critical:
-  proxy-addr; most fixable by `npm audit fix`) and `/bug` PE-02 (no `trust proxy` behind nginx →
-  shared rate limit, Turnstile gets proxy IP). Both live in production. Then spec 001.
+- **Next step:** after PR merge, send one real contact form submit (Resend path, QS-B-03).
+  Then `/bug` PE-02 (no `trust proxy` behind nginx → shared rate limit, Turnstile gets proxy
+  IP). Then spec 001. Spec 009 (mail fallback, DEBT-020) is Planned for later.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
 - ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; the upgrade is optional (DEBT-007).
 - ADR-0004: native SVG architecture maps for all 4 projects (PO-12, new scope).
+- Mail: Resend is primary in production; nodemailer must become a real runtime fallback
+  (spec 009). Today the provider is picked once at startup by config (DEBT-020).
 - CV: Google Drive `/view` links by language (BR-005). Email: copy button only, no `mailto`.
 - Pre-rendered HTML is EN only (ASM-010). Coverage is reported, not gated (ASM-011).
 - Out of scope: the oakfern dashboard (OQ-003) and the custom domain for now (OQ-004).
@@ -29,6 +32,8 @@
   by the auto-mode classifier → Hernán opens PRs (as **draft** until G-Merge).
 - Cloning `sushiBurritoJava` on Windows fails on long paths. Use `git show HEAD:<file>`.
 - Playwright MCP uses installed Chrome; it creates `.playwright-mcp/` (gitignored).
+- `npm audit fix` takes the newest in-range version (resend 6.41.0 was 6 h old): check publish
+  date and provenance. A parent pin (express → qs) may need `npm update <parent>`.
 - LinkedIn cannot be read automatically: Hernán pastes posts if they are needed.
 - Production API: `api-portfolio.hernan-cardona.com` (`/health` 200). Frontend: `portfolio-hernan-cardona.vercel.app`.
 
