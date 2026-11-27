@@ -44,13 +44,14 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Depends on: T-01
   - Evidence: a3ad812 · Verify → exit 0 (9/9 tests; grep none); red 6 failed first; 45/45 all
 
-- [ ] **T-03** — Replace the four EN/ES descriptions with K-10 … K-17 (byte for byte); add the
+- [x] **T-03** — Replace the four EN/ES descriptions with K-10 … K-17 (byte for byte); add the
   description tests (exact copy, no "Next.js 14", FlyWorkFlow terms, Slicing Edge first sentence).
   - AC: AC-001-02, AC-001-04, AC-001-06 (U)
   - Files: `frontend/src/data/projects.ts`, `frontend/src/data/projects.test.ts`
   - Verify: `npm test --prefix frontend -- src/data/projects.test.ts &&
     ! grep -rn "Next.js 14" frontend/src`
   - Depends on: T-02
+  - Evidence: eefc79f · Verify → exit 0 (18/18 tests; grep none); red 9 failed first; 54/54 all
 
 - [ ] **T-04** [P] — Icons, part 1 of 2: copy the 12 Simple Icons glyphs from
   `simple-icons@16.37.0` (plan §1.3 table, light file unchanged, `-dark` with `fill="white"`);
