@@ -23,7 +23,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 
 ## Phase A — Data model and content
 
-- [ ] **T-01** — Add `ProjectKind` and the required `kind` plus optional `coldStartNotice` to
+- [x] **T-01** — Add `ProjectKind` and the required `kind` plus optional `coldStartNotice` to
   `Project` (plan §1.1); set `kind` on the four projects per BR-006; create
   `frontend/src/data/projects.test.ts` with the kind test and the `@ts-expect-error` fixture
   (every required field except `kind`, used in an assertion).
@@ -33,6 +33,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `npm test --prefix frontend -- src/data/projects.test.ts &&
     npm run typecheck --prefix frontend && grep -c "AC-001-08" frontend/src/data/projects.test.ts`
   - Depends on: — (G-Plan approved 2026-11-27)
+  - Evidence: 5012f6f · Verify → exit 0 (2/2 tests; typecheck 0; grep 5); kind? mutation → TS2578
 
 - [ ] **T-02** — Replace the four stacks with the approved lists of spec §6 (order exact, no
   versions); add the stack tests.
