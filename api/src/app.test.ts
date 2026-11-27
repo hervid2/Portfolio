@@ -64,6 +64,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await new Promise<void>((resolve) => server.close(() => resolve()));
+  // Unstub only at the end: the app module reads its config once, at import time.
   vi.unstubAllEnvs();
 });
 
@@ -73,7 +74,9 @@ describe("BUG-api-trust-proxy app trust proxy setting", () => {
 
     expect(trustProxy("127.0.0.1", 0)).toBe(true);
     expect(trustProxy("::1", 0)).toBe(true);
+    expect(trustProxy("::ffff:127.0.0.1", 0)).toBe(true);
     expect(trustProxy("203.0.113.7", 0)).toBe(false);
+    expect(trustProxy("10.0.0.1", 0)).toBe(false);
   });
 });
 

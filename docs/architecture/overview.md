@@ -55,6 +55,13 @@ flowchart LR
     `proxy_set_header X-Real-IP $remote_addr;`. The app sets `trust proxy` to `loopback`, so
     `request.ip` (rate limit, Turnstile `remoteip`) is the visitor. Any change to the proxy
     topology (a CDN, a remote proxy, another hop) requires revisiting `trust proxy`.
+    - **Ordering rule:** the nginx `proxy_set_header X-Forwarded-For $remote_addr;` change must
+      be live before this code deploys. With the default nginx config, a client-sent
+      `X-Forwarded-For` is forwarded and trusted, so clients can rotate spoofed values and
+      bypass the contact rate limit.
+    - **Verify:** `sudo nginx -T | grep proxy_set_header` shows both headers set to
+      `$remote_addr`; six `curl -H 'X-Forwarded-For: 1.2.3.4'` POSTs to `/api/contact`, each
+      with a different spoofed value, must still end in `429`.
 - **Observability:** None beyond host logs (debt DEBT-003).
 
 ## Testing strategy

@@ -11,6 +11,8 @@ export const app = express();
 // Production: one nginx on the same host proxies to localhost:4000 and sets X-Forwarded-For.
 // Trust only loopback peers, so request.ip is the visitor (rate limit, Turnstile remoteip).
 // Fail-safe: a non-loopback peer is never trusted. Revisit if the proxy topology changes.
+// Precondition: nginx must overwrite X-Forwarded-For with $remote_addr; otherwise a
+// client-sent value is forwarded, trusted and bypasses the rate limit.
 app.set("trust proxy", "loopback");
 
 app.use(helmet());
