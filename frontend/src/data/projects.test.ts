@@ -65,17 +65,17 @@ const APPROVED_STACK_BY_ID: Record<string, string[]> = {
 const MAX_STACK_CHIPS = 10;
 
 /**
- * Returns the stack of the project with the given id.
+ * Returns the project with the given id.
  *
  * @param id - The project id.
- * @returns The project's stack labels.
+ * @returns The matching project.
  */
-function stackOf(id: string): string[] {
+function projectById(id: string): Project {
   const project = projects.find((candidate) => candidate.id === id);
   if (!project) {
     throw new Error(`Unknown project id: ${id}`);
   }
-  return project.stack;
+  return project;
 }
 
 /**
@@ -107,11 +107,13 @@ describe("AC-001-08 project kind", () => {
 
 describe("AC-001-01 FlyWorkFlow stack", () => {
   it("AC-001-01 the FlyWorkFlow stack equals the approved §6 list in order", () => {
-    expect(stackOf("flyworkflow-incidents")).toEqual(APPROVED_STACK_BY_ID["flyworkflow-incidents"]);
+    expect(projectById("flyworkflow-incidents").stack).toEqual(
+      APPROVED_STACK_BY_ID["flyworkflow-incidents"]
+    );
   });
 
   it("AC-001-01 the FlyWorkFlow stack names the backend, data and AWS chips", () => {
-    const stack = stackOf("flyworkflow-incidents");
+    const stack = projectById("flyworkflow-incidents").stack;
     for (const label of ["Next.js", "NestJS", "Prisma", "PostgreSQL", "AWS Lambda", "Amazon S3"]) {
       expect(stack).toContain(label);
     }
@@ -122,7 +124,7 @@ describe("AC-001-03 other project stacks", () => {
   it.each(["java-desktop-app", "sushi-burrito-spa", "the-slicing-edge"])(
     "AC-001-03 the %s stack equals the approved §6 list in order",
     (id) => {
-      expect(stackOf(id)).toEqual(APPROVED_STACK_BY_ID[id]);
+      expect(projectById(id).stack).toEqual(APPROVED_STACK_BY_ID[id]);
     }
   );
 
@@ -135,7 +137,7 @@ describe("AC-001-03 other project stacks", () => {
 
 describe("AC-001-07 Slicing Edge LLM chip", () => {
   it("AC-001-07 the Slicing Edge stack contains 'LLM tool calling (Groq)'", () => {
-    expect(stackOf("the-slicing-edge")).toContain("LLM tool calling (Groq)");
+    expect(projectById("the-slicing-edge").stack).toContain("LLM tool calling (Groq)");
   });
 });
 
@@ -183,20 +185,6 @@ const SLICING_EDGE_FIRST_SENTENCE_TERMS = ["Llama 3.3 70B", "Groq", "tool callin
  * (grep for that version across frontend/src) only flags data, never this test.
  */
 const STALE_NEXT_VERSION = ["Next.js", "14"].join(" ");
-
-/**
- * Returns the project with the given id.
- *
- * @param id - The project id.
- * @returns The matching project.
- */
-function projectById(id: string): Project {
-  const project = projects.find((candidate) => candidate.id === id);
-  if (!project) {
-    throw new Error(`Unknown project id: ${id}`);
-  }
-  return project;
-}
 
 /**
  * Returns the first sentence of a text: everything up to the first period followed by
