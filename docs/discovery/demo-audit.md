@@ -6,7 +6,10 @@
 > decision done (T-17, 3 of 3 samples, no notice on any project)**. The close (T-18) is
 > pending. Section 6 is not final yet. Owner decisions of 2026-11-27 (spec v1.3): the Slicing
 > Edge accounts stay published as an owner exception (OQ-001-16); the FlyWorkFlow Super Admin
-> is owner-verified (ASM-008 closed, no audit login).
+> is owner-verified (ASM-008 closed, no audit login). **Slicing Edge re-audit (T-14a,
+> 2026-11-27 21:49 UTC-5) stopped under B-E3:** the Admin login now works but lands on
+> possible production data; the Customer was not tested. Escalated to Hernán; T-18 waits for
+> his decision (section 4.3, section 5).
 
 ## 1. Header
 
@@ -291,7 +294,17 @@ day):
   was copied; no screenshot was taken. The MCP's logged-in page snapshots were moved out of the
   repository folder to the session scratchpad.
 
-### 4.3 The Slicing Edge (`the-slicing-edge`) — T-14
+### 4.3 The Slicing Edge (`the-slicing-edge`) — T-14, re-audit T-14a
+
+Current result (T-14a, the re-audit after the owner reported the login fixed). The T-14 rows
+below it are kept as history.
+
+| Role label (card) | Username | Result | Observed role / landing page | Published |
+|---|---|---|---|---|
+| Admin / Administrador | `admin@slicing-edge.com` | **possible production data** (B-E3) — T-14a, 2026-11-27 21:49 UTC-5, single attempt, login succeeded; logged out at once | Lands on `/admin` "Admin Dashboard"; header badge shows the role explicitly: "Admin"; admin menu (Dashboard, Products, Orders, Users). The recent-orders list shows real-looking customer names and an email address (not copied). Logout OK (21:50, back to `/`) | yes (owner exception, OQ-001-16) — **owner decision pending** (B-E3 escalation; spec §4.3 B-E3 says remove) |
+| Customer / Cliente | `customer@example.com` | **not tested** — T-14a run stopped after the B-E3 finding on Admin; no attempt made | — | yes (owner exception, OQ-001-16) — owner decision pending |
+
+History (T-14, first run):
 
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
@@ -310,6 +323,29 @@ T-14 notes (Playwright MCP, 2026-11-27 19:37 UTC-5; Hernán's go-ahead given the
 - Open sign-up and guest checkout were left untouched. Nothing was copied; no screenshot was
   taken. The MCP's page snapshots of this run (public pages and the login form only) were moved
   out of the repository folder to the session scratchpad; the browser was closed.
+
+T-14a notes (re-audit, Playwright MCP, 2026-11-27 21:49 – 21:50 UTC-5; Hernán's go-ahead given
+the same day, after he reported that he fixed the login in the Slicing Edge project):
+- A new audit run for these two accounts only (BR-008: one attempt per account per run). Email
+  and password only, with the passwords published in `projects.ts`, on `/auth/login`;
+  "Continue with Google", "Forgot password?" and "Create one" were not used.
+- Admin: the login succeeded on the single attempt and redirected to `/admin`. The role is shown
+  explicitly (header badge "Admin"), and the route, heading and menu are admin-only, matching the
+  card label. The landing view's recent-orders list shows customer names and an email address
+  that look like real people's data, next to store counters. Under B-E3 the auditor signed out at
+  once with the header "Sign out" button (21:50, back to the public home `/`), clicked nothing
+  else, and copied none of it: no name, address, order number or amount is recorded here.
+- Customer: not attempted. The brief for T-14a says to stop at a B-E3 finding, so the run ended
+  after the Admin logout. The account stays untested in this run.
+- Read-only: no cart, checkout, edit, product, order, user, search or AI-assistant control and no
+  other form was used. After the logout the public header showed a cart badge "1", which the
+  auditor did not create or open.
+- No screenshot was taken. The MCP's three page snapshots of this run (login form, the logged-in
+  admin view, the public home after logout) were moved out of the repository folder to the
+  session scratchpad (`t14a-playwright`); the browser was closed and no process is left running.
+- Owner context: OQ-001-12 / ASM-001-13 state that all Slicing Edge data is non-real. The
+  auditor cannot confirm that from the page, so the B-E3 rule applies as written; Hernán decides
+  (section 5).
 
 ### 4.4 FlyWorkFlow (`flyworkflow-incidents`) — T-15
 
@@ -359,6 +395,16 @@ Preflight findings (T-18 completes this section):
   accounts, then re-audit with a short `/bug` in this repo, which lifts the exception. Likely
   causes to check (not verified): the production database was never seeded with these users, it
   was reseeded with other passwords, or a visitor changed them (CL-17).
+- **Slicing Edge re-audit (T-14a, 2026-11-27 21:49 UTC-5) — possible production data,
+  escalated (B-E3):** after the owner's fix the Admin login works (role "Admin", `/admin`), but
+  the admin dashboard's recent-orders list shows real-looking customer names and an email
+  address (not copied). The auditor logged out at once and stopped the run; the Customer account
+  was not tested. OQ-001-16 stays open in practice and OF-1 stays Open. Hernán decides: (a)
+  confirm the orders are test data (ASM-001-13) and give a go-ahead for a new run (Customer
+  login, and Admin again only if he wants it re-verified); (b) clean or reseed the Slicing Edge
+  orders so the admin view holds only demo data, then re-audit; or (c) remove the Admin
+  credential from the card (spec §4.3 B-E3). Until then T-18 does not start (its dependency
+  "no unresolved B-E3 escalation").
 - **Sushi Burrito Web bundle (other repo, informational):** the public bundle contains the
   SweetAlert2 "protestware" snippet (reference to an anthem `.mp3` on `flag-gimn.ru`), which some
   SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
