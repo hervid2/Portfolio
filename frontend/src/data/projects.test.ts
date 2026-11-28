@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { projects } from "@/data/projects";
@@ -246,6 +248,144 @@ describe("AC-001-06 Slicing Edge AI assistant first", () => {
     expect(sentence.slice(0, start.length)).toBe(start);
     for (const term of SLICING_EDGE_FIRST_SENTENCE_TERMS) {
       expect(sentence).toContain(term);
+    }
+  });
+});
+
+/** Shape of the machine-readable summary in `docs/discovery/demo-audit.md` (spec 001 §8.2). */
+interface AuditSummary {
+  auditDate: string;
+  verifiedUsernames: Record<string, string[]>;
+  ownerExceptionUsernames: Record<string, string[]>;
+  coldStartProjectIds: string[];
+}
+
+/** Absolute path of the demo audit deliverable (spec 001 §8.2). */
+const AUDIT_PATH = resolve(__dirname, "../../../docs/discovery/demo-audit.md");
+
+/** The six §8.2 section headings, in order (AC-001-13). */
+const AUDIT_HEADINGS = [
+  "## 1. Header",
+  "## 2. Method",
+  "## 3. Per-project results",
+  "## 4. Credentials",
+  "## 5. Findings and follow-ups for Hernán",
+  "## 6. Machine-readable summary"
+];
+
+/** The exact keys of the summary block (plan §4: extra or missing keys fail). */
+const AUDIT_SUMMARY_KEYS = [
+  "auditDate",
+  "ownerExceptionUsernames",
+  "coldStartProjectIds",
+  "verifiedUsernames"
+].sort();
+
+/** The one owner-exception credential, unchanged (OQ-001-15, AC-001-15). */
+const OWNER_EXCEPTION_CREDENTIAL = {
+  role: { en: "Super Admin", es: "Superadministrador" },
+  username: "camila.rojas@flyworkflow.io",
+  password: "FlyWorkFlow2026!"
+};
+
+/** The audit document's text. */
+const auditText = readFileSync(AUDIT_PATH, "utf8");
+
+/**
+ * Parses the last fenced `json` block of the audit document (plan §4).
+ *
+ * @param text - The audit document's text.
+ * @returns The parsed summary object.
+ */
+function parseAuditSummary(text: string): AuditSummary {
+  const blocks = [...text.matchAll(/```json\r?\n([\s\S]*?)```/g)];
+  const last = blocks.at(-1);
+  if (!last) {
+    throw new Error("No json block in demo-audit.md");
+  }
+  return JSON.parse(last[1]) as AuditSummary;
+}
+
+/** The parsed audit summary. */
+const auditSummary = parseAuditSummary(auditText);
+
+/**
+ * Returns the published usernames of a project, sorted.
+ *
+ * @param project - The project.
+ * @returns Its credential usernames, sorted.
+ */
+function publishedUsernames(project: Project): (string | null)[] {
+  return (project.demoCredentials ?? []).map((credential) => credential.username).sort();
+}
+
+describe("AC-001-13 demo audit document", () => {
+  it("AC-001-13 has the six §8.2 headings in order", () => {
+    const lines = auditText.split(/\r?\n/).map((line) => line.trimEnd());
+    const headings = lines.filter((line) => line.startsWith("## "));
+    expect(headings).toEqual(AUDIT_HEADINGS);
+  });
+
+  it("AC-001-13 the summary has exactly the §8.2 keys and a valid auditDate", () => {
+    expect(Object.keys(auditSummary).sort()).toEqual(AUDIT_SUMMARY_KEYS);
+    expect(auditSummary.auditDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    const parsed = new Date(`${auditSummary.auditDate}T00:00:00Z`);
+    expect(parsed.toISOString().slice(0, 10)).toBe(auditSummary.auditDate);
+  });
+
+  it("AC-001-13 verifiedUsernames has an entry for every project id", () => {
+    const ids = projects.map((project) => project.id).sort();
+    expect(Object.keys(auditSummary.verifiedUsernames).sort()).toEqual(ids);
+  });
+});
+
+describe("AC-001-14 published credentials match the audit", () => {
+  it.each(projects.map((project) => project.id))(
+    "AC-001-14 %s publishes exactly the verified plus owner-exception usernames",
+    (id) => {
+      const expected = [
+        ...(auditSummary.verifiedUsernames[id] ?? []),
+        ...(auditSummary.ownerExceptionUsernames[id] ?? [])
+      ].sort();
+      expect(publishedUsernames(projectById(id))).toEqual(expected);
+    }
+  );
+});
+
+describe("AC-001-15 owner-exception credential", () => {
+  it("AC-001-15 the exception set is exactly the FlyWorkFlow Super Admin", () => {
+    expect(auditSummary.ownerExceptionUsernames).toEqual({
+      "flyworkflow-incidents": [OWNER_EXCEPTION_CREDENTIAL.username]
+    });
+  });
+
+  it("AC-001-15 the Super Admin is published with its role label and password unchanged", () => {
+    const credentials = projectById("flyworkflow-incidents").demoCredentials ?? [];
+    const superAdmin = credentials.find(
+      (credential) => credential.username === OWNER_EXCEPTION_CREDENTIAL.username
+    );
+    expect(superAdmin).toEqual(OWNER_EXCEPTION_CREDENTIAL);
+  });
+
+  it("AC-001-15 the owner-exception username is not in verifiedUsernames", () => {
+    const verified = Object.values(auditSummary.verifiedUsernames).flat();
+    expect(verified).not.toContain(OWNER_EXCEPTION_CREDENTIAL.username);
+  });
+});
+
+describe("AC-001-16 cold-start notice flags", () => {
+  it.each(projects.map((project) => project.id))(
+    "AC-001-16 %s sets coldStartNotice exactly when listed in coldStartProjectIds",
+    (id) => {
+      const expected = auditSummary.coldStartProjectIds.includes(id);
+      expect(projectById(id).coldStartNotice === true).toBe(expected);
+    }
+  );
+
+  it("AC-001-16 every coldStartProjectIds entry is a known project id", () => {
+    const ids = projects.map((project) => project.id);
+    for (const id of auditSummary.coldStartProjectIds) {
+      expect(ids).toContain(id);
     }
   });
 });

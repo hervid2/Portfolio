@@ -3,8 +3,9 @@
 > Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13); Slicing Edge logins
 > done (T-14, both failed); FlyWorkFlow logins done (T-15, Super Admin excluded); latency
 > session 1 done (T-16, 2 of 3 samples per endpoint); latency session 2 and `coldStartNotice`
-> decision done (T-17, 3 of 3 samples, no notice on any project)**. The close (T-18) is
-> pending. Section 6 is not final yet. Owner decisions of 2026-11-27: the FlyWorkFlow Super
+> decision done (T-17, 3 of 3 samples, no notice on any project); audit closed (T-18,
+> 2026-11-27, no live access): section 5 complete, section 6 final and applied to
+> `projects.ts`**. Owner decisions of 2026-11-27: the FlyWorkFlow Super
 > Admin is owner-verified (ASM-008 closed, no audit login; spec v1.3). **Slicing Edge re-audit
 > complete (T-14a 21:49, T-14b 21:54 UTC-5): both accounts verified.** The T-14a B-E3
 > escalation was resolved by the owner (the admin "Recent Orders" are his own test data,
@@ -269,7 +270,8 @@ So `coldStartProjectIds` will be `[]` (T-18 writes it in section 6 and applies i
 
 ## 4. Credentials
 
-Prepared for T-13 … T-15. Result column is empty until the login task for that demo runs.
+Filled by T-13 … T-15 (Slicing Edge re-audit T-14a / T-14b). Every published credential has a
+result; the close (T-18) applies them to `projects.ts` through section 6.
 
 ### 4.1 Sushi Burrito Desktop (`java-desktop-app`)
 
@@ -408,7 +410,18 @@ day):
 
 ## 5. Findings and follow-ups for Hernán
 
-Preflight findings (T-18 completes this section):
+Completed at T-18 (2026-11-27, from the records above; no new login or request to the demos).
+
+**Audit result (T-18):** 8 published credentials on 4 cards. 7 are `verified` in this run
+(Sushi Burrito Web Admin, Kitchen, Waiter at T-13; Slicing Edge Admin at T-14a and Customer at
+T-14b; FlyWorkFlow Admin and Member at T-15); 1 is the owner exception (FlyWorkFlow Super Admin,
+not audited — owner-verified 2026-11-27). None is `failed` or `not tested` in the current
+results, so T-18 removes no credential from `projects.ts`. Role labels: the card labels match
+what the apps show or imply (Slicing Edge badge "Admin"; FlyWorkFlow `admin` / `member`;
+Sushi Burrito Web and the Slicing Edge Customer inferred from route, heading and menu), so no
+label changes. `coldStartNotice`: no project crossed 10 s (section 3.7), so no project sets it.
+
+Preflight and run findings:
 - **OQ-001-11 resolved (owner, 2026-11-27):** the proposal is confirmed. Sushi Burrito Web
   `GET …hernan-cardona.com/api`; Slicing Edge `GET …/api/health` + storefront home; FlyWorkFlow
   `GET …/health`. Full URLs in section 3 and spec §11.
@@ -439,13 +452,16 @@ Preflight findings (T-18 completes this section):
   SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
   Suggest pinning a SweetAlert2 version without it in `SushiBurritoFinal` (follow-up OF-4).
 
-Follow-ups required by spec §8.2 item 5 (recorded now, confirmed at T-18):
+Follow-ups required by spec §8.2 item 5 (confirmed at T-18):
 - Add the demo accounts to the Sushi Burrito Web and Slicing Edge READMEs (OQ-001-06).
 - State in the `SushiBurritoFinal` README that the linked deployment is a demo clone with seeded
   data, separate from the restaurant's instance (suggestion, other repo; OQ-001-04; follow-up
   OF-3).
 - FlyWorkFlow Super Admin: owner-verified 2026-11-27, no audit login (ASM-008 closed, OQ-001-05,
   OQ-001-15).
+- Slicing Edge Admin and Customer failed at login (T-14), were fixed by the owner and verified
+  by the re-audit T-14a / T-14b (the T-14a B-E3 flag cleared by the owner as test data);
+  OQ-001-16 closed with no exception, follow-up OF-1 closed (spec v1.4).
 - Sushi Burrito Web: the app header does not show the signed-in role (T-13); follow-up OF-2.
 - Shared-demo integrity: any visitor can lock a FlyWorkFlow account or change a demo password;
   suggest blocking password changes for demo accounts and a scheduled reseed (CL-17).
@@ -455,17 +471,23 @@ repos)" (OF-1 … OF-4).
 
 ## 6. Machine-readable summary
 
-Provisional: only `auditDate` and `ownerExceptionUsernames` are final; T-18 fills
-`verifiedUsernames` and `coldStartProjectIds` from sections 3 and 4.
+Final (T-18, 2026-11-27). `verifiedUsernames` lists the credentials marked `verified` in
+section 4 (T-13, T-14a, T-14b, T-15); `ownerExceptionUsernames` holds only the FlyWorkFlow Super
+Admin (OQ-001-15; OQ-001-16 closed, spec v1.4); `coldStartProjectIds` comes from section 3.7
+(T-17). The unit tests in `frontend/src/data/projects.test.ts` read this block
+(AC-001-13 … AC-001-16).
 
 ```json
 {
   "auditDate": "2026-11-27",
   "verifiedUsernames": {
     "java-desktop-app": [],
-    "sushi-burrito-spa": [],
-    "the-slicing-edge": [],
-    "flyworkflow-incidents": []
+    "sushi-burrito-spa": ["admin@demo.com", "kitchen@demo.com", "waiter@demo.com"],
+    "the-slicing-edge": ["admin@slicing-edge.com", "customer@example.com"],
+    "flyworkflow-incidents": [
+      "isabela.nieto@constructoradelvalle.com",
+      "diego.salazar@constructoradelvalle.com"
+    ]
   },
   "ownerExceptionUsernames": {
     "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"]
