@@ -1,7 +1,7 @@
 # Live demo audit — spec 001
 
-> Status: **preflight done (T-12)**. Logins (T-13 … T-15), latency (T-16, T-17) and the close
-> (T-18) are pending. Nothing in sections 4 and 6 is a result yet.
+> Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13)**. Logins T-14, T-15,
+> latency (T-16, T-17) and the close (T-18) are pending. Section 6 is not final yet.
 
 ## 1. Header
 
@@ -145,9 +145,22 @@ No published credentials (flow A2).
 
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
-| Admin / Administrador | `admin@demo.com` | pending — T-13 | — | pending |
-| Kitchen / Cocina | `kitchen@demo.com` | pending — T-13 | — | pending |
-| Waiter / Mesero | `waiter@demo.com` | pending — T-13 | — | pending |
+| Admin / Administrador | `admin@demo.com` | **verified** — 2026-11-27 19:35 UTC-5, first attempt | Lands on `#admin/dashboard` "Panel administrativo" / "Dashboard Administrativo"; admin menu (Dashboard, Gestión de Usuarios, Menú y mesas, Estadísticas ventas); seeded-looking counters only. Logout OK (19:35, "Has cerrado sesión.") | yes |
+| Kitchen / Cocina | `kitchen@demo.com` | **verified** — 2026-11-27 19:35 UTC-5, first attempt | Lands on `#kitchen/orders/pending` "Pedidos Pendientes"; kitchen menu (Pendientes, En Preparación, Listos); one demo order (table number and menu items, no personal data). Logout OK (19:35) | yes |
+| Waiter / Mesero | `waiter@demo.com` | **verified** — 2026-11-27 19:35 UTC-5, first attempt | Lands on `#waiter/orders` "Gestión de Pedidos" / "Gestión de Mesas"; waiter menu (Gestión de Pedidos, Estado Pedidos, Facturar pedido); six tables, no personal data. Logout OK (19:35) | yes |
+
+T-13 notes (Playwright MCP, 2026-11-27 19:34 – 19:35 UTC-5; Hernán's go-ahead given the same
+day):
+- One login attempt per account; all three succeeded on the first try, so no retry question
+  arose. After each login only the landing view was read (accessibility snapshot); no menu link,
+  create / edit / status / invoice button, password-reset link or other form was used. Each
+  session ended with "Cerrar Sesión"; the browser was closed afterwards.
+- The app shows no explicit role name; the role is inferred from the landing route
+  (`#admin/…`, `#kitchen/…`, `#waiter/…`), the page heading and the menu. The card labels
+  (Admin, Kitchen, Waiter) match these views.
+- No real-looking personal or business data on any landing view (B-E3 not triggered). Nothing
+  was copied; no screenshot was taken. The MCP's logged-in page snapshots were moved out of the
+  repository folder to the session scratchpad.
 
 ### 4.3 The Slicing Edge (`the-slicing-edge`) — T-14
 
