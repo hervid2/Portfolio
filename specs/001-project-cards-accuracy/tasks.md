@@ -124,7 +124,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: af9a095 · Verify → exit 0 (3/3 tests; no "motion" in source); red first (module
     missing); 191/191 all tests; format, lint, typecheck, build OK; browser check → T-09/validation
 
-- [ ] **T-09** — Extract `ProjectCardBody` from `ProjectCard` and render, in order: kind label,
+- [x] **T-09** — Extract `ProjectCardBody` from `ProjectCard` and render, in order: kind label,
   title, description, stack, footer `mt-auto flex flex-col gap-3` (notice when
   `coldStartNotice`, then `ProjectCardActions`). Create `ProjectCard.test.tsx`: Slicing Edge EN
   description starts "AI shopping assistant"; EN → ES rerender switches label, description and
@@ -137,6 +137,9 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     (cd frontend && npx eslint --max-warnings 0 src/components/ui/ProjectCard.tsx
     src/components/ui/ProjectCardBody.tsx)`
   - Depends on: T-03, T-07, T-08
+  - Evidence: cb80941 · Verify → exit 0 (7/7 tests; eslint clean); red first (5/7 failed:
+    no label, no note); 198/198 all tests; format, lint, typecheck, build OK; browser 360/1280
+    EN/ES dark/light: 4 labels correct, no clipping, no h-scroll; only DEBT-013 + Turnstile logs
 
 - [ ] **T-10** — Grid-level tests in `PortfolioSection.test.tsx`: the four cards show the
   right kind label in EN and in ES; after clicking a category filter, every visible card still
