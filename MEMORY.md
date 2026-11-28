@@ -2,10 +2,10 @@
 
 ## Current status
 - **Stage:** G6 · Spec 001 **Planned**, implementing (v1.4) on `feat/001-project-cards-accuracy`.
-- T-01…T-17 done (incl. T-11a, T-14a, T-14b). Next: **T-18** (audit close), then T-19; G-Merge
-  on or before 2026-12-04 (audit window end).
-- Audit (`auditDate` 2026-11-27): logins 7 verified (Slicing Edge re-audit T-14a Admin, B-E3
-  cleared by owner as test data; T-14b Customer); Super Admin owner-verified (only exception).
+- T-01…T-19 done. Next: P-01 push (ask; draft PR), P-02 validate ×3, P-03 G-Merge ≤ 2026-12-04.
+- Audit closed (`auditDate` 2026-11-27): 7 logins verified (T-14a Admin: B-E3 = owner test
+  data; T-14b Customer); ASM-008 closed, Super Admin owner-verified 2026-11-27 (no login) = only
+  owner exception; no cold-start notice. DEBT-013 closed (T-11 + T-11a).
 - Owner follow-ups, other repos (OF-1 closed, OF-2…OF-4 open): `docs/roadmap.md`.
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
