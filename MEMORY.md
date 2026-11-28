@@ -4,8 +4,8 @@
 - **Stage:** G6 · Spec 001 **Planned**, implementing (v1.3) on `feat/001-project-cards-accuracy`.
 - T-01…T-16 done (incl. T-11a). Next: **T-17** latency session 2 (Hernán's go-ahead) on a later
   day, no earlier than 2026-11-28, on or before 2026-12-04 (audit window end); then T-18, T-19.
-- Audit (`auditDate` 2026-11-27): logins 5 verified, 2 failed (Slicing Edge, kept as owner
-  exception OQ-001-16), FlyWorkFlow Super Admin owner-verified (ASM-008 closed, no audit login).
+- Audit (`auditDate` 2026-11-27): logins 5 verified; Slicing Edge re-audit T-14a: Admin works
+  but showed real-looking data (B-E3, escalated), Customer untested; Super Admin owner-verified.
 - Owner follow-ups in other repos (OF-1…OF-4): `docs/roadmap.md` § "Owner follow-ups".
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.

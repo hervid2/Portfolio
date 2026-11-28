@@ -227,6 +227,20 @@ Written: 2026-11-27.
   - Evidence: 966fcf7 · Verify → exit 0; 2/2 `failed` on a single attempt each (2026-11-27
     19:37 UTC-5, "Invalid email or password"), not retried (B-E2); no Stripe indicator seen
 
+- [x] **T-14a** — **⛔ Hernán's go-ahead (given 2026-11-27).** Re-audit Slicing Edge credentials
+  after owner fix (OQ-001-16): a new audit run, one email/password attempt each for
+  `admin@slicing-edge.com` and `customer@example.com`; same rules as T-13 (BR-008, B-E2, B-E3);
+  T-14 rows kept as history.
+  - AC: AC-001-13 (rows), AC-001-18
+  - Files: `docs/discovery/demo-audit.md`
+  - Verify: `grep -q "T-14a notes" docs/discovery/demo-audit.md &&
+    grep -qE "admin@slicing-edge.com.*T-14a" docs/discovery/demo-audit.md`
+  - Depends on: T-14, owner fix (OF-1)
+  - Evidence: 2433544 · Verify → exit 0; Admin login succeeded (21:49 UTC-5, role "Admin",
+    `/admin`) but showed real-looking customer data → logged out at once, nothing copied (B-E3);
+    Customer not tested (run stopped). Escalated to Hernán; OQ-001-16 and OF-1 unchanged; T-18
+    blocked until he decides (spec §4.3 B-E3)
+
 - [x] **T-15** — **⛔ Hernán's go-ahead for the FlyWorkFlow demo.** One login attempt each for
   the Admin and Member accounts; same rules as T-13. The Super Admin row
   (`camila.rojas@flyworkflow.io`) is written as `not audited — owner investigation pending`, with
