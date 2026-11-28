@@ -300,7 +300,7 @@ Written: 2026-11-27.
   - Evidence: 7a9f7ea · Verify → exit 0; 3 of 3 samples per endpoint (session 2 2026-11-27
     21:25 – 21:47 UTC-5), all 200, max `time_total` 2.90 s (FlyWorkFlow); notice: no × 3, N/A × 1
 
-- [ ] **T-18** — Close the audit (no live access): write section 5 (at least the four spec §8.2
+- [x] **T-18** — Close the audit (no live access): write section 5 (at least the four spec §8.2
   item 5 follow-ups) and the section 6 `json` summary; set `projects.ts` from it (remove every
   `failed` / `not tested` credential **not** in `ownerExceptionUsernames`; keep the one owner
   exception unchanged: the FlyWorkFlow Super Admin (OQ-001-15); the Slicing Edge
@@ -318,6 +318,9 @@ Written: 2026-11-27.
     for id in AC-001-13 AC-001-14 AC-001-15 AC-001-16; do
     grep -q "$id" frontend/src/data/projects.test.ts || exit 1; done`
   - Depends on: T-13, T-14, T-15, T-17 (and no unresolved B-E1 / B-E3 / B-E4 escalation)
+  - Evidence: 8034497 · Verify → exit 0 (projects.test.ts 33/33; 4 AC ids found); red first
+    (3 AC-001-14 fails on the provisional summary; AC-001-15/-16 mutations caught); full suite
+    222/222, format/lint/typecheck/build exit 0; projects.ts unchanged (already matched)
 
 ## Phase D — Documentation
 
