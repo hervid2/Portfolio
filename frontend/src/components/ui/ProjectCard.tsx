@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
-import { ProjectCardActions } from "@/components/ui/ProjectCardActions";
+import { ProjectCardBody } from "@/components/ui/ProjectCardBody";
 import { ProjectCardMedia } from "@/components/ui/ProjectCardMedia";
-import { ProjectStackList } from "@/components/ui/ProjectStackList";
 import { useHoverPreviewVideo } from "@/hooks/useHoverPreviewVideo";
 import {
   gridItemVariants,
@@ -95,17 +94,13 @@ export function ProjectCard({
     >
       <ProjectCardMedia project={project} preview={preview} />
 
-      <motion.div layout="position" className="flex flex-1 flex-col gap-4 p-5">
-        <h3 className="text-xl font-bold text-text-primary">{project.title}</h3>
-        <p className="text-sm text-text-secondary">{project.description[language]}</p>
-        <ProjectStackList projectId={project.id} stack={project.stack} />
-        <ProjectCardActions
-          project={project}
-          dictionary={dictionary}
-          onOpenVideo={onOpenVideo}
-          onOpenCredentials={onOpenCredentials}
-        />
-      </motion.div>
+      <ProjectCardBody
+        project={project}
+        language={language}
+        dictionary={dictionary}
+        onOpenVideo={onOpenVideo}
+        onOpenCredentials={onOpenCredentials}
+      />
     </motion.article>
   );
 }
