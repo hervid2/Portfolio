@@ -2,10 +2,11 @@
 
 > Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13); Slicing Edge logins
 > done (T-14, both failed); FlyWorkFlow logins done (T-15, Super Admin excluded); latency
-> session 1 done (T-16, 2 of 3 samples per endpoint)**. Latency session 2 (T-17) and the close
-> (T-18) are pending. Section 6 is not final yet. Owner decisions of 2026-11-27 (spec v1.3):
-> the Slicing Edge accounts stay published as an owner exception (OQ-001-16); the FlyWorkFlow
-> Super Admin is owner-verified (ASM-008 closed, no audit login).
+> session 1 done (T-16, 2 of 3 samples per endpoint); latency session 2 and `coldStartNotice`
+> decision done (T-17, 3 of 3 samples, no notice on any project)**. The close (T-18) is
+> pending. Section 6 is not final yet. Owner decisions of 2026-11-27 (spec v1.3): the Slicing
+> Edge accounts stay published as an owner exception (OQ-001-16); the FlyWorkFlow Super Admin
+> is owner-verified (ASM-008 closed, no audit login).
 
 ## 1. Header
 
@@ -106,8 +107,8 @@ was needed (every final status was 2xx, every oEmbed 200).
 | API base URL (OQ-001-11) | `https://api-sushi-burrito.hernan-cardona.com/api` — found in the public bundle `assets/index-BoEdhW8C.js`; the login page sends no API request before login |
 | Health-route probe (GET, no auth) | `/` 404 · `/health` 404 · `/api/health` 404 · `/healthz` 404 · **`/api` 200** `{"message":"Bienvenido al API de Sushi Burrito."}` (0.56 s) |
 | **Proposed latency endpoint** | `GET https://api-sushi-burrito.hernan-cardona.com/api` (public welcome route; no dedicated health route exists). Confirmed by Hernán 2026-11-27 (OQ-001-11 closed) |
-| First-load latency samples | Session 1 (T-16): 2 of 3 samples, see §3.5; session 2 pending (T-17) |
-| `coldStartNotice` | pending (decided at T-17) |
+| First-load latency samples | 3 of 3: session 1 (T-16, §3.5) and session 2 (T-17, §3.6); max `time_total` 0.40 s |
+| `coldStartNotice` | **no** — no `time_total` sample > 10 s (T-17, §3.7) |
 
 ### 3.3 The Slicing Edge (`the-slicing-edge`)
 
@@ -119,8 +120,8 @@ was needed (every final status was 2xx, every oEmbed 200).
 | API base URL (OQ-001-11) | `https://slicing-edgeapi-production.up.railway.app/api` — observed in the browser on the public `/products` page: `GET …/api/categories` → 200. The home page is server-rendered and calls the API server-side |
 | Health-route probe (GET, no auth) | `/health` 404 · `/` 404 · **`/api/health` 200** `{"status":"ok","service":"slicing-edge-api",…}` (0.56 s) · `/docs` 200 (Swagger UI, 0.47 s) |
 | **Proposed latency endpoints** | `GET https://slicing-edgeapi-production.up.railway.app/api/health` (API) and `GET https://slicing-edge-e-commerce-web.vercel.app/` (storefront home), per ASM-001-03. Confirmed by Hernán 2026-11-27 (OQ-001-11 closed) |
-| First-load latency samples | Session 1 (T-16): 2 of 3 samples, see §3.5; session 2 pending (T-17) |
-| `coldStartNotice` | pending (decided at T-17) |
+| First-load latency samples | 3 of 3 per endpoint: session 1 (T-16, §3.5) and session 2 (T-17, §3.6); max `time_total` 0.69 s (API), 1.14 s (storefront home) |
+| `coldStartNotice` | **no** — no `time_total` sample > 10 s (T-17, §3.7) |
 
 ### 3.4 FlyWorkFlow (`flyworkflow-incidents`)
 
@@ -132,8 +133,8 @@ was needed (every final status was 2xx, every oEmbed 200).
 | API base URL | `https://50s0hvq0me.execute-api.us-east-1.amazonaws.com` — found in the public JS chunks of `/login`; the login page sends no API request before login |
 | Health-route probe (GET, no auth) | **`/health` 200** `{"status":"ok","uptime":1.71,…}` — ttfb 2.85 s, total 2.85 s; uptime 1.7 s shows a fresh Lambda (one observation, not a sample) |
 | **Proposed latency endpoint** | `GET https://50s0hvq0me.execute-api.us-east-1.amazonaws.com/health` (already named by ASM-001-03). Confirmed by Hernán 2026-11-27 (OQ-001-11 closed) |
-| First-load latency samples | Session 1 (T-16): 2 of 3 samples, see §3.5; session 2 pending (T-17) |
-| `coldStartNotice` | pending (decided at T-17) |
+| First-load latency samples | 3 of 3: session 1 (T-16, §3.5) and session 2 (T-17, §3.6); max `time_total` 2.90 s (cold Lambda) |
+| `coldStartNotice` | **no** — no `time_total` sample > 10 s (T-17, §3.7) |
 
 **Real-looking data on public pages:** none seen. Sushi Burrito Web and FlyWorkFlow show only a
 login form; Slicing Edge shows a seeded knife catalogue (product names, categories, Cloudinary
@@ -201,6 +202,65 @@ time to 20:47:30.
 - Other visitors may have warmed any backend in the 30 min gaps (best effort, ASM-001-03).
 - Last auditor traffic at the end of session 1: Sushi Burrito Web 20:47:16, Slicing Edge 20:47:30,
   FlyWorkFlow 21:16:48 (all UTC-5, 2026-11-27).
+
+### 3.6 First-load latency — Session 2 (T-17)
+
+Run 2026-11-27 21:25 – 21:47 UTC-5 by the implementer agent in a separate invocation from T-16
+(ASM-001-03), same machine, same tools, same command and same endpoints as §3.5 (public,
+unauthenticated `GET` only; no login, no form). Hernán gave the go-ahead the same day. The
+FlyWorkFlow body was again saved to a temporary file only to read `uptime`, then deleted.
+
+**Spacing.** Each sample came ≥ 30 min after the auditor's last request to that backend
+(end of session 1: Sushi Burrito Web 20:47:16, Slicing Edge 20:47:30, FlyWorkFlow 21:16:48).
+Sushi Burrito Web and Slicing Edge were eligible from 21:17:30 and were sampled at 21:25;
+FlyWorkFlow was eligible from 21:46:48 and was sampled at 21:47:08. The Slicing Edge order
+alternates again (S2-1: API then home, like S1-1). No other request was sent in this session.
+
+**Samples** (seconds; rounded to 2 decimals):
+
+| Sample | Time (UTC-5) | Project | Endpoint | time_starttransfer | time_total | http_code | Notes |
+|---|---|---|---|---|---|---|---|
+| S2-1 | 2026-11-27 21:25:41 | Sushi Burrito Web | `GET https://api-sushi-burrito.hernan-cardona.com/api` | 0.32 | 0.32 | 200 | — |
+| S2-1 | 2026-11-27 21:25:42 | The Slicing Edge | `GET https://slicing-edgeapi-production.up.railway.app/api/health` | 0.69 | 0.69 | 200 | measured before the home |
+| S2-1 | 2026-11-27 21:25:43 | The Slicing Edge | `GET https://slicing-edge-e-commerce-web.vercel.app/` | 1.08 | 1.11 | 200 | API already warmed by the row above |
+| S2-1 | 2026-11-27 21:47:08 | FlyWorkFlow | `GET https://50s0hvq0me.execute-api.us-east-1.amazonaws.com/health` | 2.90 | 2.90 | 200 | `uptime` 2.05 s → cold start (fresh Lambda) |
+
+**Warm references (not samples).** One request right after each sample; not counted.
+
+| After | Time (UTC-5) | Endpoint | time_starttransfer | time_total | http_code | Notes |
+|---|---|---|---|---|---|---|
+| S2-1 | 21:25:41 | Sushi Burrito Web `/api` | 0.24 | 0.24 | 200 | — |
+| S2-1 | 21:25:43 | Slicing Edge API `/api/health` | 0.42 | 0.42 | 200 | — |
+| S2-1 | 21:25:45 | Slicing Edge storefront home | 0.37 | 0.40 | 200 | — |
+| S2-1 | 21:47:13 | FlyWorkFlow `/health` | 0.29 | 0.29 | 200 | `uptime` 4.60 s (same instance) |
+
+**Session 2 reading:** same pattern as session 1. FlyWorkFlow hit a cold Lambda again (about
+2.6 s over warm); the storefront home's first request (1.11 s against 0.40 s warm) again suggests
+a mild Vercel cold render; Sushi Burrito Web and the Slicing Edge API show no cold-start pattern.
+Last auditor traffic at the end of the audit's latency work: Sushi Burrito Web 21:25:41, Slicing
+Edge 21:25:45, FlyWorkFlow 21:47:13 (UTC-5, 2026-11-27).
+
+### 3.7 `coldStartNotice` decision (T-17)
+
+Rule (ASM-001-03, §2): `coldStartNotice` = yes if **any** `time_total` sample of the project's
+endpoints is > 10 s over the 3 samples (sessions 1 and 2); warm references do not count.
+
+| Project | Endpoint | Samples (`time_total`, s) | Max of 3 | > 10 s? |
+|---|---|---|---|---|
+| Sushi Burrito Web | API `/api` | 0.29 · 0.40 · 0.32 | 0.40 | no |
+| The Slicing Edge | API `/api/health` | 0.61 · 0.55 · 0.69 | 0.69 | no |
+| The Slicing Edge | storefront home | 1.14 · 0.39 · 1.11 | 1.14 | no |
+| FlyWorkFlow | API `/health` | 2.62 · 2.38 · 2.90 | 2.90 | no |
+
+| Project id | Decision |
+|---|---|
+| `java-desktop-app` | `coldStartNotice`: **N/A** — no live demo (flow A3) |
+| `sushi-burrito-spa` | `coldStartNotice`: **no** — max `time_total` 0.40 s |
+| `the-slicing-edge` | `coldStartNotice`: **no** — max `time_total` 1.14 s (storefront home) |
+| `flyworkflow-incidents` | `coldStartNotice`: **no** — max `time_total` 2.90 s; every sample was a cold Lambda, still under 10 s |
+
+So `coldStartProjectIds` will be `[]` (T-18 writes it in section 6 and applies it to
+`projects.ts`). Best effort: other visitors may have warmed a backend between samples.
 
 ## 4. Credentials
 
