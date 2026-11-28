@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { motion } from "motion/react";
 import { ProjectCardBody } from "@/components/ui/ProjectCardBody";
 import { ProjectCardMedia } from "@/components/ui/ProjectCardMedia";
@@ -50,20 +51,21 @@ const CARD_STATIC_PROPS = {
  * Pointing at the card—or reaching it with the keyboard—crossfades the static
  * poster into a muted looping clip, and leaving it fades the poster back in.
  *
+ * The card forwards its ref to the `<article>` so `AnimatePresence mode="popLayout"` can
+ * measure an exiting card and pop it out of the layout in place (DEBT-013).
+ *
  * @param project - Project data to render.
  * @param language - Active language used to pick localized copy.
  * @param dictionary - Active dictionary for UI labels.
  * @param onOpenVideo - Opens the demo video modal for a project id.
  * @param onOpenCredentials - Opens the demo credentials modal for a project id.
+ * @param ref - Forwarded to the card `<article>`.
  * @returns Animated project card element.
  */
-export function ProjectCard({
-  project,
-  language,
-  dictionary,
-  onOpenVideo,
-  onOpenCredentials
-}: ProjectCardProps): JSX.Element {
+export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(function ProjectCard(
+  { project, language, dictionary, onOpenVideo, onOpenCredentials },
+  ref
+): JSX.Element {
   const preview = useHoverPreviewVideo(project.previewVideoUrl);
 
   /**
@@ -85,6 +87,7 @@ export function ProjectCard({
 
   return (
     <motion.article
+      ref={ref}
       {...CARD_STATIC_PROPS}
       layoutId={buildCardLayoutId(project.id)}
       onPointerEnter={preview.startPreview}
@@ -103,4 +106,6 @@ export function ProjectCard({
       />
     </motion.article>
   );
-}
+});
+
+ProjectCard.displayName = "ProjectCard";
