@@ -4,12 +4,12 @@
 > done (T-14, both failed); FlyWorkFlow logins done (T-15, Super Admin excluded); latency
 > session 1 done (T-16, 2 of 3 samples per endpoint); latency session 2 and `coldStartNotice`
 > decision done (T-17, 3 of 3 samples, no notice on any project)**. The close (T-18) is
-> pending. Section 6 is not final yet. Owner decisions of 2026-11-27 (spec v1.3): the Slicing
-> Edge accounts stay published as an owner exception (OQ-001-16); the FlyWorkFlow Super Admin
-> is owner-verified (ASM-008 closed, no audit login). **Slicing Edge re-audit (T-14a,
-> 2026-11-27 21:49 UTC-5) stopped under B-E3:** the Admin login now works but lands on
-> possible production data; the Customer was not tested. Escalated to Hernán; T-18 waits for
-> his decision (section 4.3, section 5).
+> pending. Section 6 is not final yet. Owner decisions of 2026-11-27: the FlyWorkFlow Super
+> Admin is owner-verified (ASM-008 closed, no audit login; spec v1.3). **Slicing Edge re-audit
+> complete (T-14a 21:49, T-14b 21:54 UTC-5): both accounts verified.** The T-14a B-E3
+> escalation was resolved by the owner (the admin "Recent Orders" are his own test data,
+> Stripe test mode); OQ-001-16 is closed with no exception needed (spec v1.4), so
+> `ownerExceptionUsernames` holds only the FlyWorkFlow Super Admin (section 4.3, section 5).
 
 ## 1. Header
 
@@ -20,7 +20,7 @@
 | Auditor | Implementer agent (Claude Code), on Hernán's machine, Git Bash; Hernán gave the go-ahead for T-12 (no login) |
 | Method version | 1 |
 | Time zone | UTC-5 (constitution Title IV) |
-| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.3), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
+| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.4), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
 | Requirements | [FR-019 — Demo availability verified](../requirements/functional.md), [BR-008 — Live demo audit safety](../requirements/business-rules.md), NFR-013 |
 
 **Owner confirmations this audit relies on**
@@ -32,6 +32,8 @@
 | OQ-001-15 / OQ-001-05 | FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`) is excluded from the audit: kept on the card, never logged into, listed as "not audited — owner investigation pending" (ASM-008, one-off Title III exception) | Hernán | 2026-11-27 |
 | ASM-008 / OQ-001-15 update | The owner states the Super Admin access works: ASM-008 closed as "Confirmed by owner, 2026-11-27 (no audit login)". The row now reads "not audited — owner-verified 2026-11-27"; the account stays in `ownerExceptionUsernames` | Hernán | 2026-11-27 |
 | OQ-001-16 | The two Slicing Edge accounts that failed at T-14 stay on the card as a one-off owner exception to constitution Title III, listed in `ownerExceptionUsernames`; owner fix pending (follow-up OF-1, `docs/roadmap.md`) | Hernán | 2026-11-27 |
+| B-E3 (T-14a) / OQ-001-12 | Resolves the T-14a B-E3 escalation with option (a): the orders and names in the Slicing Edge admin "Recent Orders" are the owner's own **test data** (Stripe test mode, consistent with OQ-001-12 / ASM-001-13). The T-14a Admin login (21:49, role "Admin") counts as **verified**; no new Admin login. Go-ahead for the Customer login (T-14b) | Hernán | 2026-11-27 |
+| OQ-001-16 update | After T-14a / T-14b verified both Slicing Edge accounts, OQ-001-16 is closed as "resolved by re-audit T-14a/T-14b; no exception needed"; both accounts leave `ownerExceptionUsernames` and are `verified` (spec v1.4; OF-1 closed) | Hernán | 2026-11-27 |
 
 ## 2. Method
 
@@ -294,15 +296,16 @@ day):
   was copied; no screenshot was taken. The MCP's logged-in page snapshots were moved out of the
   repository folder to the session scratchpad.
 
-### 4.3 The Slicing Edge (`the-slicing-edge`) — T-14, re-audit T-14a
+### 4.3 The Slicing Edge (`the-slicing-edge`) — T-14, re-audit T-14a / T-14b
 
-Current result (T-14a, the re-audit after the owner reported the login fixed). The T-14 rows
-below it are kept as history.
+Current result (re-audit run after the owner reported the login fixed: Admin at T-14a, Customer
+at T-14b). The T-14a "possible production data" finding was resolved by the owner (test data,
+section 1). The T-14 rows below are kept as history.
 
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
-| Admin / Administrador | `admin@slicing-edge.com` | **possible production data** (B-E3) — T-14a, 2026-11-27 21:49 UTC-5, single attempt, login succeeded; logged out at once | Lands on `/admin` "Admin Dashboard"; header badge shows the role explicitly: "Admin"; admin menu (Dashboard, Products, Orders, Users). The recent-orders list shows real-looking customer names and an email address (not copied). Logout OK (21:50, back to `/`) | yes (owner exception, OQ-001-16) — **owner decision pending** (B-E3 escalation; spec §4.3 B-E3 says remove) |
-| Customer / Cliente | `customer@example.com` | **not tested** — T-14a run stopped after the B-E3 finding on Admin; no attempt made | — | yes (owner exception, OQ-001-16) — owner decision pending |
+| Admin / Administrador | `admin@slicing-edge.com` | **verified (T-14a)** — 2026-11-27 21:49 UTC-5, single attempt, login succeeded. The B-E3 flag on its landing view was cleared by the owner: the recent orders are his test data (Stripe test mode, OQ-001-12); no new login | Lands on `/admin` "Admin Dashboard"; header badge shows the role explicitly: "Admin"; admin menu (Dashboard, Products, Orders, Users). Logout OK (21:50, back to `/`) | yes |
+| Customer / Cliente | `customer@example.com` | **verified (T-14b)** — 2026-11-27 21:54 UTC-5, single attempt, login succeeded | Redirected to the public storefront home `/`; no role badge: the header shows a display name (seeded demo persona, not recorded), "My account" (`/account`) and "Sign out", and no admin link, so the role is inferred as a signed-in customer, matching the card label. No personal or order data on the landing view. Logout OK (21:54) | yes |
 
 History (T-14, first run):
 
@@ -346,6 +349,31 @@ the same day, after he reported that he fixed the login in the Slicing Edge proj
 - Owner context: OQ-001-12 / ASM-001-13 state that all Slicing Edge data is non-real. The
   auditor cannot confirm that from the page, so the B-E3 rule applies as written; Hernán decides
   (section 5).
+- Resolution (owner, 2026-11-27): option (a), the orders and names are his own test data
+  (Stripe test mode); the Admin result counts as verified (section 1). The MCP snapshots of
+  T-14a were deleted by the coordinator.
+
+T-14b notes (completion of the same re-audit run, Playwright MCP, 2026-11-27 21:53 – 21:54
+UTC-5; Hernán's go-ahead given the same day with his B-E3 decision):
+- Customer only; the Admin was not logged into again (verified at T-14a, owner decision). One
+  email/password attempt on `/auth/login` with the password published in `projects.ts`;
+  "Continue with Google", "Forgot password?" and "Create one" were not used.
+- The login succeeded on the single attempt (21:54:00) and redirected to the public home `/`.
+  The header first still showed the public "Account" link; about 10 s later it showed the
+  signed-in header (display name, "My account", "Sign out"). That was observation only, not a
+  second attempt. The app shows no role badge for a customer (unlike the Admin badge); the role
+  is inferred from the absent admin link and badge, matching the card label "Customer".
+- No real-looking personal or business data on the landing view (B-E3 not triggered): it is the
+  public storefront home (seeded knife catalogue). The display name looked like a placeholder
+  persona; it is not recorded here. No account, order, cart or wishlist page was opened.
+- Logout: "Sign out" at 21:54:18. The header kept the signed-in look until the auditor reloaded
+  the public home (21:54:31), which showed the public "Account" link again, so the session was
+  closed (the header just does not refresh on sign-out; informational, other repo).
+- Read-only: no cart, checkout, edit, search, AI-assistant control or other form was used. A
+  cart badge "1" showed in the header right after the redirect; it was not opened or changed.
+- No screenshot was taken. The MCP's six page snapshots of this run were moved out of the
+  repository folder to the session scratchpad (`t14b-playwright`) and deleted after these notes
+  were written; the browser was closed and no process is left running.
 
 ### 4.4 FlyWorkFlow (`flyworkflow-incidents`) — T-15
 
@@ -387,24 +415,25 @@ Preflight findings (T-18 completes this section):
 - **Task-count discrepancy — resolved: typo, 2 is correct (owner, 2026-11-27).** `tasks.md` T-12
   said "8 YouTube ids"; `projects.ts` has 2 (`java-desktop-app` EN and ES; the desktop app has no
   live demo, so its videos are its evidence). Both were checked.
-- **Slicing Edge demo accounts fail (T-14, 2026-11-27) — owner exception, investigation
-  pending:** `admin@slicing-edge.com` and `customer@example.com` both get "Invalid email or
+- **Slicing Edge demo accounts fail (T-14, 2026-11-27) — resolved by re-audit T-14a / T-14b
+  (exception lifted, see the next item):** `admin@slicing-edge.com` and `customer@example.com` both get "Invalid email or
   password" with the published passwords. Owner decision (2026-11-27, OQ-001-16): both stay on the
   card as a one-off exception to constitution Title III and are listed in
   `ownerExceptionUsernames`; T-18 does not remove them. Follow-up OF-1 (`docs/roadmap.md`): fix the
   accounts, then re-audit with a short `/bug` in this repo, which lifts the exception. Likely
   causes to check (not verified): the production database was never seeded with these users, it
   was reseeded with other passwords, or a visitor changed them (CL-17).
-- **Slicing Edge re-audit (T-14a, 2026-11-27 21:49 UTC-5) — possible production data,
-  escalated (B-E3):** after the owner's fix the Admin login works (role "Admin", `/admin`), but
-  the admin dashboard's recent-orders list shows real-looking customer names and an email
-  address (not copied). The auditor logged out at once and stopped the run; the Customer account
-  was not tested. OQ-001-16 stays open in practice and OF-1 stays Open. Hernán decides: (a)
-  confirm the orders are test data (ASM-001-13) and give a go-ahead for a new run (Customer
-  login, and Admin again only if he wants it re-verified); (b) clean or reseed the Slicing Edge
-  orders so the admin view holds only demo data, then re-audit; or (c) remove the Admin
-  credential from the card (spec §4.3 B-E3). Until then T-18 does not start (its dependency
-  "no unresolved B-E3 escalation").
+- **Slicing Edge re-audit (T-14a / T-14b, 2026-11-27) — resolved, both accounts verified:**
+  at T-14a (21:49 UTC-5) the Admin login worked (role "Admin", `/admin`), but the dashboard's
+  recent-orders list looked like real customer data (not copied), so the auditor logged out and
+  escalated under B-E3. **Owner decision (2026-11-27), option (a):** those orders are his own
+  test data (Stripe test mode, OQ-001-12); the Admin result counts as verified, with no new
+  login. At T-14b (21:54 UTC-5) the Customer login succeeded on the single attempt (signed-in
+  storefront, no personal data) and logged out. OQ-001-16 is closed as "resolved by re-audit
+  T-14a/T-14b; no exception needed"; both accounts are `verified` and leave
+  `ownerExceptionUsernames`; OF-1 is closed. No B-E3 escalation remains open for T-18.
+  Suggestion for the owner (other repo, optional): the storefront header does not refresh on
+  "Sign out" until the page reloads.
 - **Sushi Burrito Web bundle (other repo, informational):** the public bundle contains the
   SweetAlert2 "protestware" snippet (reference to an anthem `.mp3` on `flag-gimn.ru`), which some
   SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
@@ -439,8 +468,7 @@ Provisional: only `auditDate` and `ownerExceptionUsernames` are final; T-18 fill
     "flyworkflow-incidents": []
   },
   "ownerExceptionUsernames": {
-    "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"],
-    "the-slicing-edge": ["admin@slicing-edge.com", "customer@example.com"]
+    "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"]
   },
   "coldStartProjectIds": []
 }
