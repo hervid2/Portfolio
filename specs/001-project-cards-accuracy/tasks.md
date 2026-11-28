@@ -165,7 +165,20 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Depends on: T-09
   - Evidence: 64e10f8 · Verify → exit 0 (1/1); red first (spy caught the warning from `PopChild`).
     206/206 all tests, 0 ref warnings in the run; format, lint, typecheck, build OK. Browser
-    (R-9): no ref warning, but grid is `static`, so popped exit cards start ~7–20k px off; OQ open
+    (R-9): no ref warning, but grid is `static`, so popped exit cards fly off; fixed in T-11a
+
+- [x] **T-11a** — Grid needs a positioned parent for popLayout exits (R-9): `popLayout` pops
+  exiting cards to `position: absolute`, so add `relative` as the first class of the grid
+  `motion.div`; add an AC-001-22 test that the grid has class `relative` (guard only; jsdom has
+  no layout, the browser frame trace is the proof).
+  - AC: AC-001-22 (support), AC-001-20 (browser part)
+  - Files: `frontend/src/components/sections/PortfolioGrid.tsx`,
+    `frontend/src/components/sections/PortfolioGrid.test.tsx`
+  - Verify: browser frame trace at 1280 and 360 px, filter All → Desktop: every exiting card
+    stays within ~50 px of its slot over 120 frames; no ref warning in the console
+  - Depends on: T-11
+  - Evidence: acb2c45 · trace max drift 2985 → 23 px (1280), 6048 → 8 px (360); 0 ref
+    warnings; new test red without `relative`. 207/207 tests; format, lint, typecheck, build OK
 
 ## Phase C — Live demo audit (documentation only; no `frontend/` edits)
 
@@ -308,6 +321,6 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 | AC-001-19 | T-12, P-02 | `demo-audit.md` + validation re-run (recorded verification, spec §9) |
 | AC-001-20 | T-10 | `PortfolioSection.test.tsx` + existing filter tests |
 | AC-001-21 | every code task, P-01 | local five commands + CI |
-| AC-001-22 | T-11, T-19 | `PortfolioGrid.test.tsx` + roadmap |
+| AC-001-22 | T-11, T-11a, T-19 | `PortfolioGrid.test.tsx` + roadmap |
 
 ## Evidence
