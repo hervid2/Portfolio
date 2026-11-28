@@ -1,18 +1,16 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 v1.4)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 closed)
 
 ## Current status
-- **Stage:** G6 · Spec 001 **Planned**, implementing (v1.4) on `feat/001-project-cards-accuracy`.
-- T-01…T-19 done. Next: P-01 push (ask; draft PR), P-02 validate ×3, P-03 G-Merge ≤ 2026-12-04.
-- Audit closed (`auditDate` 2026-11-27): 7 logins verified (T-14a Admin: B-E3 = owner test
-  data; T-14b Customer); ASM-008 closed, Super Admin owner-verified 2026-11-27 (no login) = only
-  owner exception; no cold-start notice. DEBT-013 closed (T-11 + T-11a).
-- Owner follow-ups, other repos (OF-1 closed, OF-2…OF-4 open): `docs/roadmap.md`.
+- **Stage:** G6 · Spec 001 **Implemented** (G-Merge 2026-11-27, PR #8 `da9dece`, prod verified).
+- Next: spec 002 Hero and contact CTAs (PO-7, PO-1; FR-010, FR-011, FR-017) via `/feature`.
+- Owner follow-ups, other repos (OF-2…OF-4 open): `docs/roadmap.md`. New debts DEBT-021…025
+  (a11y, navbar at 360 px, credentials-dialog i18n): roadmap, mostly for spec 004.
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
-- ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; the upgrade is optional (DEBT-007).
+- ADR-0003: custom Vite SSG (Option C); React 18 and Vite 5 stay; upgrade optional (DEBT-007).
 - ADR-0004: native SVG architecture maps for all 4 projects (PO-12, new scope).
 - Mail: Resend is primary in production; nodemailer must become a real runtime fallback
   (spec 009). Today the provider is picked once at startup by config (DEBT-020).
@@ -36,15 +34,16 @@
 - `npm audit fix` takes the newest in-range version (resend 6.41.0 was 6 h old): check publish
   date and provenance. A parent pin (express → qs) may need `npm update <parent>`.
 - LinkedIn cannot be read automatically: Hernán pastes posts if they are needed.
-- Droplet: nginx `/etc/nginx/sites-enabled/api-portfolio` → localhost:4000 (also 4001, 4002
-  for other apps). Proxy/header changes must go live before code that trusts them deploys.
-- Production API: `api-portfolio.hernan-cardona.com` (`/health` 200). Frontend: `portfolio-hernan-cardona.vercel.app`.
+- Prod: web `portfolio-hernan-cardona.vercel.app`; API `api-portfolio.hernan-cardona.com` (`/health`
+  200) via nginx `sites-enabled/api-portfolio` → :4000 (4001/4002 other apps); proxy first.
 
-## Retrospective spec 000 (GENESIS §C.9)
-- Missing instruction: the PR step didn't say "draft" loudly enough → PR #4 merged before
-  validation (G-Merge skipped). Now prevented by branch protection; ask for draft explicitly.
-- Make deterministic: "one component per file" is not linted (C-02 slipped) → consider a lint
-  rule (e.g. react/no-multi-comp once eslint-plugin-react supports ESLint 10).
+## Retrospective spec 001 (GENESIS §C.9; full text in specs/001-*/validation.md)
+- APPLIED 2026-11-27 (`chore(harness): apply spec 001 retrospective improvements [001]`):
+  out-of-plan files stop for Hernán first (T-11a/C-01); greps use `from "motion`; MCP pinned
+  `@playwright/mcp@0.0.86` (sync now writes `.mcp.json`); api G-Merge ends at prod deploy;
+  commit ids `[T-NN]`/`[NNN]`/`[BUG-<slug>]` (C-06). Still deferred: react/no-multi-comp.
+- Worked: BR-008 stop (T-14a); red-first + mutation (CL-04); browser beats jsdom (popLayout).
+  Cycles ≤ 1 per task; validation 1 of 3; audit window met on day 1.
 
 ## Active blockers and open questions
 - OQ-005: retention policy for contact messages.

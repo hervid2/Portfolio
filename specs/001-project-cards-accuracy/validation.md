@@ -114,9 +114,9 @@ Cleanup: the preview process (PID 22844, `vite.js preview --port 4173`) was stop
 | C-02 | MINOR | `plan.md:2` | Plan header anchored to spec v1.1; T-11a / T-14a / T-14b not listed | **Resolved in `9a1d2b6`** |
 | C-03 | MINOR | `docs/domain/model.md:41-42` | Still said "pending investigation" for the Super Admin exception after ASM-008 closed | **Resolved in `9a1d2b6`** |
 | C-04 | MINOR | `docs/discovery/demo-audit.md` (status, OQ-001-16 row, B-E2 rule, T-14 finding) | Text superseded by spec v1.4 (T-14a/T-14b) was not marked | **Resolved in `9a1d2b6`** |
-| C-05 | SUGGESTION | `docs/traceability.md` (spec 001 rows) | Rows say "Tested" before G-Merge | Open suggestion (Coordinator / planner at G-Merge) |
+| C-05 | SUGGESTION | `docs/traceability.md` (spec 001 rows) | Rows say "Tested" before G-Merge | **Resolved at G-Merge** (rows confirmed, `chore/001-closeout`) |
 | C-06 | SUGGESTION | `AGENTS.md` § Code conventions | The `[NNN]` suffix used for spec-level commits is not documented (only `[T-NN]` is) | Open suggestion |
-| C-07 | SUGGESTION | `docs/discovery/demo-audit.md:21` | G-Merge must happen by **2026-12-04** (audit window) or the audit is re-run | Open suggestion (tracked in P-03) |
+| C-07 | SUGGESTION | `docs/discovery/demo-audit.md:21` | G-Merge must happen by **2026-12-04** (audit window) or the audit is re-run | **Resolved**: merged 2026-11-27, inside the window |
 
 ---
 
@@ -222,7 +222,7 @@ the chunk); the code under test is the same.
 | AC-001-18 | D (exception §9) | Document check of `demo-audit.md` | ✅ Pass | ≤ 1 login per account per run; no Super Admin login; BR-008 actions only; no third-party data; OQ-001-04 / OQ-001-12 cited, 2026-11-27 |
 | AC-001-19 | M, D (exception §9) | `demo-audit.md` + live re-run (e2e) | ✅ Pass | 3 demos, 4 repos, 2 oEmbed → 200 |
 | AC-001-20 | C | `PortfolioSection.test.tsx` (4 filters) + existing `ProjectFilterBar` / `useProjectFilter` tests | ✅ Pass | Labels kept; browser frame trace at 1280/360 (e2e) |
-| AC-001-21 | M, CI | Local five commands + CI on the draft PR | ⏳ **Partial** | Local: 5/5 exit 0 at `9a1d2b6`. CI: pending P-01 (push + draft PR) |
+| AC-001-21 | M, CI | Local five commands + CI on the draft PR | ✅ Pass | Local: 5/5 exit 0 at `9a1d2b6`. CI: PR #8 run 46102964883 `frontend` + `api` green at `718bfe5` (G-Merge closeout) |
 | AC-001-22 | C | `PortfolioGrid.test.tsx` (2) | ✅ Pass | `console.error` spy: no ref warning; `relative` guard; DEBT-013 Closed in roadmap |
 
 ## Definition of Done checklist (GENESIS §C.6)
@@ -231,9 +231,46 @@ the chunk); the code under test is the same.
 - [x] Every AC covered by a green automated test or the approved §9 exception (AC-001-12, -18,
   -19 live part recorded here and in `demo-audit.md`).
 - [x] Linter, formatter, type checking, full suite and build green locally at `9a1d2b6`.
-- [ ] Green in CI: pending P-01 (AC-001-21 Partial).
+- [x] Green in CI: PR #8 run 46102964883 (`frontend`, `api`); post-merge `main` run 46103187818.
 - [x] e2e validation of the spec's flows with evidence (e2e focus; dev server, build served).
 - [x] No secrets, no new dependencies, no `TODO` without a ticket, no debug logs.
 - [x] Spec, plan, `traceability.md`, `roadmap.md` (DEBT-013 closed; DEBT-024, DEBT-025 added;
   DEBT-011 extended) and domain docs updated. `MEMORY.md` is the Coordinator's at phase close.
-- [ ] Human approval of the merge (G-Merge), **by 2026-12-04**.
+- [x] Human approval of the merge (G-Merge), **by 2026-12-04**: approved by Hernán 2026-11-27.
+
+---
+
+## G-Merge and closeout (2026-11-27)
+- **G-Merge:** approved by Hernán 2026-11-27. PR #8 (head `718bfe5`) merged into `main` as
+  `da9dece` (2026-11-28 03:30 UTC = 2026-11-27 22:30 UTC-5), inside the audit window (ends
+  2026-12-04, C-07).
+- **CI:** PR run 46102964883 `frontend` and `api` green; Vercel preview green; post-merge `main`
+  run 46103187818 green. AC-001-21 → Pass.
+- **Production** (verified by the Coordinator):
+  `https://portfolio-hernan-cardona.vercel.app/` → 200; the served bundle `index-DbdKAaLA.js` has the validated build's hash and contains the kind
+  labels; `/assets/icons/tech/nestjs-dark.svg` → 200. The API was not touched (no droplet deploy).
+- **Docs:** spec v1.5 Implemented; roadmap row 001 Implemented (2026-11-27); traceability rows
+  FR-014/015/016/019 confirmed (C-05).
+
+## Retrospective (GENESIS §C.9)
+1. **Missing instruction / deviation:** the Coordinator applied T-11a (a file outside the approved
+   plan, `PortfolioGrid.tsx`) before asking; the compliance reviewer caught it (C-01). Rule: any
+   file outside the plan stops for Hernán's approval, even a one-class CSS change.
+2. **Repeated errors:** none beyond one cycle. Max 1 correction cycle per task (T-08 grep, T-09
+   test matcher); validation used 1 of 3 cycles. No limit was reached.
+3. **Make deterministic (proposals, need Hernán's approval):**
+   - Task verify steps grep `from "motion` instead of the bare word `motion` (it matched comments).
+   - Pin Playwright MCP in `.harness/mcp.md` to `@playwright/mcp@0.0.86` instead of `@latest` (the
+     `@latest` npx fetch caused the 30 s `CONNECT_TIMEOUT`). Not edited.
+   - API specs: G-Merge ends at "deployed and verified in production" (prod ran March code until
+     2026-11-27); write it into the G-Merge checklist.
+4. **What worked:** the BR-008 stop on B-E3 (T-14a) prevented auditing over real-looking data;
+   red-first plus mutation checks exposed a false pass (Vanilla JS fallback, CL-04); the browser
+   check caught the `popLayout` jump that jsdom could not.
+5. **Time / plan:** the audit window (2026-11-27 → 2026-12-04) was met on day 1.
+
+**Applied (Hernán approved 2026-11-27):** items 1 and 3, plus C-06 (commit id conventions), applied
+in commit `chore(harness): apply spec 001 retrospective improvements [001]` on
+`chore/001-closeout`: `.harness/` agents, commands, `testing-conventions` rule 10, `mcp.md` pin
+(the sync script now generates `.mcp.json`), AGENTS.md. The react/no-multi-comp lint rule stays
+deferred.

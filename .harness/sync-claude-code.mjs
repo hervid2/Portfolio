@@ -8,6 +8,7 @@
  * - `.harness/commands/*.md` → `.claude/commands/*.md`. Commands owned by a subagent run in a
  *   forked context; commands that talk to the human run inline in the main session.
  * - `.harness/skills/<name>/` → `.claude/skills/<name>/` (copied as-is).
+ * - `.harness/mcp.md` (its fenced `json mcp` block) → `.mcp.json`.
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -116,7 +117,22 @@ function syncSkills() {
   cpSync(sourceDir, targetDir, { recursive: true });
 }
 
+/**
+ * Writes `.mcp.json` from the fenced `json mcp` block in `.harness/mcp.md`.
+ * Throws if the block is missing or is not valid JSON, so `.mcp.json` is never half-written.
+ */
+function syncMcp() {
+  const text = readFileSync(join(HARNESS_DIR, "mcp.md"), "utf8");
+  const match = text.match(/```json mcp\r?\n([\s\S]*?)\r?\n```/);
+  if (!match) {
+    throw new Error("No ```json mcp block found in .harness/mcp.md");
+  }
+  JSON.parse(match[1]);
+  writeFileSync(".mcp.json", `${match[1]}\n`);
+}
+
 syncAgents();
 syncCommands();
 syncSkills();
+syncMcp();
 process.stdout.write("Claude Code adapters regenerated from .harness/\n");
