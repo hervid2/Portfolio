@@ -3,7 +3,9 @@
 > Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13); Slicing Edge logins
 > done (T-14, both failed); FlyWorkFlow logins done (T-15, Super Admin excluded); latency
 > session 1 done (T-16, 2 of 3 samples per endpoint)**. Latency session 2 (T-17) and the close
-> (T-18) are pending. Section 6 is not final yet.
+> (T-18) are pending. Section 6 is not final yet. Owner decisions of 2026-11-27 (spec v1.3):
+> the Slicing Edge accounts stay published as an owner exception (OQ-001-16); the FlyWorkFlow
+> Super Admin is owner-verified (ASM-008 closed, no audit login).
 
 ## 1. Header
 
@@ -14,7 +16,7 @@
 | Auditor | Implementer agent (Claude Code), on Hernán's machine, Git Bash; Hernán gave the go-ahead for T-12 (no login) |
 | Method version | 1 |
 | Time zone | UTC-5 (constitution Title IV) |
-| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.2), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
+| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.3), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
 | Requirements | [FR-019 — Demo availability verified](../requirements/functional.md), [BR-008 — Live demo audit safety](../requirements/business-rules.md), NFR-013 |
 
 **Owner confirmations this audit relies on**
@@ -24,6 +26,8 @@
 | OQ-001-04 | The linked Sushi Burrito Web deployment is a demo clone with seeded data, separate from the restaurant's real instance (separate repo, VPS and database). Its three accounts are audited normally under BR-008 (ASM-001-12) | Hernán | 2026-11-27 |
 | OQ-001-12 | Slicing Edge holds non-real data and Stripe runs in test mode; all its demo accounts stay publishable, Admin included, subject to the audit (ASM-001-13) | Hernán | 2026-11-27 |
 | OQ-001-15 / OQ-001-05 | FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`) is excluded from the audit: kept on the card, never logged into, listed as "not audited — owner investigation pending" (ASM-008, one-off Title III exception) | Hernán | 2026-11-27 |
+| ASM-008 / OQ-001-15 update | The owner states the Super Admin access works: ASM-008 closed as "Confirmed by owner, 2026-11-27 (no audit login)". The row now reads "not audited — owner-verified 2026-11-27"; the account stays in `ownerExceptionUsernames` | Hernán | 2026-11-27 |
+| OQ-001-16 | The two Slicing Edge accounts that failed at T-14 stay on the card as a one-off owner exception to constitution Title III, listed in `ownerExceptionUsernames`; owner fix pending (follow-up OF-1, `docs/roadmap.md`) | Hernán | 2026-11-27 |
 
 ## 2. Method
 
@@ -33,7 +37,7 @@
 - Never: submit any other form, create / edit / delete data, retry a failed login, use a
   password-reset link, create an account, or record third-party or real data.
 - Login fails → record the visible message only, no retry in this run, credential not published
-  (B-E2).
+  (B-E2), unless the owner keeps it as a named exception (OQ-001-16).
 - Login lands on real-looking data → log out at once, record "possible production data" without
   copying anything, escalate to Hernán (B-E3).
 - The FlyWorkFlow Super Admin is never logged into (owner exception above).
@@ -231,8 +235,8 @@ day):
 
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
-| Admin / Administrador | `admin@slicing-edge.com` | **failed** — 2026-11-27 19:37 UTC-5, single attempt, not retried | Stayed on `/auth/login`; visible message "Invalid email or password". No logged-in view, so no role observed | no (B-E2; removed at T-18) |
-| Customer / Cliente | `customer@example.com` | **failed** — 2026-11-27 19:37 UTC-5, single attempt, not retried | Stayed on `/auth/login`; visible message "Invalid email or password". No logged-in view, so no role observed | no (B-E2; removed at T-18) |
+| Admin / Administrador | `admin@slicing-edge.com` | **failed** — 2026-11-27 19:37 UTC-5, single attempt, not retried | Stayed on `/auth/login`; visible message "Invalid email or password". No logged-in view, so no role observed | yes (owner exception, OQ-001-16) |
+| Customer / Cliente | `customer@example.com` | **failed** — 2026-11-27 19:37 UTC-5, single attempt, not retried | Stayed on `/auth/login`; visible message "Invalid email or password". No logged-in view, so no role observed | yes (owner exception, OQ-001-16) |
 
 T-14 notes (Playwright MCP, 2026-11-27 19:37 UTC-5; Hernán's go-ahead given the same day):
 - One email/password attempt per published account on `/auth/login` ("Welcome Back"), with the
@@ -251,7 +255,7 @@ T-14 notes (Playwright MCP, 2026-11-27 19:37 UTC-5; Hernán's go-ahead given the
 
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
-| Super Admin / Superadministrador | `camila.rojas@flyworkflow.io` | not audited — owner investigation pending | no login (OQ-001-05, OQ-001-15) | yes (owner exception) |
+| Super Admin / Superadministrador | `camila.rojas@flyworkflow.io` | not audited — owner-verified 2026-11-27 | no login (OQ-001-05, OQ-001-15); the owner states the access works (ASM-008 closed) | yes (owner exception) |
 | Admin / Administrador | `isabela.nieto@constructoradelvalle.com` | **verified** — 2026-11-27 20:13 UTC-5, first attempt | Lands on `/mapa` "Mapa de Incidencias"; header user button shows the role explicitly: "Isabela Nieto — admin"; project "Proyecto Onboarding"; seeded-looking incident pins only. Logout OK (20:13, back to `/login`) | yes |
 | Member / Miembro | `diego.salazar@constructoradelvalle.com` | **verified** — 2026-11-27 20:14 UTC-5, first attempt | Lands on `/mapa` "Mapa de Incidencias"; header user button shows the role explicitly: "Diego Salazar — member"; same project and pins as Admin. Logout OK (20:14, back to `/login`) | yes |
 
@@ -287,23 +291,32 @@ Preflight findings (T-18 completes this section):
 - **Task-count discrepancy — resolved: typo, 2 is correct (owner, 2026-11-27).** `tasks.md` T-12
   said "8 YouTube ids"; `projects.ts` has 2 (`java-desktop-app` EN and ES; the desktop app has no
   live demo, so its videos are its evidence). Both were checked.
-- **Slicing Edge demo accounts fail (T-14, 2026-11-27):** `admin@slicing-edge.com` and
-  `customer@example.com` both get "Invalid email or password" with the published passwords. Under
-  B-E2 both credentials are unpublished at T-18 unless Hernán restores them and asks for a new
-  audit run. Likely causes to check (not verified): the production database was never seeded
-  with these users, it was reseeded with other passwords, or a visitor changed them (CL-17).
+- **Slicing Edge demo accounts fail (T-14, 2026-11-27) — owner exception, investigation
+  pending:** `admin@slicing-edge.com` and `customer@example.com` both get "Invalid email or
+  password" with the published passwords. Owner decision (2026-11-27, OQ-001-16): both stay on the
+  card as a one-off exception to constitution Title III and are listed in
+  `ownerExceptionUsernames`; T-18 does not remove them. Follow-up OF-1 (`docs/roadmap.md`): fix the
+  accounts, then re-audit with a short `/bug` in this repo, which lifts the exception. Likely
+  causes to check (not verified): the production database was never seeded with these users, it
+  was reseeded with other passwords, or a visitor changed them (CL-17).
 - **Sushi Burrito Web bundle (other repo, informational):** the public bundle contains the
   SweetAlert2 "protestware" snippet (reference to an anthem `.mp3` on `flag-gimn.ru`), which some
   SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
-  Suggest pinning a SweetAlert2 version without it in `SushiBurritoFinal`.
+  Suggest pinning a SweetAlert2 version without it in `SushiBurritoFinal` (follow-up OF-4).
 
 Follow-ups required by spec §8.2 item 5 (recorded now, confirmed at T-18):
 - Add the demo accounts to the Sushi Burrito Web and Slicing Edge READMEs (OQ-001-06).
 - State in the `SushiBurritoFinal` README that the linked deployment is a demo clone with seeded
-  data, separate from the restaurant's instance (suggestion, other repo; OQ-001-04).
-- FlyWorkFlow Super Admin: owner investigation pending (ASM-008, OQ-001-05).
+  data, separate from the restaurant's instance (suggestion, other repo; OQ-001-04; follow-up
+  OF-3).
+- FlyWorkFlow Super Admin: owner-verified 2026-11-27, no audit login (ASM-008 closed, OQ-001-05,
+  OQ-001-15).
+- Sushi Burrito Web: the app header does not show the signed-in role (T-13); follow-up OF-2.
 - Shared-demo integrity: any visitor can lock a FlyWorkFlow account or change a demo password;
   suggest blocking password changes for demo accounts and a scheduled reseed (CL-17).
+
+Follow-ups in other repositories are tracked in `docs/roadmap.md` § "Owner follow-ups (other
+repos)" (OF-1 … OF-4).
 
 ## 6. Machine-readable summary
 
@@ -319,7 +332,10 @@ Provisional: only `auditDate` and `ownerExceptionUsernames` are final; T-18 fill
     "the-slicing-edge": [],
     "flyworkflow-incidents": []
   },
-  "ownerExceptionUsernames": { "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"] },
+  "ownerExceptionUsernames": {
+    "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"],
+    "the-slicing-edge": ["admin@slicing-edge.com", "customer@example.com"]
+  },
   "coldStartProjectIds": []
 }
 ```

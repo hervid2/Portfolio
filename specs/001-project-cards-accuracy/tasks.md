@@ -2,7 +2,8 @@
 > [P] = parallelizable (does not share files with other pending [P] tasks).
 
 Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27) · Spec:
-`spec.md` v1.1 · Written: 2026-11-27.
+`spec.md` v1.3 (T-18 / T-19 wording updated 2026-11-27 for OQ-001-16 and ASM-008) ·
+Written: 2026-11-27.
 
 **Conventions for every task**
 - One task = one commit: `<type>(<scope>): <description> [T-NN]` (Conventional Commits), ending
@@ -239,6 +240,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Depends on: T-14
   - Evidence: 6f6f8d7 · Verify → exit 0; Admin and Member `verified` on a single attempt each
     (2026-11-27 20:13 – 20:14 UTC-5, role shown in header); Super Admin not attempted
+  - Note (spec v1.3): the Super Admin row now reads `not audited — owner-verified 2026-11-27`
+    (ASM-008 closed); a re-run of this Verify must grep that string instead.
 
 - [x] **T-16** — **⛔ Hernán's go-ahead (OQ-001-11 closed 2026-11-27).** Latency session 1
   (no login): `curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}"` on
@@ -264,10 +267,14 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 
 - [ ] **T-18** — Close the audit (no live access): write section 5 (at least the four spec §8.2
   item 5 follow-ups) and the section 6 `json` summary; set `projects.ts` from it (remove every
-  `failed` / `not tested` credential, keep the Super Admin unchanged, set `coldStartNotice: true`
-  only for `coldStartProjectIds`, role labels follow observed app names); add the audit-summary
-  tests to `projects.test.ts` (headings, valid `auditDate`, an entry per project id, credentials
-  = verified + owner exception, Super Admin unchanged and only exception, notice flags).
+  `failed` / `not tested` credential **not** in `ownerExceptionUsernames`; keep the owner
+  exceptions unchanged: the FlyWorkFlow Super Admin (OQ-001-15) and the Slicing Edge
+  `admin@slicing-edge.com` and `customer@example.com` (OQ-001-16, do **not** remove them); set
+  `coldStartNotice: true` only for `coldStartProjectIds`; role labels follow observed app names);
+  add the audit-summary tests to `projects.test.ts` (headings, valid `auditDate`, an entry per
+  project id, credentials = verified + owner exception, the three owner-exception usernames
+  unchanged and exactly the exception set, none of them verified, notice flags). No test asserts
+  that a `failed` credential is absent unless it is outside `ownerExceptionUsernames`.
   - AC: AC-001-13 (U), AC-001-14, AC-001-15 (U), AC-001-16
   - Files: `docs/discovery/demo-audit.md`, `frontend/src/data/projects.ts`,
     `frontend/src/data/projects.test.ts`
@@ -280,9 +287,9 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 
 - [ ] **T-19** — Docs: glossary "Cold-start notice" (name `coldStartNotice` final, drop "proposed");
   `docs/traceability.md` rows FR-014, FR-015, FR-016, FR-019 → ACs and test files; roadmap
-  DEBT-013 → Closed (spec 001, T-11); `MEMORY.md`: ASM-008 open (owner investigation) and the
-  `auditDate`.
-  - AC: AC-001-22 (DEBT-013 closed), AC-001-15 (D, ASM-008 note unchanged)
+  DEBT-013 → Closed (spec 001, T-11); `MEMORY.md`: ASM-008 closed (owner-verified 2026-11-27),
+  the owner exceptions and the `auditDate` (already written in the spec v1.3 commit; confirm).
+  - AC: AC-001-22 (DEBT-013 closed), AC-001-15 (D, ASM-008 row closed in v1.3)
   - Files: `docs/glossary.md`, `docs/traceability.md`, `docs/roadmap.md`, `MEMORY.md`
   - Verify: `grep -E "^\| FR-01[4569] " docs/traceability.md | grep -c "AC-001" | grep -qx 4 &&
     grep -E "^\| DEBT-013 " docs/roadmap.md | grep -q "Closed" &&

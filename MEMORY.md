@@ -1,13 +1,14 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 G-Plan approved)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 v1.3)
 
 ## Current status
-- **Stage:** G6 · Spec 001 **Planned** (G-Spec + G-Plan approved 2026-11-27, spec v1.1).
-- **Branch:** `feat/001-project-cards-accuracy`. T-01 done (5012f6f). Next T-02…T-11 (code),
-  then stop: T-12…T-17 (live demo audit) need Hernán's go-ahead per demo; OQ-001-11 open.
-- PE-01 (PR #6) and PE-02 (PR #7) deployed and verified in prod 2026-11-27 (5×400 then 429).
+- **Stage:** G6 · Spec 001 **Planned**, implementing (v1.3) on `feat/001-project-cards-accuracy`.
+- T-01…T-16 done (incl. T-11a). Next: **T-17** latency session 2 (Hernán's go-ahead) on a later
+  day, no earlier than 2026-11-28, on or before 2026-12-04 (audit window end); then T-18, T-19.
+- Audit (`auditDate` 2026-11-27): logins 5 verified, 2 failed (Slicing Edge, kept as owner
+  exception OQ-001-16), FlyWorkFlow Super Admin owner-verified (ASM-008 closed, no audit login).
+- Owner follow-ups in other repos (OF-1…OF-4): `docs/roadmap.md` § "Owner follow-ups".
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
-- Real contact submit OK in prod (Resend, 2026-11-27): PE-01/02 closed. Spec 009 Planned.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
@@ -47,4 +48,3 @@
 
 ## Active blockers and open questions
 - OQ-005: retention policy for contact messages.
-- ASM-008: the FlyWorkFlow Super Admin demo account may be invalid → to be checked in the PO-9 audit (spec 001).

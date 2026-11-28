@@ -51,3 +51,13 @@
 | DEBT-021 | The accent card buttons (`ACCENT_BUTTON_CLASSES`: "Demo Credentials", "Watch demo"; `text-xs font-semibold text-accent-cyan` on `bg-accent-cyan/5`) fail WCAG AA in the light theme: 3.38:1 (`accent-cyan` on white is 3.58:1; AA needs 4.5:1). Found in spec 001 clarification (CL-06) | Low-vision visitors may not read the main card actions (NFR-003) | Fix with the spec 004 a11y pass, e.g. `text-accent-cyan-strong` in the light theme (4.62:1); not 001 (OQ-001-14, owner 2026-11-27) | Open |
 | DEBT-022 | Node version parity: the production droplet (contact API behind nginx) runs Node 20.20.1, while development and CI use Node 22.17. Reported by Hernán, 2026-11-27 | Code and dependencies tested on 22 may behave differently on 20; Node 20 reaches end of life before 22 | Align the server with 22.x (or pin CI to the server version); upgrading Node on the server is Hernán's call (no agent changes the server) | Open |
 | DEBT-023 | Stack chip icons use `alt="<label> icon"` next to the visible label, so screen readers read "Next.js icon Next.js" on every chip. Pre-existing; found in spec 001 clarification (CL-18) | Redundant screen-reader output (a11y polish) | Make the icons decorative (`alt=""`) with the spec 004 a11y pass; not 001 | Open |
+
+## Owner follow-ups (other repos)
+These items are owned by Hernán and live outside this repository; agents here only record them.
+
+| ID | Repo | Item | Origin | Status |
+|---|---|---|---|---|
+| OF-1 | Slicing Edge | Published demo credentials `admin@slicing-edge.com` / `customer@example.com` fail at login; fix the accounts, then re-audit with a short `/bug` in this repo (lifts the OQ-001-16 exception) | T-14, OQ-001-16 | Open |
+| OF-2 | SushiBurritoFinal | The app header does not show the signed-in user's role (Admin/Kitchen/Waiter); show it so visitors know which profile they are testing | T-13 | Open |
+| OF-3 | SushiBurritoFinal | README: state that `sushi-burrito-final.vercel.app` + its API is a demo clone with seeded data, separate from the restaurant's production instance | CL-01, OQ-001-04 | Open |
+| OF-4 | SushiBurritoFinal | The public bundle contains the SweetAlert2 protestware snippet (anthem mp3 from `flag-gimn.ru`); pin a clean SweetAlert2 version | T-12 | Open |
