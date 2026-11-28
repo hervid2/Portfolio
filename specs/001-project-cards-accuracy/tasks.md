@@ -226,7 +226,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: 966fcf7 · Verify → exit 0; 2/2 `failed` on a single attempt each (2026-11-27
     19:37 UTC-5, "Invalid email or password"), not retried (B-E2); no Stripe indicator seen
 
-- [ ] **T-15** — **⛔ Hernán's go-ahead for the FlyWorkFlow demo.** One login attempt each for
+- [x] **T-15** — **⛔ Hernán's go-ahead for the FlyWorkFlow demo.** One login attempt each for
   the Admin and Member accounts; same rules as T-13. The Super Admin row
   (`camila.rojas@flyworkflow.io`) is written as `not audited — owner investigation pending`, with
   **no** login (OQ-001-05, OQ-001-15).
@@ -237,6 +237,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     grep -qE "$u@constructoradelvalle.com.*(verified|failed|not tested)"
     docs/discovery/demo-audit.md || exit 1; done`
   - Depends on: T-14
+  - Evidence: 6f6f8d7 · Verify → exit 0; Admin and Member `verified` on a single attempt each
+    (2026-11-27 20:13 – 20:14 UTC-5, role shown in header); Super Admin not attempted
 
 - [ ] **T-16** — **⛔ Hernán's go-ahead (OQ-001-11 closed 2026-11-27).** Latency session 1
   (no login): `curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}"` on
