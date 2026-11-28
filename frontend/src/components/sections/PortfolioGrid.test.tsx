@@ -40,4 +40,13 @@ describe("AC-001-22 PortfolioGrid ref forwarding", () => {
     );
     expect(refWarnings).toEqual([]);
   });
+
+  // jsdom has no layout, so this only guards the class; the browser frame trace
+  // (T-11a) is the real proof that exiting cards stay in their slot.
+  it("AC-001-22 the grid is a positioned parent for popLayout exits", () => {
+    const { container } = render(gridElement(projects.slice(0, 2)));
+
+    const grid = container.querySelector("article")?.parentElement;
+    expect(grid).toHaveClass("relative", "grid");
+  });
 });
