@@ -1,10 +1,13 @@
 # Plan — Spec 001
-Spec: `specs/001-project-cards-accuracy/spec.md` v1.1 (Planned, G-Plan 2026-11-27) ·
+Spec: `specs/001-project-cards-accuracy/spec.md` v1.4 (planned at v1.1, G-Plan 2026-11-27) ·
 Planned: 2026-11-27 · Status: Approved (G-Plan 2026-11-27, Hernán; D-1 … D-4 as recommended)
 · Updated 2026-11-27 for spec v1.3 (OQ-001-16 owner exception, ASM-008 closed): §1.6, §2, §3 and
 the AC-001-15 row; no new file, dependency or task. · Updated 2026-11-27 for spec v1.4 (OQ-001-16
 resolved by re-audit T-14a / T-14b, no Slicing Edge exception): §1.6, §2, §3 and the AC-001-15
-row; no new file, dependency or task.
+row; no new file or dependency. · Updated 2026-11-27 (validation, compliance C-01 / C-02): now
+anchored to spec **v1.4**; tasks added after G-Plan: **T-11a** (grid `relative` for `popLayout`
+exits, R-9; approved by Hernán 2026-11-27 after the fact), **T-14a** and **T-14b** (Slicing Edge
+re-audit, OQ-001-16); §2 lists `PortfolioGrid.tsx`.
 
 Checked on 2026-11-27 (Art. 14): `npm view simple-icons version license time` → latest 16.38.1
 (published 2026-11-22, CC0-1.0). The icons are copied from **16.37.0** (published 2026-11-08, more
@@ -214,7 +217,8 @@ nominatively next to the technology name, as the existing icons are. 26 new file
 | `frontend/src/components/ui/ProjectCard.tsx` | Modify | Uses `ProjectCardBody` (T-09); `forwardRef` (T-11) |
 | `frontend/src/components/ui/ProjectCard.test.tsx` | Create | AC-001-06 (C), -10, -17 |
 | `frontend/src/components/sections/PortfolioSection.test.tsx` | Create | AC-001-11 (T-06), -09 and -20 (T-10) |
-| `frontend/src/components/sections/PortfolioGrid.test.tsx` | Create | AC-001-22 |
+| `frontend/src/components/sections/PortfolioGrid.tsx` | Modify | T-11a: `relative` as the first class of the grid `motion.div`, so `popLayout` exit cards stay in their slots (R-9); the grid layout is unchanged. Approved by Hernán 2026-11-27 (after the fact) |
+| `frontend/src/components/sections/PortfolioGrid.test.tsx` | Create | AC-001-22 (T-11 ref-warning spy; T-11a `relative` guard) |
 | `frontend/src/test/setup.ts` | Modify only if needed | `IntersectionObserver` shim, only if a component test fails without it (R-7) |
 | `docs/discovery/demo-audit.md` | Create | The demo audit (T-12 … T-18) |
 | `docs/glossary.md` | Modify | "Cold-start notice": name final, drop "proposed" (T-19) |
@@ -224,7 +228,7 @@ nominatively next to the technology name, as the existing icons are. 26 new file
 | `docs/discovery/brief.md` | Modify (spec v1.3 commit) | ASM-008 row closed: "Confirmed by owner, 2026-11-27 (no audit login)"; reviewer checks it (AC-001-15) |
 
 Not touched: `api/`, `ProjectCardActions.tsx`, `ProjectStackList.tsx`, `CredentialsModal.tsx`,
-`PortfolioGrid.tsx`, Vercel settings, the project repositories.
+Vercel settings, the project repositories.
 
 ## 3. Data changes and migrations (with rollback strategy)
 - No database and no migration: static typed content (spec §6). `id` slugs are not renamed.

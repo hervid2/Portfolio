@@ -173,6 +173,8 @@ Written: 2026-11-27.
   exiting cards to `position: absolute`, so add `relative` as the first class of the grid
   `motion.div`; add an AC-001-22 test that the grid has class `relative` (guard only; jsdom has
   no layout, the browser frame trace is the proof).
+  - ⛔ Approved by Hernán 2026-11-27 (after the fact; the coordinator applied it under R-9 before
+    asking — process deviation recorded)
   - AC: AC-001-22 (support), AC-001-20 (browser part)
   - Files: `frontend/src/components/sections/PortfolioGrid.tsx`,
     `frontend/src/components/sections/PortfolioGrid.test.tsx`

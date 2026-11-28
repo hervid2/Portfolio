@@ -39,7 +39,8 @@
   - `password` (string | null)
   - Sensitivity: public by design (fictional or seeded demo data).
 - **Invariants:** Published only if verified by the demo audit (FR-019, BR-008). Spec 001 records
-  one owner exception pending investigation (FlyWorkFlow Super Admin, ASM-008).
+  one owner exception, owner-verified 2026-11-27, no audit login (FlyWorkFlow Super Admin;
+  ASM-008 closed).
 - **Data owner / source of truth:** Owner. The demo audit (`docs/discovery/demo-audit.md`) is the
   publishing gate; each project's README is informative and may lag (spec 001, OQ-001-06).
 

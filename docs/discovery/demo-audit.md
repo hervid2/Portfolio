@@ -1,7 +1,8 @@
 # Live demo audit — spec 001
 
 > Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13); Slicing Edge logins
-> done (T-14, both failed); FlyWorkFlow logins done (T-15, Super Admin excluded); latency
+> done (T-14, both failed — *superseded (v1.4, T-14a/T-14b): both verified at re-audit*);
+> FlyWorkFlow logins done (T-15, Super Admin excluded); latency
 > session 1 done (T-16, 2 of 3 samples per endpoint); latency session 2 and `coldStartNotice`
 > decision done (T-17, 3 of 3 samples, no notice on any project); audit closed (T-18,
 > 2026-11-27, no live access): section 5 complete, section 6 final and applied to
@@ -32,7 +33,7 @@
 | OQ-001-12 | Slicing Edge holds non-real data and Stripe runs in test mode; all its demo accounts stay publishable, Admin included, subject to the audit (ASM-001-13) | Hernán | 2026-11-27 |
 | OQ-001-15 / OQ-001-05 | FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`) is excluded from the audit: kept on the card, never logged into, listed as "not audited — owner investigation pending" (ASM-008, one-off Title III exception) | Hernán | 2026-11-27 |
 | ASM-008 / OQ-001-15 update | The owner states the Super Admin access works: ASM-008 closed as "Confirmed by owner, 2026-11-27 (no audit login)". The row now reads "not audited — owner-verified 2026-11-27"; the account stays in `ownerExceptionUsernames` | Hernán | 2026-11-27 |
-| OQ-001-16 | The two Slicing Edge accounts that failed at T-14 stay on the card as a one-off owner exception to constitution Title III, listed in `ownerExceptionUsernames`; owner fix pending (follow-up OF-1, `docs/roadmap.md`) | Hernán | 2026-11-27 |
+| OQ-001-16 | The two Slicing Edge accounts that failed at T-14 stay on the card as a one-off owner exception to constitution Title III, listed in `ownerExceptionUsernames`; owner fix pending (follow-up OF-1, `docs/roadmap.md`). *Superseded (v1.4, T-14a/T-14b): see the "OQ-001-16 update" row below* | Hernán | 2026-11-27 |
 | B-E3 (T-14a) / OQ-001-12 | Resolves the T-14a B-E3 escalation with option (a): the orders and names in the Slicing Edge admin "Recent Orders" are the owner's own **test data** (Stripe test mode, consistent with OQ-001-12 / ASM-001-13). The T-14a Admin login (21:49, role "Admin") counts as **verified**; no new Admin login. Go-ahead for the Customer login (T-14b) | Hernán | 2026-11-27 |
 | OQ-001-16 update | After T-14a / T-14b verified both Slicing Edge accounts, OQ-001-16 is closed as "resolved by re-audit T-14a/T-14b; no exception needed"; both accounts leave `ownerExceptionUsernames` and are `verified` (spec v1.4; OF-1 closed) | Hernán | 2026-11-27 |
 
@@ -44,7 +45,8 @@
 - Never: submit any other form, create / edit / delete data, retry a failed login, use a
   password-reset link, create an account, or record third-party or real data.
 - Login fails → record the visible message only, no retry in this run, credential not published
-  (B-E2), unless the owner keeps it as a named exception (OQ-001-16).
+  (B-E2), unless the owner keeps it as a named exception (OQ-001-16). *Superseded (v1.4,
+  T-14a/T-14b): OQ-001-16 closed with no exception; a failed login is never published.*
 - Login lands on real-looking data → log out at once, record "possible production data" without
   copying anything, escalate to Hernán (B-E3).
 - The FlyWorkFlow Super Admin is never logged into (owner exception above).
@@ -429,7 +431,8 @@ Preflight and run findings:
   said "8 YouTube ids"; `projects.ts` has 2 (`java-desktop-app` EN and ES; the desktop app has no
   live demo, so its videos are its evidence). Both were checked.
 - **Slicing Edge demo accounts fail (T-14, 2026-11-27) — resolved by re-audit T-14a / T-14b
-  (exception lifted, see the next item):** `admin@slicing-edge.com` and `customer@example.com` both get "Invalid email or
+  (exception lifted, see the next item).** *Superseded (v1.4, T-14a/T-14b); kept as history:*
+  `admin@slicing-edge.com` and `customer@example.com` both get "Invalid email or
   password" with the published passwords. Owner decision (2026-11-27, OQ-001-16): both stay on the
   card as a one-off exception to constitution Title III and are listed in
   `ownerExceptionUsernames`; T-18 does not remove them. Follow-up OF-1 (`docs/roadmap.md`): fix the
