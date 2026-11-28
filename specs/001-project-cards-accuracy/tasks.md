@@ -189,7 +189,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   method version 1, links to spec 001 / FR-019 / BR-008, OQ-001-04 and OQ-001-12 owner
   confirmations dated 2026-11-27) and section 2 (BR-008 rules, exact commands, ASM-001-03); in
   section 3, the final status and redirect chain of the 7 URLs (3 `liveDemoUrl`, 4 `codeUrl`) and
-  the oEmbed status of the 8 YouTube ids; propose the OQ-001-11 endpoints from public network
+  the oEmbed status of the 2 YouTube ids; propose the OQ-001-11 endpoints from public network
   requests (no login, no form). A final non-2xx after one re-check → stop and escalate (B-E1,
   B-E4).
   - AC: AC-001-19 (live part), AC-001-13 (structure), AC-001-18 (method)
@@ -201,7 +201,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     test "$(grep -c "youtube.com/oembed\|oEmbed" docs/discovery/demo-audit.md)" -ge 1`
   - Depends on: T-01 … T-11 (code done first, so the window ends near G-Merge)
   - Evidence: fe5dbb9 · Verify → exit 0; auditDate 2026-11-27 (window end 2026-12-04); 7/7 final
-    2xx; oEmbed 200 ×2 (projects.ts has 2 ids, not 8); MCP connected; OQ-001-11 proposal recorded
+    2xx; oEmbed 200 ×2 (2 ids: `java-desktop-app` EN/ES; "8" was a typo, owner 2026-11-27);
+    MCP connected; OQ-001-11 proposal recorded
 
 - [ ] **T-13** — **⛔ Hernán's go-ahead for the Sushi Burrito Web demo.** One login attempt each
   for `admin@demo.com`, `kitchen@demo.com`, `waiter@demo.com`; record role, landing page,
@@ -233,18 +234,18 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     docs/discovery/demo-audit.md || exit 1; done`
   - Depends on: T-14
 
-- [ ] **T-16** — **⛔ Hernán's go-ahead · blocked by OQ-001-11.** Latency session 1 (no login):
-  `curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}"` on each confirmed
-  endpoint (FlyWorkFlow `/health`; Slicing Edge API health or `/docs` and storefront home; Sushi
-  Burrito API health if one exists, else N/A with reason), each sample after ≥ 30 min without
-  auditor traffic; record time (UTC-5), endpoint and values.
+- [ ] **T-16** — **⛔ Hernán's go-ahead (OQ-001-11 closed 2026-11-27).** Latency session 1
+  (no login): `curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}"` on
+  each confirmed endpoint (FlyWorkFlow API `/health`; Slicing Edge API `/api/health` and
+  storefront home; Sushi Burrito Web API `/api`; spec §11 OQ-001-11), each sample after
+  ≥ 30 min without auditor traffic; record time (UTC-5), endpoint and values.
   - AC: AC-001-13 (latency rows), AC-001-16 (input)
   - Files: `docs/discovery/demo-audit.md`
   - Verify: `grep -q "time_total" docs/discovery/demo-audit.md &&
     grep -q "Session 1" docs/discovery/demo-audit.md`
-  - Depends on: T-12, OQ-001-11 closed (Hernán confirms the T-12 proposal or gives the URLs)
+  - Depends on: T-12 (OQ-001-11 closed 2026-11-27: the T-12 proposal is confirmed)
 
-- [ ] **T-17** — **⛔ Hernán's go-ahead · blocked by OQ-001-11.** Latency session 2, in a separate
+- [ ] **T-17** — **⛔ Hernán's go-ahead (OQ-001-11 closed).** Latency session 2, in a separate
   implementer invocation, completing 3 samples per endpoint; write the `coldStartNotice` decision
   per project (yes if any `time_total` > 10 s / no / N/A with reason).
   - AC: AC-001-13 (latency rows), AC-001-16 (input)
@@ -296,7 +297,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 | T-13 | Hernán's go-ahead for Sushi Burrito Web logins |
 | T-14 | Hernán's go-ahead for Slicing Edge logins |
 | T-15 | Hernán's go-ahead for FlyWorkFlow logins (Super Admin never logged into) |
-| T-16, T-17 | Hernán's go-ahead + OQ-001-11 closed |
+| T-16, T-17 | Hernán's go-ahead (OQ-001-11 closed 2026-11-27) |
 | P-01 | Push / PR: ask first; Hernán opens the draft PR |
 
 ## AC coverage

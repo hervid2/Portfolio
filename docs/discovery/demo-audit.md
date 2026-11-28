@@ -12,7 +12,7 @@
 | Auditor | Implementer agent (Claude Code), on Hernán's machine, Git Bash; Hernán gave the go-ahead for T-12 (no login) |
 | Method version | 1 |
 | Time zone | UTC-5 (constitution Title IV) |
-| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.1), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
+| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.2), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
 | Requirements | [FR-019 — Demo availability verified](../requirements/functional.md), [BR-008 — Live demo audit safety](../requirements/business-rules.md), NFR-013 |
 
 **Owner confirmations this audit relies on**
@@ -99,7 +99,7 @@ was needed (every final status was 2xx, every oEmbed 200).
 | YouTube | none (no `demoVideoId`) |
 | API base URL (OQ-001-11) | `https://api-sushi-burrito.hernan-cardona.com/api` — found in the public bundle `assets/index-BoEdhW8C.js`; the login page sends no API request before login |
 | Health-route probe (GET, no auth) | `/` 404 · `/health` 404 · `/api/health` 404 · `/healthz` 404 · **`/api` 200** `{"message":"Bienvenido al API de Sushi Burrito."}` (0.56 s) |
-| **Proposed latency endpoint** | `GET https://api-sushi-burrito.hernan-cardona.com/api` (public welcome route; no dedicated health route exists). Alternative per ASM-001-03: N/A, always-on droplet. Hernán decides (OQ-001-11) |
+| **Proposed latency endpoint** | `GET https://api-sushi-burrito.hernan-cardona.com/api` (public welcome route; no dedicated health route exists). Confirmed by Hernán 2026-11-27 (OQ-001-11 closed) |
 | First-load latency samples | pending (T-16, T-17) |
 | `coldStartNotice` | pending |
 
@@ -112,7 +112,7 @@ was needed (every final status was 2xx, every oEmbed 200).
 | YouTube | none (no `demoVideoId`) |
 | API base URL (OQ-001-11) | `https://slicing-edgeapi-production.up.railway.app/api` — observed in the browser on the public `/products` page: `GET …/api/categories` → 200. The home page is server-rendered and calls the API server-side |
 | Health-route probe (GET, no auth) | `/health` 404 · `/` 404 · **`/api/health` 200** `{"status":"ok","service":"slicing-edge-api",…}` (0.56 s) · `/docs` 200 (Swagger UI, 0.47 s) |
-| **Proposed latency endpoints** | `GET https://slicing-edgeapi-production.up.railway.app/api/health` (API) and `GET https://slicing-edge-e-commerce-web.vercel.app/` (storefront home), per ASM-001-03. Hernán confirms (OQ-001-11) |
+| **Proposed latency endpoints** | `GET https://slicing-edgeapi-production.up.railway.app/api/health` (API) and `GET https://slicing-edge-e-commerce-web.vercel.app/` (storefront home), per ASM-001-03. Confirmed by Hernán 2026-11-27 (OQ-001-11 closed) |
 | First-load latency samples | pending (T-16, T-17) |
 | `coldStartNotice` | pending |
 
@@ -125,7 +125,7 @@ was needed (every final status was 2xx, every oEmbed 200).
 | YouTube | none (no `demoVideoId`) |
 | API base URL | `https://50s0hvq0me.execute-api.us-east-1.amazonaws.com` — found in the public JS chunks of `/login`; the login page sends no API request before login |
 | Health-route probe (GET, no auth) | **`/health` 200** `{"status":"ok","uptime":1.71,…}` — ttfb 2.85 s, total 2.85 s; uptime 1.7 s shows a fresh Lambda (one observation, not a sample) |
-| **Proposed latency endpoint** | `GET https://50s0hvq0me.execute-api.us-east-1.amazonaws.com/health` (already named by ASM-001-03) |
+| **Proposed latency endpoint** | `GET https://50s0hvq0me.execute-api.us-east-1.amazonaws.com/health` (already named by ASM-001-03). Confirmed by Hernán 2026-11-27 (OQ-001-11 closed) |
 | First-load latency samples | pending (T-16, T-17) |
 | `coldStartNotice` | pending |
 
@@ -167,12 +167,12 @@ No published credentials (flow A2).
 ## 5. Findings and follow-ups for Hernán
 
 Preflight findings (T-18 completes this section):
-- **OQ-001-11 proposal** (needs Hernán's confirmation before T-16): Sushi Burrito Web
-  `GET …hernan-cardona.com/api` (or N/A, always-on droplet); Slicing Edge `GET …/api/health` +
-  storefront home; FlyWorkFlow `GET …/health`. See section 3.
-- **Task-count discrepancy:** `tasks.md` T-12 mentions "8 YouTube ids", but `projects.ts` has
-  only 2 (`java-desktop-app` EN and ES). Both were checked; no other `demoVideoId`, case-study or
-  diagram URL exists in `projects.ts`.
+- **OQ-001-11 resolved (owner, 2026-11-27):** the proposal is confirmed. Sushi Burrito Web
+  `GET …hernan-cardona.com/api`; Slicing Edge `GET …/api/health` + storefront home; FlyWorkFlow
+  `GET …/health`. Full URLs in section 3 and spec §11.
+- **Task-count discrepancy — resolved: typo, 2 is correct (owner, 2026-11-27).** `tasks.md` T-12
+  said "8 YouTube ids"; `projects.ts` has 2 (`java-desktop-app` EN and ES; the desktop app has no
+  live demo, so its videos are its evidence). Both were checked.
 - **Sushi Burrito Web bundle (other repo, informational):** the public bundle contains the
   SweetAlert2 "protestware" snippet (reference to an anthem `.mp3` on `flag-gimn.ru`), which some
   SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
