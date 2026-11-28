@@ -215,7 +215,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: b22429e · Verify → exit 0; 3/3 `verified` on the first attempt (2026-11-27
     19:35 UTC-5), landing views recorded, logout OK; no real-looking data; no screenshot
 
-- [ ] **T-14** — **⛔ Hernán's go-ahead for the Slicing Edge demo.** One login attempt each for
+- [x] **T-14** — **⛔ Hernán's go-ahead for the Slicing Edge demo.** One login attempt each for
   `admin@slicing-edge.com` and `customer@example.com`; same rules as T-13. Note any visible Stripe
   test-mode indicator without starting a checkout.
   - AC: AC-001-13 (rows), AC-001-18
@@ -223,6 +223,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `for u in admin@slicing-edge.com customer@example.com; do
     grep -qE "$u.*(verified|failed|not tested)" docs/discovery/demo-audit.md || exit 1; done`
   - Depends on: T-13 (shares the file; any order between T-13 … T-15 is fine, one at a time)
+  - Evidence: 966fcf7 · Verify → exit 0; 2/2 `failed` on a single attempt each (2026-11-27
+    19:37 UTC-5, "Invalid email or password"), not retried (B-E2); no Stripe indicator seen
 
 - [ ] **T-15** — **⛔ Hernán's go-ahead for the FlyWorkFlow demo.** One login attempt each for
   the Admin and Member accounts; same rules as T-13. The Super Admin row
