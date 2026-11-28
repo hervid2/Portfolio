@@ -1,0 +1,206 @@
+# Live demo audit — spec 001
+
+> Status: **preflight done (T-12)**. Logins (T-13 … T-15), latency (T-16, T-17) and the close
+> (T-18) are pending. Nothing in sections 4 and 6 is a result yet.
+
+## 1. Header
+
+| Field | Value |
+|---|---|
+| Audit date (`auditDate`, ASM-001-14) | **2026-11-27** (first day of this run) |
+| Window end | **2026-12-04** (`auditDate` + 7 days). Every record of this run and G-Merge must fall on or before this date; otherwise spec §4.2 B4 applies (re-run) |
+| Auditor | Implementer agent (Claude Code), on Hernán's machine, Git Bash; Hernán gave the go-ahead for T-12 (no login) |
+| Method version | 1 |
+| Time zone | UTC-5 (constitution Title IV) |
+| Spec | [spec 001 — project cards accuracy](../../specs/001-project-cards-accuracy/spec.md) (v1.1), [plan §1.6](../../specs/001-project-cards-accuracy/plan.md) |
+| Requirements | [FR-019 — Demo availability verified](../requirements/functional.md), [BR-008 — Live demo audit safety](../requirements/business-rules.md), NFR-013 |
+
+**Owner confirmations this audit relies on**
+
+| Id | Confirmation | Owner | Date |
+|---|---|---|---|
+| OQ-001-04 | The linked Sushi Burrito Web deployment is a demo clone with seeded data, separate from the restaurant's real instance (separate repo, VPS and database). Its three accounts are audited normally under BR-008 (ASM-001-12) | Hernán | 2026-11-27 |
+| OQ-001-12 | Slicing Edge holds non-real data and Stripe runs in test mode; all its demo accounts stay publishable, Admin included, subject to the audit (ASM-001-13) | Hernán | 2026-11-27 |
+| OQ-001-15 / OQ-001-05 | FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`) is excluded from the audit: kept on the card, never logged into, listed as "not audited — owner investigation pending" (ASM-008, one-off Title III exception) | Hernán | 2026-11-27 |
+
+## 2. Method
+
+**BR-008 rules (binding for every task of this run)**
+- Allowed actions only: open the demo, at most **one** login attempt per published demo account
+  per audit run, observe the landing page, log out.
+- Never: submit any other form, create / edit / delete data, retry a failed login, use a
+  password-reset link, create an account, or record third-party or real data.
+- Login fails → record the visible message only, no retry in this run, credential not published
+  (B-E2).
+- Login lands on real-looking data → log out at once, record "possible production data" without
+  copying anything, escalate to Hernán (B-E3).
+- The FlyWorkFlow Super Admin is never logged into (owner exception above).
+- No password, token, cookie or screenshot of a logged-in page is stored in this file or the repo.
+- Each login task needs Hernán's explicit go-ahead for that demo (T-13, T-14, T-15).
+
+**Link commands (spec §4.1 B3, NFR-013)** — run from Git Bash; a final 2xx passes:
+
+```sh
+curl -sL -o /dev/null -w "%{http_code} %{url_effective}" <url>   # final status, redirects followed
+curl -sIL <url> | grep -iE "^HTTP/|^location:"                   # redirect chain (status lines)
+```
+
+**YouTube oEmbed check** — 200 passes:
+
+```sh
+curl -s -o /dev/null -w "%{http_code}" \
+  "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=<id>&format=json"
+```
+
+A final 4xx/5xx or oEmbed failure gets one re-check in the same run; if it still fails, the
+audit stops and escalates to Hernán (B-E1, B-E4).
+
+**First-load latency (ASM-001-03, no login)** — used by T-16 / T-17, not by this preflight:
+
+```sh
+curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}" <endpoint>
+```
+
+3 samples per endpoint, each after ≥ 30 min without traffic from the auditor, over at least two
+separate sessions inside the window. `coldStartNotice` = yes if any `time_total` > 10 s. Other
+visitors may warm the backend, so the result is best effort.
+
+**Endpoint discovery (OQ-001-11, spec §4.2 B5)** — Playwright MCP loads only the **public**
+pages (home, product list, login page without typing); the auditor reads the network requests
+and the public JS bundles, then sends unauthenticated `GET` requests to candidate health routes.
+No form, no login.
+
+**Playwright MCP preflight (OQ-001-09):** connected on 2026-11-27 19:27 UTC-5
+(`browser_navigate`, `browser_network_requests`, `browser_snapshot`, `browser_close` all
+worked). T-13 … T-15 can use it; the fallback (Hernán logs in by hand) is not needed.
+
+## 3. Per-project results
+
+Link checks run 2026-11-27 19:26 UTC-5; endpoint discovery 19:27 – 19:28 UTC-5. No re-check
+was needed (every final status was 2xx, every oEmbed 200).
+
+### 3.1 Sushi Burrito Desktop (`java-desktop-app`)
+
+| Check | Result |
+|---|---|
+| Live demo URL | none (`liveDemoUrl: null`; flow A3) |
+| Code URL `https://github.com/hervid2/sushiBurritoJava` | **200**, final URL unchanged; chain: `200` |
+| YouTube EN `inrgfaGwJEE` (oEmbed) | **200** |
+| YouTube ES `sSIvLiMbzEM` (oEmbed) | **200** |
+| First-load latency | N/A — no live demo (flow A3) |
+| `coldStartNotice` | N/A — no live demo |
+
+### 3.2 Sushi Burrito Web (`sushi-burrito-spa`)
+
+| Check | Result |
+|---|---|
+| Live demo URL `https://sushi-burrito-final.vercel.app/` | **200**, final URL unchanged; chain: `200`; 0.43 s |
+| Code URL `https://github.com/hervid2/SushiBurritoFinal` | **200**, final URL unchanged; chain: `200` |
+| YouTube | none (no `demoVideoId`) |
+| API base URL (OQ-001-11) | `https://api-sushi-burrito.hernan-cardona.com/api` — found in the public bundle `assets/index-BoEdhW8C.js`; the login page sends no API request before login |
+| Health-route probe (GET, no auth) | `/` 404 · `/health` 404 · `/api/health` 404 · `/healthz` 404 · **`/api` 200** `{"message":"Bienvenido al API de Sushi Burrito."}` (0.56 s) |
+| **Proposed latency endpoint** | `GET https://api-sushi-burrito.hernan-cardona.com/api` (public welcome route; no dedicated health route exists). Alternative per ASM-001-03: N/A, always-on droplet. Hernán decides (OQ-001-11) |
+| First-load latency samples | pending (T-16, T-17) |
+| `coldStartNotice` | pending |
+
+### 3.3 The Slicing Edge (`the-slicing-edge`)
+
+| Check | Result |
+|---|---|
+| Live demo URL `https://slicing-edge-e-commerce-web.vercel.app/` | **200**, final URL unchanged; chain: `200`; 1.14 s |
+| Code URL `https://github.com/hervid2/Slicing-edge-e-commerce` | **200**, final URL unchanged; chain: `200` |
+| YouTube | none (no `demoVideoId`) |
+| API base URL (OQ-001-11) | `https://slicing-edgeapi-production.up.railway.app/api` — observed in the browser on the public `/products` page: `GET …/api/categories` → 200. The home page is server-rendered and calls the API server-side |
+| Health-route probe (GET, no auth) | `/health` 404 · `/` 404 · **`/api/health` 200** `{"status":"ok","service":"slicing-edge-api",…}` (0.56 s) · `/docs` 200 (Swagger UI, 0.47 s) |
+| **Proposed latency endpoints** | `GET https://slicing-edgeapi-production.up.railway.app/api/health` (API) and `GET https://slicing-edge-e-commerce-web.vercel.app/` (storefront home), per ASM-001-03. Hernán confirms (OQ-001-11) |
+| First-load latency samples | pending (T-16, T-17) |
+| `coldStartNotice` | pending |
+
+### 3.4 FlyWorkFlow (`flyworkflow-incidents`)
+
+| Check | Result |
+|---|---|
+| Live demo URL `https://flyworkflowapp.vercel.app/` | **200**, final URL `https://flyworkflowapp.vercel.app/login?from=%2F`; chain: `307` (Location `/login?from=%2F`) → `200`; 2.46 s |
+| Code URL `https://github.com/hervid2/flyworkflowapp` | **200**, final URL unchanged; chain: `200` |
+| YouTube | none (no `demoVideoId`) |
+| API base URL | `https://50s0hvq0me.execute-api.us-east-1.amazonaws.com` — found in the public JS chunks of `/login`; the login page sends no API request before login |
+| Health-route probe (GET, no auth) | **`/health` 200** `{"status":"ok","uptime":1.71,…}` — ttfb 2.85 s, total 2.85 s; uptime 1.7 s shows a fresh Lambda (one observation, not a sample) |
+| **Proposed latency endpoint** | `GET https://50s0hvq0me.execute-api.us-east-1.amazonaws.com/health` (already named by ASM-001-03) |
+| First-load latency samples | pending (T-16, T-17) |
+| `coldStartNotice` | pending |
+
+**Real-looking data on public pages:** none seen. Sushi Burrito Web and FlyWorkFlow show only a
+login form; Slicing Edge shows a seeded knife catalogue (product names, categories, Cloudinary
+images). Nothing was copied.
+
+## 4. Credentials
+
+Prepared for T-13 … T-15. Result column is empty until the login task for that demo runs.
+
+### 4.1 Sushi Burrito Desktop (`java-desktop-app`)
+
+No published credentials (flow A2).
+
+### 4.2 Sushi Burrito Web (`sushi-burrito-spa`) — T-13
+
+| Role label (card) | Username | Result | Observed role / landing page | Published |
+|---|---|---|---|---|
+| Admin / Administrador | `admin@demo.com` | pending — T-13 | — | pending |
+| Kitchen / Cocina | `kitchen@demo.com` | pending — T-13 | — | pending |
+| Waiter / Mesero | `waiter@demo.com` | pending — T-13 | — | pending |
+
+### 4.3 The Slicing Edge (`the-slicing-edge`) — T-14
+
+| Role label (card) | Username | Result | Observed role / landing page | Published |
+|---|---|---|---|---|
+| Admin / Administrador | `admin@slicing-edge.com` | pending — T-14 | — | pending |
+| Customer / Cliente | `customer@example.com` | pending — T-14 | — | pending |
+
+### 4.4 FlyWorkFlow (`flyworkflow-incidents`) — T-15
+
+| Role label (card) | Username | Result | Observed role / landing page | Published |
+|---|---|---|---|---|
+| Super Admin / Superadministrador | `camila.rojas@flyworkflow.io` | not audited — owner investigation pending | no login (OQ-001-05, OQ-001-15) | yes (owner exception) |
+| Admin / Administrador | `isabela.nieto@constructoradelvalle.com` | pending — T-15 | — | pending |
+| Member / Miembro | `diego.salazar@constructoradelvalle.com` | pending — T-15 | — | pending |
+
+## 5. Findings and follow-ups for Hernán
+
+Preflight findings (T-18 completes this section):
+- **OQ-001-11 proposal** (needs Hernán's confirmation before T-16): Sushi Burrito Web
+  `GET …hernan-cardona.com/api` (or N/A, always-on droplet); Slicing Edge `GET …/api/health` +
+  storefront home; FlyWorkFlow `GET …/health`. See section 3.
+- **Task-count discrepancy:** `tasks.md` T-12 mentions "8 YouTube ids", but `projects.ts` has
+  only 2 (`java-desktop-app` EN and ES). Both were checked; no other `demoVideoId`, case-study or
+  diagram URL exists in `projects.ts`.
+- **Sushi Burrito Web bundle (other repo, informational):** the public bundle contains the
+  SweetAlert2 "protestware" snippet (reference to an anthem `.mp3` on `flag-gimn.ru`), which some
+  SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
+  Suggest pinning a SweetAlert2 version without it in `SushiBurritoFinal`.
+
+Follow-ups required by spec §8.2 item 5 (recorded now, confirmed at T-18):
+- Add the demo accounts to the Sushi Burrito Web and Slicing Edge READMEs (OQ-001-06).
+- State in the `SushiBurritoFinal` README that the linked deployment is a demo clone with seeded
+  data, separate from the restaurant's instance (suggestion, other repo; OQ-001-04).
+- FlyWorkFlow Super Admin: owner investigation pending (ASM-008, OQ-001-05).
+- Shared-demo integrity: any visitor can lock a FlyWorkFlow account or change a demo password;
+  suggest blocking password changes for demo accounts and a scheduled reseed (CL-17).
+
+## 6. Machine-readable summary
+
+Provisional: only `auditDate` and `ownerExceptionUsernames` are final; T-18 fills
+`verifiedUsernames` and `coldStartProjectIds` from sections 3 and 4.
+
+```json
+{
+  "auditDate": "2026-11-27",
+  "verifiedUsernames": {
+    "java-desktop-app": [],
+    "sushi-burrito-spa": [],
+    "the-slicing-edge": [],
+    "flyworkflow-incidents": []
+  },
+  "ownerExceptionUsernames": { "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"] },
+  "coldStartProjectIds": []
+}
+```
