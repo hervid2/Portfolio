@@ -324,7 +324,7 @@ Written: 2026-11-27.
 
 ## Phase D — Documentation
 
-- [ ] **T-19** — Docs: glossary "Cold-start notice" (name `coldStartNotice` final, drop "proposed");
+- [x] **T-19** — Docs: glossary "Cold-start notice" (name `coldStartNotice` final, drop "proposed");
   `docs/traceability.md` rows FR-014, FR-015, FR-016, FR-019 → ACs and test files; roadmap
   DEBT-013 → Closed (spec 001, T-11); `MEMORY.md`: ASM-008 closed (owner-verified 2026-11-27),
   the owner exception and the `auditDate` (written in the spec v1.3 / v1.4 commits; confirm).
@@ -334,6 +334,8 @@ Written: 2026-11-27.
     grep -E "^\| DEBT-013 " docs/roadmap.md | grep -q "Closed" &&
     ! grep -n "name proposed" docs/glossary.md`
   - Depends on: T-11, T-18
+  - Evidence: 5618573 · Verify → exit 0 (4 FR rows with AC-001; DEBT-013 Closed; no "name
+    proposed"); ASM-008 row in brief.md already closed (v1.3); MEMORY.md 50 lines; docs only
 
 ## Post-implementation steps (not implementer tasks; listed so every AC has an owner)
 - **P-01** — Coordinator asks Hernán before pushing; Hernán opens the **draft** PR. CI `frontend`
