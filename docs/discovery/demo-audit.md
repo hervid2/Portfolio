@@ -1,7 +1,8 @@
 # Live demo audit — spec 001
 
-> Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13)**. Logins T-14, T-15,
-> latency (T-16, T-17) and the close (T-18) are pending. Section 6 is not final yet.
+> Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13); Slicing Edge logins
+> done (T-14, both failed)**. Logins T-15, latency (T-16, T-17) and the close (T-18) are
+> pending. Section 6 is not final yet.
 
 ## 1. Header
 
@@ -166,8 +167,21 @@ day):
 
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
-| Admin / Administrador | `admin@slicing-edge.com` | pending — T-14 | — | pending |
-| Customer / Cliente | `customer@example.com` | pending — T-14 | — | pending |
+| Admin / Administrador | `admin@slicing-edge.com` | **failed** — 2026-11-27 19:37 UTC-5, single attempt, not retried | Stayed on `/auth/login`; visible message "Invalid email or password". No logged-in view, so no role observed | no (B-E2; removed at T-18) |
+| Customer / Cliente | `customer@example.com` | **failed** — 2026-11-27 19:37 UTC-5, single attempt, not retried | Stayed on `/auth/login`; visible message "Invalid email or password". No logged-in view, so no role observed | no (B-E2; removed at T-18) |
+
+T-14 notes (Playwright MCP, 2026-11-27 19:37 UTC-5; Hernán's go-ahead given the same day):
+- One email/password attempt per published account on `/auth/login` ("Welcome Back"), with the
+  passwords published in `projects.ts`. Both returned "Invalid email or password" about 1–3 s
+  after "Sign In" and the page stayed on the login form. Per BR-008 neither was retried; the
+  "Forgot password?" link, "Continue with Google" and "Create one" (sign-up) were not used.
+- Because no login succeeded, there was no session to log out of, no role to observe and no
+  logged-in data to assess (B-E3 not reachable). The T-13 role-inference note does not apply.
+- Stripe test-mode indicator: none seen on the pages visited (home, login). No cart, checkout or
+  guest-checkout flow was opened, so nothing about Stripe was observed.
+- Open sign-up and guest checkout were left untouched. Nothing was copied; no screenshot was
+  taken. The MCP's page snapshots of this run (public pages and the login form only) were moved
+  out of the repository folder to the session scratchpad; the browser was closed.
 
 ### 4.4 FlyWorkFlow (`flyworkflow-incidents`) — T-15
 
@@ -186,6 +200,11 @@ Preflight findings (T-18 completes this section):
 - **Task-count discrepancy — resolved: typo, 2 is correct (owner, 2026-11-27).** `tasks.md` T-12
   said "8 YouTube ids"; `projects.ts` has 2 (`java-desktop-app` EN and ES; the desktop app has no
   live demo, so its videos are its evidence). Both were checked.
+- **Slicing Edge demo accounts fail (T-14, 2026-11-27):** `admin@slicing-edge.com` and
+  `customer@example.com` both get "Invalid email or password" with the published passwords. Under
+  B-E2 both credentials are unpublished at T-18 unless Hernán restores them and asks for a new
+  audit run. Likely causes to check (not verified): the production database was never seeded
+  with these users, it was reseeded with other passwords, or a visitor changed them (CL-17).
 - **Sushi Burrito Web bundle (other repo, informational):** the public bundle contains the
   SweetAlert2 "protestware" snippet (reference to an anthem `.mp3` on `flag-gimn.ru`), which some
   SweetAlert2 11.x releases play for visitors on Russian-locale `.ru`/`.su`/`.рф` domains.
