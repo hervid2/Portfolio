@@ -240,7 +240,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Evidence: 6f6f8d7 · Verify → exit 0; Admin and Member `verified` on a single attempt each
     (2026-11-27 20:13 – 20:14 UTC-5, role shown in header); Super Admin not attempted
 
-- [ ] **T-16** — **⛔ Hernán's go-ahead (OQ-001-11 closed 2026-11-27).** Latency session 1
+- [x] **T-16** — **⛔ Hernán's go-ahead (OQ-001-11 closed 2026-11-27).** Latency session 1
   (no login): `curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}"` on
   each confirmed endpoint (FlyWorkFlow API `/health`; Slicing Edge API `/api/health` and
   storefront home; Sushi Burrito Web API `/api`; spec §11 OQ-001-11), each sample after
@@ -250,6 +250,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `grep -q "time_total" docs/discovery/demo-audit.md &&
     grep -q "Session 1" docs/discovery/demo-audit.md`
   - Depends on: T-12 (OQ-001-11 closed 2026-11-27: the T-12 proposal is confirmed)
+  - Evidence: 0de1605 · Verify → exit 0; 2 of 3 samples per endpoint (2026-11-27 20:16 –
+    21:16 UTC-5), all 200, max `time_total` 2.62 s (FlyWorkFlow, cold Lambda); none > 10 s
 
 - [ ] **T-17** — **⛔ Hernán's go-ahead (OQ-001-11 closed).** Latency session 2, in a separate
   implementer invocation, completing 3 samples per endpoint; write the `coldStartNotice` decision
