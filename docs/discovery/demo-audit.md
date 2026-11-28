@@ -1,8 +1,8 @@
 # Live demo audit — spec 001
 
 > Status: **preflight done (T-12); Sushi Burrito Web logins done (T-13); Slicing Edge logins
-> done (T-14, both failed)**. Logins T-15, latency (T-16, T-17) and the close (T-18) are
-> pending. Section 6 is not final yet.
+> done (T-14, both failed); FlyWorkFlow logins done (T-15, Super Admin excluded)**. Latency
+> (T-16, T-17) and the close (T-18) are pending. Section 6 is not final yet.
 
 ## 1. Header
 
@@ -188,8 +188,31 @@ T-14 notes (Playwright MCP, 2026-11-27 19:37 UTC-5; Hernán's go-ahead given the
 | Role label (card) | Username | Result | Observed role / landing page | Published |
 |---|---|---|---|---|
 | Super Admin / Superadministrador | `camila.rojas@flyworkflow.io` | not audited — owner investigation pending | no login (OQ-001-05, OQ-001-15) | yes (owner exception) |
-| Admin / Administrador | `isabela.nieto@constructoradelvalle.com` | pending — T-15 | — | pending |
-| Member / Miembro | `diego.salazar@constructoradelvalle.com` | pending — T-15 | — | pending |
+| Admin / Administrador | `isabela.nieto@constructoradelvalle.com` | **verified** — 2026-11-27 20:13 UTC-5, first attempt | Lands on `/mapa` "Mapa de Incidencias"; header user button shows the role explicitly: "Isabela Nieto — admin"; project "Proyecto Onboarding"; seeded-looking incident pins only. Logout OK (20:13, back to `/login`) | yes |
+| Member / Miembro | `diego.salazar@constructoradelvalle.com` | **verified** — 2026-11-27 20:14 UTC-5, first attempt | Lands on `/mapa` "Mapa de Incidencias"; header user button shows the role explicitly: "Diego Salazar — member"; same project and pins as Admin. Logout OK (20:14, back to `/login`) | yes |
+
+T-15 notes (Playwright MCP, 2026-11-27 20:13 – 20:14 UTC-5; Hernán's go-ahead given the same
+day):
+- The Super Admin (`camila.rojas@flyworkflow.io`) was not logged into and no attempt was made
+  (owner exception OQ-001-05 / OQ-001-15, ASM-008).
+- One login attempt per account on `/login` ("Gestión de Incidencias", Spanish by default, as
+  expected), with the password published in `projects.ts`. Both succeeded on the first try and
+  redirected to `/mapa` after a few seconds, so no retry question arose (FlyWorkFlow locks an
+  account after 10 wrong passwords).
+- Unlike T-13, the role does not need to be inferred: the header user button names it
+  (`admin`, `member`), matching the card labels. The landing view and the main menu (Inicio,
+  Dashboard, Mapa, Historial, Calendario, Galería, Documentos, Papelera, Ajustes) look the same
+  for both roles; role-specific permissions further in were not explored (read-only audit).
+- Only the landing view was read (accessibility snapshot). No menu link, incident pin,
+  "Crear incidencia", upload, map tool, date / slider control, notification, settings, share,
+  password-reset or other form was used; each session ended with "Cerrar sesión", then the
+  browser was closed.
+- No real-looking personal or business data on the landing view (B-E3 not triggered): the
+  project is "Proyecto Onboarding" and the pins include "Testing incident #03" next to generic
+  construction-issue titles. The display names match the published demo personas. Nothing was
+  copied; no screenshot was taken. The MCP's page snapshots and console log of this run were
+  moved out of the repository folder to the session scratchpad. Console: 4 warnings (an unused
+  CSS preload), 0 errors.
 
 ## 5. Findings and follow-ups for Hernán
 
