@@ -256,7 +256,7 @@ Written: 2026-11-27.
   - Evidence: 0de1605 · Verify → exit 0; 2 of 3 samples per endpoint (2026-11-27 20:16 –
     21:16 UTC-5), all 200, max `time_total` 2.62 s (FlyWorkFlow, cold Lambda); none > 10 s
 
-- [ ] **T-17** — **⛔ Hernán's go-ahead (OQ-001-11 closed).** Latency session 2, in a separate
+- [x] **T-17** — **⛔ Hernán's go-ahead (OQ-001-11 closed).** Latency session 2, in a separate
   implementer invocation, completing 3 samples per endpoint; write the `coldStartNotice` decision
   per project (yes if any `time_total` > 10 s / no / N/A with reason).
   - AC: AC-001-13 (latency rows), AC-001-16 (input)
@@ -264,6 +264,8 @@ Written: 2026-11-27.
   - Verify: `grep -q "Session 2" docs/discovery/demo-audit.md &&
     test "$(grep -ciE 'coldStartNotice.*(yes|no|N/A)' docs/discovery/demo-audit.md)" -ge 4`
   - Depends on: T-16
+  - Evidence: 7a9f7ea · Verify → exit 0; 3 of 3 samples per endpoint (session 2 2026-11-27
+    21:25 – 21:47 UTC-5), all 200, max `time_total` 2.90 s (FlyWorkFlow); notice: no × 3, N/A × 1
 
 - [ ] **T-18** — Close the audit (no live access): write section 5 (at least the four spec §8.2
   item 5 follow-ups) and the section 6 `json` summary; set `projects.ts` from it (remove every
