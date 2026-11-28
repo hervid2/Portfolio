@@ -1,5 +1,5 @@
 # Spec 001 — Project cards accuracy
-Status: Planned (G-Plan 2026-11-27) · Version: 1.3 · Branch: feat/001-project-cards-accuracy ·
+Status: Planned (G-Plan 2026-11-27) · Version: 1.4 · Branch: feat/001-project-cards-accuracy ·
 FR: FR-014, FR-015, FR-016, FR-019 · BR: BR-006, BR-007, BR-008 · NFR: NFR-002, NFR-003,
 NFR-004, NFR-006, NFR-007, NFR-008, NFR-011, NFR-012, NFR-013 · Backlog: PO-4, PO-5, PO-6, PO-9 ·
 Debt: DEBT-013 (folded in, OQ-001-07) · Depends on: 000
@@ -11,10 +11,10 @@ AWS Lambda and S3; Slicing Edge buries its AI assistant mid-sentence; nothing te
 apart from personal work; and some demo credentials have never been checked (ASM-008). This spec
 makes every card truthful and verifiable: content matches the profile README, each card shows its
 project kind, and every published credential and delay notice is backed by a dated demo audit
-(`docs/discovery/demo-audit.md`). Three published credentials are named owner exceptions to
-that rule: the FlyWorkFlow Super Admin (OQ-001-05, OQ-001-15), kept out of the audit and verified
-by the owner on 2026-11-27, and the two Slicing Edge accounts that failed the audit login
-(OQ-001-16), kept while the owner fixes them (follow-up OF-1).
+(`docs/discovery/demo-audit.md`). One published credential is a named owner exception to that
+rule: the FlyWorkFlow Super Admin (OQ-001-05, OQ-001-15), kept out of the audit and verified by
+the owner on 2026-11-27. The two Slicing Edge accounts that failed at T-14 were fixed by the
+owner and verified by the re-audit T-14a / T-14b, so they need no exception (OQ-001-16, v1.4).
 
 ## 2. Scope
 **Includes**
@@ -30,15 +30,17 @@ by the owner on 2026-11-27, and the two Slicing Edge accounts that failed the au
   - The deliverable `docs/discovery/demo-audit.md`, structured as in §8.2, ending with a
     machine-readable summary that the unit tests read (§8.2 item 6).
   - Removing every audited credential the audit does not mark `verified`, except the owner
-    exceptions listed in the audit summary's `ownerExceptionUsernames` (OQ-001-15, OQ-001-16).
+    exception listed in the audit summary's `ownerExceptionUsernames` (OQ-001-15).
   - FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`): kept on the card unchanged and
     excluded from the live login audit (OQ-001-05). The audit listed it as "not audited — owner
     investigation pending"; since v1.3 it reads "not audited — owner-verified 2026-11-27", because
     the owner states the access works. ASM-008 is closed as "Confirmed by owner, 2026-11-27 (no
     audit login)".
   - Slicing Edge Admin and Customer (`admin@slicing-edge.com`, `customer@example.com`): both
-    `failed` at T-14 and kept on the card unchanged as a one-off owner exception (OQ-001-16),
-    pending the owner's fix in the Slicing Edge project (follow-up OF-1).
+    `failed` at T-14 and were briefly kept as a one-off owner exception (OQ-001-16, v1.3). After
+    the owner's fix the re-audit verified both (Admin at T-14a, Customer at T-14b; the T-14a B-E3
+    flag was cleared by the owner as test data), so since v1.4 they are `verified`, not
+    exceptions (OQ-001-16 closed, follow-up OF-1 closed).
   - A bilingual cold-start notice on each card whose demo the audit measures at > 10 s on first
     load (ASM-001-03).
 - **Stack icons (OQ-001-03):** each of the 16 stack labels without an icon-map key (§8.3 D-10)
@@ -62,7 +64,7 @@ by the owner on 2026-11-27, and the two Slicing Edge accounts that failed the au
     status and DEBT-013 closed; the "Owner follow-ups (other repos)" table OF-1 … OF-4 (added with
     v1.3).
   - `docs/traceability.md`: rows FR-014, FR-015, FR-016, FR-019 → ACs and tests, at G-Merge.
-  - `MEMORY.md`: ASM-008 status (closed, owner-verified 2026-11-27), the owner exceptions and the
+  - `MEMORY.md`: ASM-008 status (closed, owner-verified 2026-11-27), the owner exception and the
     audit date.
 
 **Does not include**
@@ -101,8 +103,7 @@ No new roles or API permissions. The contact API is not touched.
 3. The visitor switches EN ↔ ES: the subtitle, kind label, description and notice change language
    without a reload; title and stack chips do not change (they are proper names).
 4. The visitor opens "Demo Credentials": only audit-verified accounts are listed, plus the
-   owner exceptions: the FlyWorkFlow Super Admin (OQ-001-05, OQ-001-15) and the two Slicing Edge
-   accounts (OQ-001-16).
+   owner exception: the FlyWorkFlow Super Admin (OQ-001-05, OQ-001-15).
 
 **B. Live demo audit (task-level activity, needs Hernán's go-ahead per demo)**
 1. The first audit task checks that the Playwright MCP server connects. If it does not, Hernán logs
@@ -123,7 +124,7 @@ No new roles or API permissions. The contact API is not touched.
    reason) or `not audited — owner investigation pending` (Super Admin only; since v1.3 `not
    audited — owner-verified 2026-11-27`).
 6. The data in `frontend/src/data/projects.ts` is updated to match the audit summary: failed or
-   untested credentials are removed, except those in `ownerExceptionUsernames` (OQ-001-16);
+   untested credentials are removed, except those in `ownerExceptionUsernames` (OQ-001-15);
    `coldStartNotice` is set where the audit says so.
 
 ### 4.2 Alternative flows
@@ -134,8 +135,9 @@ No new roles or API permissions. The contact API is not touched.
   demo link (existing behavior). No first-load latency is measured and no notice is shown.
 - **B2. A credential fails but Hernán wants to keep it:** he fixes the account in the project's
   own deployment; the auditor re-tests it (one new attempt) before G-Merge. Until it passes, it
-  stays off the card, unless the owner names it as an exception (as the two Slicing Edge accounts,
-  OQ-001-16; after 001 their re-audit is a short `/bug`, follow-up OF-1).
+  stays off the card, unless the owner names it as an exception. Example: the two Slicing Edge
+  accounts failed at T-14, were fixed by the owner and passed the re-audit T-14a / T-14b before
+  G-Merge (OQ-001-16 closed, v1.4).
 - **B3. The demo is slow on one sample only:** the notice is shown if any sample exceeds 10 s
   (ASM-001-03).
 - **B4. The audit must be redone** (G-Merge later than 7 days after the audit date): a new audit
@@ -154,11 +156,13 @@ No new roles or API permissions. The contact API is not touched.
 - **B-E2. Login fails:** stop after one attempt for that account in this audit run (FlyWorkFlow
   locks an account for 15 minutes after ten wrong passwords; repeated attempts by the auditor are
   not allowed). Record the visible error message; remove the credential (B2 for recovery),
-  unless the owner keeps it as a named exception listed in `ownerExceptionUsernames` (OQ-001-16:
-  `admin@slicing-edge.com` and `customer@example.com`, follow-up OF-1).
+  unless the owner keeps it as a named exception listed in `ownerExceptionUsernames` (none for a
+  failed login in 001: the OQ-001-16 exception ended when the re-audit verified both accounts).
 - **B-E3. The login lands on data that looks real** (real names, real invoices, a real client's
   revenue): log out immediately, record "possible production data" without copying any of it,
-  remove the credential and escalate to Hernán (BR-007, constitution Title III).
+  remove the credential and escalate to Hernán (BR-007, constitution Title III). If the owner
+  confirms the data is his own test data, the credential counts as verified and stays (Slicing
+  Edge Admin at T-14a, owner decision 2026-11-27, consistent with OQ-001-12).
 - **B-E4. A YouTube id is unavailable:** recorded as `failed`; escalated to Hernán (the spec does
   not pick a replacement video).
 
@@ -185,18 +189,18 @@ No new roles or API permissions. The contact API is not touched.
   - Example: FlyWorkFlow Admin login succeeds → note "lands on dashboard, role Admin", log out.
   - Edge case: a password-reset link is offered after a failure → not used.
 - **Constitution Title III — "Demo credentials are published only after they are verified."**
-  Applied to every credential, with two one-off owner exceptions (no constitution amendment), both
+  Applied to every credential, with one one-off owner exception (no constitution amendment),
   listed in the audit summary's `ownerExceptionUsernames`:
   - OQ-001-15 (G-Spec, 2026-11-27): the FlyWorkFlow Super Admin (`camila.rojas@flyworkflow.io`)
     stays on the card without an audit login (OQ-001-05). Status: owner-verified — on 2026-11-27
     the owner stated the access works; ASM-008 is closed as "Confirmed by owner, 2026-11-27 (no
     audit login)", and the audit lists it as "not audited — owner-verified 2026-11-27". It stays
     an exception because no audit login verified it.
-  - OQ-001-16 (2026-11-27): the Slicing Edge Admin and Customer (`admin@slicing-edge.com`,
-    `customer@example.com`) failed at T-14 ("Invalid email or password") and stay on the card,
-    pending the owner's fix (follow-up OF-1). The audit lists them as `failed`, published "yes
-    (owner exception, OQ-001-16)". The exception ends when a re-audit (a short `/bug` in this
-    repo) verifies them or the owner removes them.
+  - No longer an exception (OQ-001-16, closed v1.4): the Slicing Edge Admin and Customer
+    (`admin@slicing-edge.com`, `customer@example.com`) failed at T-14 ("Invalid email or
+    password") and were kept for a while as an exception (v1.3). The owner fixed them and the
+    re-audit verified both (T-14a Admin, T-14b Customer), so the audit lists them as `verified`
+    and they are not in `ownerExceptionUsernames`.
   - Edge case: any other `failed` or `not tested` credential is removed (B-E2).
 
 ## 6. Data
@@ -323,8 +327,9 @@ them literally):
      seeded data, separate from the restaurant's instance (suggestion, other repo; OQ-001-04);
    - FlyWorkFlow Super Admin: owner-verified 2026-11-27, no audit login (ASM-008 closed,
      OQ-001-05, OQ-001-15);
-   - Slicing Edge Admin and Customer failed at login; kept as an owner exception (OQ-001-16) until
-     the owner fixes the accounts and a re-audit passes (follow-up OF-1);
+   - Slicing Edge Admin and Customer failed at login (T-14), were fixed by the owner and verified
+     by the re-audit T-14a / T-14b (the T-14a B-E3 flag cleared by the owner as test data);
+     OQ-001-16 closed with no exception, follow-up OF-1 closed (v1.4);
    - shared-demo integrity: any visitor can lock a FlyWorkFlow account or change a demo password;
      suggest blocking password changes for demo accounts and a scheduled reseed (CL-17).
    Follow-ups that belong to other repositories are also tracked in `docs/roadmap.md` § "Owner
@@ -336,8 +341,7 @@ them literally):
      "auditDate": "YYYY-MM-DD",
      "verifiedUsernames": { "<project id>": ["<username>"] },
      "ownerExceptionUsernames": {
-       "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"],
-       "the-slicing-edge": ["admin@slicing-edge.com", "customer@example.com"]
+       "flyworkflow-incidents": ["camila.rojas@flyworkflow.io"]
      },
      "coldStartProjectIds": ["<project id>"]
    }
@@ -353,7 +357,7 @@ card already publishes on purpose.
 | D-1 | FlyWorkFlow card vs profile | Card: "Next.js 14", no NestJS / Lambda / Prisma / PostgreSQL / S3. Profile: Next.js 16, NestJS 11, Lambda + API Gateway + SAM, Prisma + PostgreSQL, S3 | Fixed by §6, §7 (AC-001-01, -02) |
 | D-2 | FlyWorkFlow card vs repo README | Card publishes a Super Admin account; the repo README lists only Admin and Member (ASM-008) | Owner decision (OQ-001-05): kept unchanged, not audited; one-off Title III exception confirmed at G-Spec (OQ-001-15). v1.3: owner-verified 2026-11-27, ASM-008 closed (no audit login); the audit lists it as "not audited — owner-verified 2026-11-27" |
 | D-3 | Slicing Edge card vs profile | AI assistant is mid-list; card lists React, Tailwind CSS, Google OAuth and Docker as chips but not Prisma, Upstash Redis, Turborepo or the LLM | Fixed by §6, §7 (AC-001-06, -07) |
-| D-4 | Slicing Edge repo README | The demo accounts are documented as "Test accounts (after seed)" for local development; production validity unknown | Audit; all accounts stay publishable, including Admin (OQ-001-12: non-real data, Stripe test mode). T-14: both failed; kept as a one-off owner exception (OQ-001-16), owner fix pending (OF-1) |
+| D-4 | Slicing Edge repo README | The demo accounts are documented as "Test accounts (after seed)" for local development; production validity unknown | Audit; all accounts stay publishable, including Admin (OQ-001-12: non-real data, Stripe test mode). T-14: both failed; kept as a one-off owner exception (OQ-001-16, v1.3). Owner fixed them; re-audit T-14a / T-14b verified both, exception lifted (v1.4, OF-1 closed) |
 | D-5 | Sushi Burrito Web card vs profile | Card: "WebSockets", "SQL", "Vanilla.js"; profile: Socket.IO, MySQL, "Vanilla JS", plus Vite, Sequelize, Nginx, DigitalOcean | Fixed by §6 (OQ-001-01 = yes) |
 | D-6 | Sushi Burrito Web repo README vs card | The repo README lists no demo credentials; the card publishes three (Admin, Kitchen, Waiter). The repo names the roles Administrador, Mesero, Cocinero | The audit decides (OQ-001-06); README follow-up in §8.2 item 5 |
 | D-7 | Sushi Burrito Web demo vs client production | Risk that the demo accounts live in the client's production instance | Resolved (OQ-001-04, owner, 2026-11-27): the linked deployment is a demo clone with seeded data; the restaurant's real instance is a separate repo, VPS and database. Audited normally under BR-008; README suggestion in §8.2 item 5 |
@@ -455,17 +459,17 @@ reviewer. Each AC names its verification.
 - **AC-001-14** (U) — Given `projects.ts` and the audit summary, when the credentials are compared
   per project, then the published usernames equal `verifiedUsernames` plus
   `ownerExceptionUsernames` for that project; so every `failed` or `not tested` credential that is
-  not in `ownerExceptionUsernames` is absent from `projects.ts` (the two Slicing Edge accounts stay,
-  OQ-001-16).
+  not in `ownerExceptionUsernames` is absent from `projects.ts` (the two Slicing Edge accounts stay
+  because they are in `verifiedUsernames`, re-audit T-14a / T-14b, OQ-001-16 closed v1.4).
 - **AC-001-15** (U, D) — Given `projects.ts` and the audit summary, when the owner-exception
-  credentials are read, then `camila.rojas@flyworkflow.io` (FlyWorkFlow) and
-  `admin@slicing-edge.com` and `customer@example.com` (Slicing Edge) are present with their current
-  role labels and passwords unchanged, none of them is in `verifiedUsernames`, and
-  `ownerExceptionUsernames` holds exactly these three usernames under those two project ids
-  (OQ-001-15, OQ-001-16). And the reviewer checks that the audit lists the Super Admin as "not
-  audited — owner-verified 2026-11-27" with no login recorded, lists the two Slicing Edge accounts
-  as `failed` with published "yes (owner exception, OQ-001-16)", and that the ASM-008 row in
-  `docs/discovery/brief.md` is closed as "Confirmed by owner, 2026-11-27 (no audit login)".
+  credential is read, then `camila.rojas@flyworkflow.io` (FlyWorkFlow) is present with its current
+  role label and password unchanged, it is not in `verifiedUsernames`, and
+  `ownerExceptionUsernames` holds exactly this one username under `flyworkflow-incidents`
+  (OQ-001-15; since v1.4 no Slicing Edge username, OQ-001-16 closed). And the reviewer checks that
+  the audit lists the Super Admin as "not audited — owner-verified 2026-11-27" with no login
+  recorded, lists the two Slicing Edge accounts as `verified` (T-14a Admin, T-14b Customer) with
+  published "yes", and that the ASM-008 row in `docs/discovery/brief.md` is closed as "Confirmed by
+  owner, 2026-11-27 (no audit login)".
 - **AC-001-16** (U) — Given `projects.ts` and the audit summary, when `coldStartNotice` is read,
   then it is `true` exactly for the ids in `coldStartProjectIds`, and absent or `false` for every
   other project (including Sushi Burrito Desktop, which has no live demo).
@@ -526,7 +530,7 @@ reviewer. Each AC names its verification.
 | OQ-001-13 | OQ | Keep publishing usernames on their current domains? | Hernán | Closed 2026-11-27: keep exactly as they are (owner states they are not real domains); no reseed follow-up |
 | OQ-001-14 | OQ | Fix the light-theme contrast of the accent card buttons in 001? | Hernán | Closed 2026-11-27: no; DEBT-021, target spec 004 |
 | OQ-001-15 | OQ | Keeping the FlyWorkFlow Super Admin on the card without verification (OQ-001-05) departs from constitution Title III ("Demo credentials are published only after they are verified"). Confirm it as a one-off, named exception for this spec? | Hernán | Closed 2026-11-27 (G-Spec): confirmed as a one-off owner exception to constitution Title III for the FlyWorkFlow Super Admin credential only, tracked by ASM-008, with no constitution amendment; it ends when Hernán's investigation verifies or removes the account. Updated 2026-11-27 (v1.3): status owner-verified (the owner states the access works; ASM-008 closed, no audit login). The exception stays recorded and the account stays on the card and in `ownerExceptionUsernames` |
-| OQ-001-16 | OQ | The Slicing Edge credentials `admin@slicing-edge.com` and `customer@example.com` failed at T-14 ("Invalid email or password", one attempt each). Remove them (B-E2) or keep them? | Hernán | Closed 2026-11-27: keep both on the card unchanged as a one-off owner exception to constitution Title III (as OQ-001-15, no constitution amendment), listed in `ownerExceptionUsernames` under `the-slicing-edge`; T-18 does not remove them. Owner investigation pending (follow-up OF-1 in `docs/roadmap.md`); the exception ends when a re-audit (a short `/bug` in this repo) verifies them or the owner removes them |
+| OQ-001-16 | OQ | The Slicing Edge credentials `admin@slicing-edge.com` and `customer@example.com` failed at T-14 ("Invalid email or password", one attempt each). Remove them (B-E2) or keep them? | Hernán | Closed 2026-11-27: keep both on the card unchanged as a one-off owner exception to constitution Title III (as OQ-001-15, no constitution amendment), listed in `ownerExceptionUsernames` under `the-slicing-edge`; T-18 does not remove them. Owner investigation pending (follow-up OF-1 in `docs/roadmap.md`); the exception ends when a re-audit (a short `/bug` in this repo) verifies them or the owner removes them. Updated 2026-11-27 (v1.4): **resolved by re-audit T-14a/T-14b; no exception needed.** The owner fixed the accounts; T-14a verified the Admin (its B-E3 flag cleared by the owner: the admin "Recent Orders" are his test data, Stripe test mode, OQ-001-12) and T-14b verified the Customer. Both are `verified`, removed from `ownerExceptionUsernames`; OF-1 closed |
 
 ## 12. Change log
 | Version | Date | Change | Approved by |
@@ -537,3 +541,4 @@ reviewer. Each AC names its verification.
 | 1.1 | 2026-11-27 | G-Plan approved with plan decisions D-1 … D-4. Added ASM-001-14 (audit date = first day of the run, 7-day window including G-Merge), ASM-001-15 (K-02 "·" `aria-hidden`, screen readers hear "Personal project deployed"; §7 reworded, the comma dropped) and ASM-001-16 (light/dark icon file convention); §8.2 names the six exact headings; §6 `coldStartNotice` name confirmed. Status → Planned | Hernán (G-Plan) |
 | 1.2 | 2026-11-27 | OQ-001-11 closed: the latency endpoints proposed at T-12 are confirmed (Sushi Burrito Web API `/api`, Slicing Edge API `/api/health` plus storefront home, FlyWorkFlow API `/health`); no behavior change | Hernán |
 | 1.3 | 2026-11-27 | Owner decisions after T-14 … T-16. OQ-001-16 added and closed: the two failed Slicing Edge credentials stay on the card as a one-off Title III owner exception (in `ownerExceptionUsernames`; follow-up OF-1). OQ-001-15 / ASM-008: the owner states the FlyWorkFlow Super Admin access works; ASM-008 closed "Confirmed by owner, 2026-11-27 (no audit login)"; audit row "not audited — owner-verified 2026-11-27"; still an exception. §1, §2, §4.1, §4.2 B2, §4.3 B-E2, §5, §8.2 items 4–6, §8.3 D-2 / D-4, AC-001-13 … -15 reworded; roadmap "Owner follow-ups (other repos)" OF-1 … OF-4 added | Hernán |
+| 1.4 | 2026-11-27 | Slicing Edge re-audit complete (T-14a, T-14b). Owner decision on the T-14a B-E3 escalation, option (a): the admin "Recent Orders" are his own test data (Stripe test mode, OQ-001-12), so the Admin counts as verified; T-14b verified the Customer. OQ-001-16 updated: resolved by re-audit, no exception needed; `ownerExceptionUsernames` now holds only the FlyWorkFlow Super Admin. §1, §2, §4.1 A.4 / B.6, §4.2 B2, §4.3 B-E2 / B-E3, §5 Title III, §8.2 items 5–6 (JSON example), §8.3 D-4, AC-001-14 and AC-001-15 reworded; roadmap OF-1 closed | Hernán |

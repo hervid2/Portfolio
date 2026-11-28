@@ -2,7 +2,9 @@
 Spec: `specs/001-project-cards-accuracy/spec.md` v1.1 (Planned, G-Plan 2026-11-27) ·
 Planned: 2026-11-27 · Status: Approved (G-Plan 2026-11-27, Hernán; D-1 … D-4 as recommended)
 · Updated 2026-11-27 for spec v1.3 (OQ-001-16 owner exception, ASM-008 closed): §1.6, §2, §3 and
-the AC-001-15 row; no new file, dependency or task.
+the AC-001-15 row; no new file, dependency or task. · Updated 2026-11-27 for spec v1.4 (OQ-001-16
+resolved by re-audit T-14a / T-14b, no Slicing Edge exception): §1.6, §2, §3 and the AC-001-15
+row; no new file, dependency or task.
 
 Checked on 2026-11-27 (Art. 14): `npm view simple-icons version license time` → latest 16.38.1
 (published 2026-11-22, CC0-1.0). The icons are copied from **16.37.0** (published 2026-11-08, more
@@ -179,7 +181,8 @@ nominatively next to the technology name, as the existing icons are. 26 new file
      (since spec v1.3: `not audited — owner-verified 2026-11-27`, ASM-008 closed).
      Failure → visible message only, no retry, no reset link (B-E2). Real-looking data → log out,
      record "possible production data" without copying, escalate (B-E3). No screenshot of a
-     logged-in page is stored.
+     logged-in page is stored. Slicing Edge re-audit (spec v1.4): T-14a (Admin, B-E3 flag cleared
+     by the owner as test data) and T-14b (Customer) verified both accounts after the owner fix.
   3. **Latency, two sessions (T-16, T-17; need Hernán's go-ahead and OQ-001-11 closed):**
      `curl -s -o /dev/null -w "%{time_starttransfer} %{time_total} %{http_code}" <endpoint>` per
      ASM-001-03, each sample after ≥ 30 min without traffic from the auditor; 3 samples per
@@ -217,7 +220,7 @@ nominatively next to the technology name, as the existing icons are. 26 new file
 | `docs/glossary.md` | Modify | "Cold-start notice": name final, drop "proposed" (T-19) |
 | `docs/traceability.md` | Modify | FR-014, FR-015, FR-016, FR-019 → ACs and tests (T-19) |
 | `docs/roadmap.md` | Modify | DEBT-013 → Closed (T-19); row 001 status at G-Merge (coordinator, P-03) |
-| `MEMORY.md` | Modify | ASM-008 status (closed, owner-verified 2026-11-27), owner exceptions and the audit date (spec v1.3 commit; T-19 confirms) |
+| `MEMORY.md` | Modify | ASM-008 status (closed, owner-verified 2026-11-27), the owner exception and the audit date (spec v1.3 / v1.4 commits; T-19 confirms) |
 | `docs/discovery/brief.md` | Modify (spec v1.3 commit) | ASM-008 row closed: "Confirmed by owner, 2026-11-27 (no audit login)"; reviewer checks it (AC-001-15) |
 
 Not touched: `api/`, `ProjectCardActions.tsx`, `ProjectStackList.tsx`, `CredentialsModal.tsx`,
@@ -228,9 +231,10 @@ Not touched: `api/`, `ProjectCardActions.tsx`, `ProjectStackList.tsx`, `Credenti
 - `kind` is required, so a project without it fails `tsc` (the build fails before deploy).
 - **Credentials:** after T-18, each project's `demoCredentials` equals `verifiedUsernames[id]` +
   `ownerExceptionUsernames[id]` (role labels follow the app if the audit observed a different
-  name). Owner exceptions (spec v1.3): the FlyWorkFlow Super Admin (OQ-001-15) and the two
-  `failed` Slicing Edge accounts (OQ-001-16) stay unchanged, so Slicing Edge keeps its credentials
-  button. A project left with no credentials drops the property (or keeps `[]`); the button hides
+  name). Owner exception (spec v1.4): only the FlyWorkFlow Super Admin (OQ-001-15) stays
+  unchanged. The two Slicing Edge accounts are `verified` by the re-audit T-14a / T-14b
+  (OQ-001-16 closed, no exception), so Slicing Edge keeps its credentials button. A project
+  left with no credentials drops the property (or keeps `[]`); the button hides
   either way (A2). `java-desktop-app` keeps no credentials.
 - **Rollback:**
   - Before merge: `git revert <task commit>`; every task is one commit.
@@ -301,7 +305,7 @@ out the whole repository, so `docs/` is present in the `frontend` job.
 | AC-001-12 | M (exception §9) | Recorded in `validation.md`: browser matrix EN/ES × dark/light × 360/1280 + reduced motion at 360, measured contrast ratios, no horizontal scroll | P-02 |
 | AC-001-13 | U, D | U: `data/projects.test.ts` → the six headings, parseable summary, valid `auditDate`, an entry per project id. D: reviewer checks tables, 8 credential rows, date window, statuses | T-18, P-02 |
 | AC-001-14 | U | `data/projects.test.ts` → per project, published usernames = verified + owner exception | T-18 |
-| AC-001-15 | U, D | U: `data/projects.test.ts` → the three owner-exception usernames (Super Admin; Slicing Edge Admin and Customer) present with role and password unchanged; `ownerExceptionUsernames` holds exactly these three under `flyworkflow-incidents` and `the-slicing-edge`; none in `verifiedUsernames`. D: audit rows ("not audited — owner-verified 2026-11-27"; Slicing Edge `failed`, published as owner exception) and `brief.md` ASM-008 closed | T-18, P-02 |
+| AC-001-15 | U, D | U: `data/projects.test.ts` → the one owner-exception username (FlyWorkFlow Super Admin) present with role and password unchanged; `ownerExceptionUsernames` holds exactly this one under `flyworkflow-incidents`; not in `verifiedUsernames`. D: audit rows ("not audited — owner-verified 2026-11-27"; Slicing Edge `verified` at T-14a / T-14b, published "yes") and `brief.md` ASM-008 closed | T-18, P-02 |
 | AC-001-16 | U | `data/projects.test.ts` → `Boolean(coldStartNotice)` equals membership in `coldStartProjectIds` for every project; every listed id exists; `java-desktop-app` not listed | T-18 |
 | AC-001-17 | C | `ui/ColdStartNotice.test.tsx` → `role="note"` with K-04 EN/ES. `ui/ProjectCard.test.tsx` → flagged fixture renders the note; unflagged renders none | T-08, T-09 |
 | AC-001-18 | D (exception §9) | Reviewer checks the audit method and results (one attempt per account, no Super Admin login, BR-008 only, no copied data, OQ-001-04/-12 cited with date) | P-02 |

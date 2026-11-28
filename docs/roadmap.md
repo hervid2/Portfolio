@@ -57,7 +57,7 @@ These items are owned by Hernán and live outside this repository; agents here o
 
 | ID | Repo | Item | Origin | Status |
 |---|---|---|---|---|
-| OF-1 | Slicing Edge | Published demo credentials `admin@slicing-edge.com` / `customer@example.com` fail at login; fix the accounts, then re-audit with a short `/bug` in this repo (lifts the OQ-001-16 exception) | T-14, OQ-001-16 | Open |
+| OF-1 | Slicing Edge | Published demo credentials `admin@slicing-edge.com` / `customer@example.com` fail at login; fix the accounts, then re-audit with a short `/bug` in this repo (lifts the OQ-001-16 exception) | T-14, OQ-001-16 | Closed (owner fixed, re-audit T-14a/T-14b verified, 2026-11-27) |
 | OF-2 | SushiBurritoFinal | The app header does not show the signed-in user's role (Admin/Kitchen/Waiter); show it so visitors know which profile they are testing | T-13 | Open |
 | OF-3 | SushiBurritoFinal | README: state that `sushi-burrito-final.vercel.app` + its API is a demo clone with seeded data, separate from the restaurant's production instance | CL-01, OQ-001-04 | Open |
 | OF-4 | SushiBurritoFinal | The public bundle contains the SweetAlert2 protestware snippet (anthem mp3 from `flag-gimn.ru`); pin a clean SweetAlert2 version | T-12 | Open |

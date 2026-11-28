@@ -1,12 +1,12 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 v1.3)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 v1.4)
 
 ## Current status
-- **Stage:** G6 · Spec 001 **Planned**, implementing (v1.3) on `feat/001-project-cards-accuracy`.
-- T-01…T-16 done (incl. T-11a). Next: **T-17** latency session 2 (Hernán's go-ahead) on a later
-  day, no earlier than 2026-11-28, on or before 2026-12-04 (audit window end); then T-18, T-19.
-- Audit (`auditDate` 2026-11-27): logins 5 verified; Slicing Edge re-audit T-14a: Admin works
-  but showed real-looking data (B-E3, escalated), Customer untested; Super Admin owner-verified.
-- Owner follow-ups in other repos (OF-1…OF-4): `docs/roadmap.md` § "Owner follow-ups".
+- **Stage:** G6 · Spec 001 **Planned**, implementing (v1.4) on `feat/001-project-cards-accuracy`.
+- T-01…T-17 done (incl. T-11a, T-14a, T-14b). Next: **T-18** (audit close), then T-19; G-Merge
+  on or before 2026-12-04 (audit window end).
+- Audit (`auditDate` 2026-11-27): logins 7 verified (Slicing Edge re-audit T-14a Admin, B-E3
+  cleared by owner as test data; T-14b Customer); Super Admin owner-verified (only exception).
+- Owner follow-ups, other repos (OF-1 closed, OF-2…OF-4 open): `docs/roadmap.md`.
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.

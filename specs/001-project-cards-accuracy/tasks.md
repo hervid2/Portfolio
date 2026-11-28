@@ -2,7 +2,8 @@
 > [P] = parallelizable (does not share files with other pending [P] tasks).
 
 Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27) · Spec:
-`spec.md` v1.3 (T-18 / T-19 wording updated 2026-11-27 for OQ-001-16 and ASM-008) ·
+`spec.md` v1.4 (T-18 / T-19 wording updated 2026-11-27 for OQ-001-16 and ASM-008; T-14b and
+the v1.4 T-18 wording added 2026-11-27: OQ-001-16 resolved by re-audit, no exception) ·
 Written: 2026-11-27.
 
 **Conventions for every task**
@@ -240,6 +241,24 @@ Written: 2026-11-27.
     `/admin`) but showed real-looking customer data → logged out at once, nothing copied (B-E3);
     Customer not tested (run stopped). Escalated to Hernán; OQ-001-16 and OF-1 unchanged; T-18
     blocked until he decides (spec §4.3 B-E3)
+  - Resolved 2026-11-27 (owner, option (a)): the admin orders are his test data (Stripe test
+    mode, OQ-001-12) → Admin counts as `verified (T-14a)`; Customer re-audited in T-14b.
+
+- [x] **T-14b** — **⛔ Hernán's go-ahead (given 2026-11-27, with his B-E3 decision).** Complete
+  the Slicing Edge re-audit: record the owner's B-E3 decision (test data → Admin verified at
+  T-14a, no new Admin login); one email/password attempt for `customer@example.com`; same rules
+  as T-13 (BR-008, B-E2, B-E3). Then update §4.3 current rows, §5 and the §6 exception set; if
+  the Customer is verified, close OQ-001-16 (no exception), OF-1 and bump the spec to v1.4.
+  - AC: AC-001-13 (rows), AC-001-15 (D), AC-001-18
+  - Files: `docs/discovery/demo-audit.md`, `specs/001-project-cards-accuracy/{spec,plan,tasks}.md`,
+    `docs/roadmap.md`, `MEMORY.md`
+  - Verify: `grep -q "T-14b notes" docs/discovery/demo-audit.md &&
+    grep -qE "customer@example.com.*verified \(T-14b\)" docs/discovery/demo-audit.md &&
+    grep -qE "admin@slicing-edge.com.*verified \(T-14a\)" docs/discovery/demo-audit.md`
+  - Depends on: T-14a, owner B-E3 decision (2026-11-27)
+  - Evidence: 64e2856 · Verify → exit 0; Customer login succeeded on the single attempt
+    (2026-11-27 21:54 UTC-5, signed-in storefront, no role badge, no personal data), logout OK;
+    OQ-001-16 closed (no exception), OF-1 closed; spec v1.4
 
 - [x] **T-15** — **⛔ Hernán's go-ahead for the FlyWorkFlow demo.** One login attempt each for
   the Admin and Member accounts; same rules as T-13. The Super Admin row
@@ -283,13 +302,14 @@ Written: 2026-11-27.
 
 - [ ] **T-18** — Close the audit (no live access): write section 5 (at least the four spec §8.2
   item 5 follow-ups) and the section 6 `json` summary; set `projects.ts` from it (remove every
-  `failed` / `not tested` credential **not** in `ownerExceptionUsernames`; keep the owner
-  exceptions unchanged: the FlyWorkFlow Super Admin (OQ-001-15) and the Slicing Edge
-  `admin@slicing-edge.com` and `customer@example.com` (OQ-001-16, do **not** remove them); set
+  `failed` / `not tested` credential **not** in `ownerExceptionUsernames`; keep the one owner
+  exception unchanged: the FlyWorkFlow Super Admin (OQ-001-15); the Slicing Edge
+  `admin@slicing-edge.com` and `customer@example.com` are `verified` (T-14a / T-14b, OQ-001-16
+  closed in spec v1.4), so they stay through `verifiedUsernames`, not as exceptions; set
   `coldStartNotice: true` only for `coldStartProjectIds`; role labels follow observed app names);
   add the audit-summary tests to `projects.test.ts` (headings, valid `auditDate`, an entry per
-  project id, credentials = verified + owner exception, the three owner-exception usernames
-  unchanged and exactly the exception set, none of them verified, notice flags). No test asserts
+  project id, credentials = verified + owner exception, the one owner-exception username
+  unchanged and exactly the exception set, not verified, notice flags). No test asserts
   that a `failed` credential is absent unless it is outside `ownerExceptionUsernames`.
   - AC: AC-001-13 (U), AC-001-14, AC-001-15 (U), AC-001-16
   - Files: `docs/discovery/demo-audit.md`, `frontend/src/data/projects.ts`,
@@ -304,7 +324,7 @@ Written: 2026-11-27.
 - [ ] **T-19** — Docs: glossary "Cold-start notice" (name `coldStartNotice` final, drop "proposed");
   `docs/traceability.md` rows FR-014, FR-015, FR-016, FR-019 → ACs and test files; roadmap
   DEBT-013 → Closed (spec 001, T-11); `MEMORY.md`: ASM-008 closed (owner-verified 2026-11-27),
-  the owner exceptions and the `auditDate` (already written in the spec v1.3 commit; confirm).
+  the owner exception and the `auditDate` (written in the spec v1.3 / v1.4 commits; confirm).
   - AC: AC-001-22 (DEBT-013 closed), AC-001-15 (D, ASM-008 row closed in v1.3)
   - Files: `docs/glossary.md`, `docs/traceability.md`, `docs/roadmap.md`, `MEMORY.md`
   - Verify: `grep -E "^\| FR-01[4569] " docs/traceability.md | grep -c "AC-001" | grep -qx 4 &&
