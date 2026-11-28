@@ -1,14 +1,14 @@
-# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, PE-01 merged, PE-02 fixed)
+# MEMORY — Hernán David Cardona Portfolio  (≤ 50 lines · updated: 2026-11-27, spec 001 v1.4)
 
 ## Current status
-- **Stage:** G5 · Spec 000 **Implemented** (PR #4, closeout PR #5 merged f86dcf8).
-- **Branch:** `fix/api-trust-proxy` (BUG PE-02: `trust proxy` = loopback; G-Merge pending
-  Hernán's yes). nginx on the droplet already sets X-Forwarded-For/X-Real-IP = $remote_addr
-  (verified 2026-11-27). PE-01 merged as PR #6 (341520f).
+- **Stage:** G6 · Spec 001 **Planned**, implementing (v1.4) on `feat/001-project-cards-accuracy`.
+- T-01…T-19 done. Next: P-01 push (ask; draft PR), P-02 validate ×3, P-03 G-Merge ≤ 2026-12-04.
+- Audit closed (`auditDate` 2026-11-27): 7 logins verified (T-14a Admin: B-E3 = owner test
+  data; T-14b Customer); ASM-008 closed, Super Admin owner-verified 2026-11-27 (no login) = only
+  owner exception; no cold-start notice. DEBT-013 closed (T-11 + T-11a).
+- Owner follow-ups, other repos (OF-1 closed, OF-2…OF-4 open): `docs/roadmap.md`.
 - **main is protected** since 2026-11-26: required checks `frontend`, `api`; PR required (0
   reviews); no force push or deletion; `enforce_admins: false` (owner choice). Verified by GET.
-- **Next step:** after the PE-02 merge, run the 6× spoofed-XFF curl (expect 5×400 then 429)
-  and one real contact submit (Resend path). Then spec 001. Spec 009 (mail fallback) is Planned.
 - Stale local branches `feat/card-animations`, `refactor`: status unknown, ask Hernán.
 
 ## Recent decisions (permanent ones go to ADR or Constitution)
@@ -23,11 +23,12 @@
 
 ## Learnings and known pitfalls
 - Type check: `npm run typecheck --prefix frontend|api`. Root `npx tsc` fails (no root TS).
-- Windows: coverage shows duplicate 0% rows when cwd is `c:` lowercase (local artifact only).
 - Parallel agents in one checkout break `node_modules`: dev/preview servers lock `esbuild.exe`
   and `npm ci` then half-deletes the tree. Use a scratch worktree/copy for installs and probes;
   run commit-producing agents sequentially. If broken: stop servers, `npm ci --prefix frontend`.
-- The API host auto-deploys on every merge to `main`; Vercel deploys the frontend too.
+- The API does NOT auto-deploy (prod ran March code until 2026-11-27). Manual: droplet
+  `/var/www/portfolio-api` → git pull, `npm ci`, prisma generate, build, `pm2 restart
+  portfolio-api`. G-Merge for api changes ends at "deployed and verified". Vercel auto-deploys.
 - `gh` now has a valid session with admin on the repo. Creating PRs via `gh pr create` is blocked
   by the auto-mode classifier → Hernán opens PRs (as **draft** until G-Merge).
 - Cloning `sushiBurritoJava` on Windows fails on long paths. Use `git show HEAD:<file>`.
@@ -47,4 +48,3 @@
 
 ## Active blockers and open questions
 - OQ-005: retention policy for contact messages.
-- ASM-008: the FlyWorkFlow Super Admin demo account may be invalid → to be checked in the PO-9 audit (spec 001).

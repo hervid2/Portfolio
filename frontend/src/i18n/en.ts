@@ -15,7 +15,7 @@ export const enDictionary: AppDictionary = {
   },
   portfolio: {
     title: "My Portfolio",
-    subtitle: "A selection of professional projects.",
+    subtitle: "A selection of client work and personal projects deployed to production.",
     liveDemo: "Live Demo",
     code: "Code",
     pending: "Link pending",
@@ -24,7 +24,13 @@ export const enDictionary: AppDictionary = {
     pendingCredentials: "Pending",
     watchDemo: "Watch Demo Video",
     filterAll: "All",
-    filterLabel: "Filter projects by category"
+    filterLabel: "Filter projects by category",
+    kind: {
+      client: "Client project",
+      personal: "Personal project",
+      personalQualifier: "deployed"
+    },
+    coldStartNotice: "Heads-up: the first load may be slow while the demo server wakes up."
   },
   about: {
     title: "About Me",
