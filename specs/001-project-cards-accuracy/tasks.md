@@ -141,7 +141,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     no label, no note); 198/198 all tests; format, lint, typecheck, build OK; browser 360/1280
     EN/ES dark/light: 4 labels correct, no clipping, no h-scroll; only DEBT-013 + Turnstile logs
 
-- [ ] **T-10** — Grid-level tests in `PortfolioSection.test.tsx`: the four cards show the
+- [x] **T-10** — Grid-level tests in `PortfolioSection.test.tsx`: the four cards show the
   right kind label in EN and in ES; after clicking a category filter, every visible card still
   shows its label. Test-only task (no source change expected).
   - AC: AC-001-09 (grid), AC-001-20
@@ -150,6 +150,9 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     src/components/ui/ProjectFilterBar.test.tsx src/hooks/useProjectFilter.test.ts &&
     grep -c "AC-001-20" frontend/src/components/sections/PortfolioSection.test.tsx`
   - Depends on: T-06, T-09
+  - Evidence: dce3a97 · Verify → exit 0 (29/29 tests; grep → 3); green at once (T-09 shipped it),
+    so mutation proof: label removed → 7/7 label tests fail; kind forced "client" → 5 fail (personal
+    cards only); restored. 205/205 all tests; format, lint, typecheck, build OK; no UI change
 
 - [ ] **T-11** [P] — DEBT-013: wrap `ProjectCard` in `forwardRef<HTMLElement, ProjectCardProps>`
   and pass `ref` to `motion.article`; create `PortfolioGrid.test.tsx` with a `console.error` spy:
