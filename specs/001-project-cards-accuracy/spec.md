@@ -1,5 +1,6 @@
 # Spec 001 — Project cards accuracy
-Status: Planned (G-Plan 2026-11-27) · Version: 1.4 · Branch: feat/001-project-cards-accuracy ·
+Status: Implemented (G-Merge 2026-11-27, PR #8, da9dece) · Version: 1.5 ·
+Branch: feat/001-project-cards-accuracy ·
 FR: FR-014, FR-015, FR-016, FR-019 · BR: BR-006, BR-007, BR-008 · NFR: NFR-002, NFR-003,
 NFR-004, NFR-006, NFR-007, NFR-008, NFR-011, NFR-012, NFR-013 · Backlog: PO-4, PO-5, PO-6, PO-9 ·
 Debt: DEBT-013 (folded in, OQ-001-07) · Depends on: 000
@@ -542,3 +543,4 @@ reviewer. Each AC names its verification.
 | 1.2 | 2026-11-27 | OQ-001-11 closed: the latency endpoints proposed at T-12 are confirmed (Sushi Burrito Web API `/api`, Slicing Edge API `/api/health` plus storefront home, FlyWorkFlow API `/health`); no behavior change | Hernán |
 | 1.3 | 2026-11-27 | Owner decisions after T-14 … T-16. OQ-001-16 added and closed: the two failed Slicing Edge credentials stay on the card as a one-off Title III owner exception (in `ownerExceptionUsernames`; follow-up OF-1). OQ-001-15 / ASM-008: the owner states the FlyWorkFlow Super Admin access works; ASM-008 closed "Confirmed by owner, 2026-11-27 (no audit login)"; audit row "not audited — owner-verified 2026-11-27"; still an exception. §1, §2, §4.1, §4.2 B2, §4.3 B-E2, §5, §8.2 items 4–6, §8.3 D-2 / D-4, AC-001-13 … -15 reworded; roadmap "Owner follow-ups (other repos)" OF-1 … OF-4 added | Hernán |
 | 1.4 | 2026-11-27 | Slicing Edge re-audit complete (T-14a, T-14b). Owner decision on the T-14a B-E3 escalation, option (a): the admin "Recent Orders" are his own test data (Stripe test mode, OQ-001-12), so the Admin counts as verified; T-14b verified the Customer. OQ-001-16 updated: resolved by re-audit, no exception needed; `ownerExceptionUsernames` now holds only the FlyWorkFlow Super Admin. §1, §2, §4.1 A.4 / B.6, §4.2 B2, §4.3 B-E2 / B-E3, §5 Title III, §8.2 items 5–6 (JSON example), §8.3 D-4, AC-001-14 and AC-001-15 reworded; roadmap OF-1 closed | Hernán |
+| 1.5 | 2026-11-27 | Status → Implemented. Validation cycle 1 APPROVED (3 focuses, 1 of 3 cycles). G-Merge approved by Hernán; PR #8 merged as `da9dece` (head `718bfe5`; CI run 46102964883 `frontend` + `api` green, Vercel green; post-merge `main` run 46103187818 green). AC-001-21 CI half closed; production verified (bundle `index-DbdKAaLA.js` carries the kind labels; `nestjs-dark.svg` 200). Merged within the audit window (ends 2026-12-04). API not touched | Hernán (G-Merge) |

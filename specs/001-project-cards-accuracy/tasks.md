@@ -340,13 +340,23 @@ Written: 2026-11-27.
     proposed"); ASM-008 row in brief.md already closed (v1.3); MEMORY.md 50 lines; docs only
 
 ## Post-implementation steps (not implementer tasks; listed so every AC has an owner)
-- **P-01** — Coordinator asks Hernán before pushing; Hernán opens the **draft** PR. CI `frontend`
-  job green (AC-001-21).
-- **P-02** — `/sdd-validate 001` × 3 (compliance | e2e | quality-security), recorded in
+- [x] **P-01** — Coordinator asks Hernán before pushing; Hernán opens the **draft** PR. CI
+  `frontend` job green (AC-001-21).
+  - Evidence: PR #8 (head `718bfe5`); CI run 46102964883 `frontend` and `api` green, Vercel
+    preview green (2026-11-28 03:28 UTC = 2026-11-27 22:28 UTC-5). AC-001-21 → Pass
+- [x] **P-02** — `/sdd-validate 001` × 3 (compliance | e2e | quality-security), recorded in
   `validation.md`: AC-001-12 browser matrix with measured contrast ratios; AC-001-19 re-run of the
   curl and oEmbed commands on the final data; document checks AC-001-13 (D), -15 (D), -18.
-- **P-03** — 🚦 G-Merge within 7 days of `auditDate` (else spec §4.2 B4 re-run first); roadmap row
-  001 → Implemented; retrospective (GENESIS §C.9).
+  - Evidence: `validation.md` cycle 1 of 3, consolidated verdict APPROVED at `9a1d2b6` (C-01
+    resolved; AC-001-12 8/8, contrast 7.63:1 / 10.64:1; AC-001-19 all 200); recorded in `718bfe5`
+- [x] **P-03** — 🚦 G-Merge within 7 days of `auditDate` (else spec §4.2 B4 re-run first);
+  roadmap row 001 → Implemented; retrospective (GENESIS §C.9).
+  - Evidence: G-Merge approved by Hernán 2026-11-27, inside the window (ends 2026-12-04); PR #8
+    merged as `da9dece`; post-merge `main` CI run 46103187818 green. Production (Coordinator):
+    `https://portfolio-hernan-cardona.vercel.app/` 200, bundle `index-DbdKAaLA.js` (validated
+    hash) contains the kind labels, `/assets/icons/tech/nestjs-dark.svg` 200; API not touched (no
+    droplet deploy). Roadmap row 001 → Implemented (2026-11-27); retrospective in `validation.md`
+    and `MEMORY.md` (branch `chore/001-closeout`)
 
 ## Human gates and blockers
 | Task | Gate |
