@@ -154,7 +154,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     so mutation proof: label removed → 7/7 label tests fail; kind forced "client" → 5 fail (personal
     cards only); restored. 205/205 all tests; format, lint, typecheck, build OK; no UI change
 
-- [ ] **T-11** [P] — DEBT-013: wrap `ProjectCard` in `forwardRef<HTMLElement, ProjectCardProps>`
+- [x] **T-11** [P] — DEBT-013: wrap `ProjectCard` in `forwardRef<HTMLElement, ProjectCardProps>`
   and pass `ref` to `motion.article`; create `PortfolioGrid.test.tsx` with a `console.error` spy:
   render 4 projects, rerender with 3, no "Function components cannot be given refs" call.
   - AC: AC-001-22
@@ -163,6 +163,9 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `npm test --prefix frontend -- src/components/sections/PortfolioGrid.test.tsx &&
     grep -q "forwardRef" frontend/src/components/ui/ProjectCard.tsx`
   - Depends on: T-09
+  - Evidence: 64e10f8 · Verify → exit 0 (1/1); red first (spy caught the warning from `PopChild`).
+    206/206 all tests, 0 ref warnings in the run; format, lint, typecheck, build OK. Browser
+    (R-9): no ref warning, but grid is `static`, so popped exit cards start ~7–20k px off; OQ open
 
 ## Phase C — Live demo audit (documentation only; no `frontend/` edits)
 
