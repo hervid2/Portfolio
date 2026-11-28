@@ -204,7 +204,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     2xx; oEmbed 200 ×2 (2 ids: `java-desktop-app` EN/ES; "8" was a typo, owner 2026-11-27);
     MCP connected; OQ-001-11 proposal recorded
 
-- [ ] **T-13** — **⛔ Hernán's go-ahead for the Sushi Burrito Web demo.** One login attempt each
+- [x] **T-13** — **⛔ Hernán's go-ahead for the Sushi Burrito Web demo.** One login attempt each
   for `admin@demo.com`, `kitchen@demo.com`, `waiter@demo.com`; record role, landing page,
   logout; result per spec §8.2 item 4. BR-008 only; B-E2 / B-E3 apply.
   - AC: AC-001-13 (rows), AC-001-18
@@ -212,6 +212,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
   - Verify: `for u in admin@demo.com kitchen@demo.com waiter@demo.com; do
     grep -qE "$u.*(verified|failed|not tested)" docs/discovery/demo-audit.md || exit 1; done`
   - Depends on: T-12
+  - Evidence: b22429e · Verify → exit 0; 3/3 `verified` on the first attempt (2026-11-27
+    19:35 UTC-5), landing views recorded, logout OK; no real-looking data; no screenshot
 
 - [ ] **T-14** — **⛔ Hernán's go-ahead for the Slicing Edge demo.** One login attempt each for
   `admin@slicing-edge.com` and `customer@example.com`; same rules as T-13. Note any visible Stripe
