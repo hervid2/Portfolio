@@ -182,7 +182,7 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
 
 ## Phase C — Live demo audit (documentation only; no `frontend/` edits)
 
-- [ ] **T-12** — **⛔ Hernán's go-ahead (starts the audit run; no login).** Audit preflight
+- [x] **T-12** — **⛔ Hernán's go-ahead (starts the audit run; no login).** Audit preflight
   (plan §1.6 step 1): check the Playwright MCP connection (record the result; if it fails, T-13 …
   T-15 use the fallback: Hernán logs in by hand, the auditor records); create
   `docs/discovery/demo-audit.md` with the six headings, section 1 (date = `auditDate`, auditor,
@@ -200,6 +200,8 @@ Source: `specs/001-project-cards-accuracy/plan.md` (Approved, G-Plan 2026-11-27)
     grep -q "OQ-001-12" docs/discovery/demo-audit.md &&
     test "$(grep -c "youtube.com/oembed\|oEmbed" docs/discovery/demo-audit.md)" -ge 1`
   - Depends on: T-01 … T-11 (code done first, so the window ends near G-Merge)
+  - Evidence: fe5dbb9 · Verify → exit 0; auditDate 2026-11-27 (window end 2026-12-04); 7/7 final
+    2xx; oEmbed 200 ×2 (projects.ts has 2 ids, not 8); MCP connected; OQ-001-11 proposal recorded
 
 - [ ] **T-13** — **⛔ Hernán's go-ahead for the Sushi Burrito Web demo.** One login attempt each
   for `admin@demo.com`, `kitchen@demo.com`, `waiter@demo.com`; record role, landing page,
