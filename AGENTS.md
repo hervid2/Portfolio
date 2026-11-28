@@ -89,7 +89,9 @@ Full rules: docs/constitution.md, Title II and Title IV.
   - Named exports, except for page or route components.
 - **Strings:** every user-visible string lives in `frontend/src/i18n/{en,es}.ts` or is a `{ en; es }` field in `frontend/src/data/`.
 - **Tailwind:** tokens only; mobile-first; class order as set in the constitution.
-- **Commits:** Conventional Commits with the task id: `feat(portfolio): description [T-03]`.
+- **Commits:** Conventional Commits ending in an id: the task id (`feat(portfolio): description [T-03]`);
+  the spec id for spec-level commits with no task (`docs(spec): close spec 001 [001]`); the bug slug
+  for /bug fixes (`fix(api): description [BUG-<slug>]`).
 
 ## Agents and commands
 - **Agents** (`.harness/agents/`):
@@ -108,11 +110,15 @@ Full rules: docs/constitution.md, Title II and Title IV.
   each with `--prefix <pkg>`.
 - UI changes: check in the browser (Playwright MCP) in EN and ES, dark and light themes, at 360 px and 1280 px.
 - Route or pre-render changes: `curl` the built HTML and confirm the content is there.
+- `api/` changes: the API does not auto-deploy. The last G-Merge item is "deployed to the droplet
+  and verified in production" (steps in `.harness/agents/coordinator.md`, Procedure 4).
 
 ## Forbidden
 - Committing to `main`; force push; pushing without asking.
 - Secrets in the repo, including in `.env.example`.
 - New dependencies outside an approved plan.
+- Editing any file outside the approved plan, even a one-class change, before Hernán approves it;
+  record the dated approval in `tasks.md` (spec 001: T-11a / C-01).
 - Copy that contradicts the GitHub profile README.
 - Hardcoded brand colors or new palettes.
 - Publishing third-party personal data without consent (BR-007).

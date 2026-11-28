@@ -38,11 +38,10 @@
   200) via nginx `sites-enabled/api-portfolio` → :4000 (4001/4002 other apps); proxy first.
 
 ## Retrospective spec 001 (GENESIS §C.9; full text in specs/001-*/validation.md)
-- Any file outside the approved plan stops for Hernán's approval first, even a one-class CSS
-  change (T-11a was applied before asking; caught as C-01).
-- Proposals pending Hernán: verify greps use `from "motion` (bare `motion` hit comments); pin
-  `@playwright/mcp@0.0.86` in `.harness/mcp.md` (`@latest` caused the 30 s CONNECT_TIMEOUT).
-  Still open from 000: lint "one component per file" (react/no-multi-comp once ESLint 10 ok).
+- APPLIED 2026-11-27 (`chore(harness): apply spec 001 retrospective improvements [001]`):
+  out-of-plan files stop for Hernán first (T-11a/C-01); greps use `from "motion`; MCP pinned
+  `@playwright/mcp@0.0.86` (sync now writes `.mcp.json`); api G-Merge ends at prod deploy;
+  commit ids `[T-NN]`/`[NNN]`/`[BUG-<slug>]` (C-06). Still deferred: react/no-multi-comp.
 - Worked: BR-008 stop (T-14a); red-first + mutation (CL-04); browser beats jsdom (popLayout).
   Cycles ≤ 1 per task; validation 1 of 3; audit window met on day 1.
 

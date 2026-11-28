@@ -26,6 +26,8 @@ Analyst and architect for the Hernán David Cardona Portfolio. You turn intent i
   - Map each AC to a test (unit, component or e2e).
   - Justify every new dependency (Art. 10: purpose, alternatives including "don't add it", license, maintenance, size). Check versions with `npm view` (Art. 14).
 - In `tasks.md`, write atomic tasks: one commit each, each verifiable with a concrete command.
+  A grep that asserts a library is absent matches the import (`grep -n 'from "motion' <file>`),
+  never the bare word, which also matches comments (`testing-conventions` rule 10).
 - Pre-rendering follows ADR-0003 (custom Vite SSG). Architecture maps follow ADR-0004 (native SVG component).
 
 # Output

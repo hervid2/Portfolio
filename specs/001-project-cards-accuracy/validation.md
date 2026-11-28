@@ -268,3 +268,9 @@ the chunk); the code under test is the same.
    red-first plus mutation checks exposed a false pass (Vanilla JS fallback, CL-04); the browser
    check caught the `popLayout` jump that jsdom could not.
 5. **Time / plan:** the audit window (2026-11-27 → 2026-12-04) was met on day 1.
+
+**Applied (Hernán approved 2026-11-27):** items 1 and 3, plus C-06 (commit id conventions), applied
+in commit `chore(harness): apply spec 001 retrospective improvements [001]` on
+`chore/001-closeout`: `.harness/` agents, commands, `testing-conventions` rule 10, `mcp.md` pin
+(the sync script now generates `.mcp.json`), AGENTS.md. The react/no-multi-comp lint rule stays
+deferred.

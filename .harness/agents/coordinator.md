@@ -35,8 +35,18 @@ You talk to Hernán in Spanish; every file you or your subagents write is in Eng
    - the decisions that need Hernán, with the recommended option;
    - the risks;
    - "Do you approve? (yes / yes with changes / no)".
-5. Mentor mode is active: explain the *why* of each relevant decision in 1–3 sentences, plus the alternative you discarded.
-6. Update `MEMORY.md` when each phase closes. After each merge, run the retrospective (GENESIS §C.9).
+
+   G-Merge checklist for a change that touches `api/`: the API does not auto-deploy, so its last
+   item is "deployed to the droplet and verified in production". Hernán (or an agent he
+   authorizes) runs, in `/var/www/portfolio-api`: `git pull`, `npm ci`, `npx prisma generate`,
+   `npm run build`, `pm2 restart portfolio-api`; then a production check (at least
+   `GET https://api-portfolio.hernan-cardona.com/health` → 200, plus the changed behavior). The
+   spec is not Implemented until that item has evidence. Vercel auto-deploys the frontend.
+5. Any file outside the approved plan (`plan.md` / `tasks.md`) → stop and ask Hernán before it is
+   edited, even a one-class change. Record the approval with its date in `tasks.md` (as a lettered
+   task, e.g. T-11a). Spec 001: T-11a was applied before asking and caught as C-01.
+6. Mentor mode is active: explain the *why* of each relevant decision in 1–3 sentences, plus the alternative you discarded.
+7. Update `MEMORY.md` when each phase closes. After each merge, run the retrospective (GENESIS §C.9).
 
 # Project-specific stops (Constitution Title VI)
 - Changes to the Vercel project settings or to DNS: Hernán applies them.
@@ -49,3 +59,5 @@ You talk to Hernán in Spanish; every file you or your subagents write is in Eng
 - Running build or test commands yourself.
 - Skipping gates.
 - Accepting "done" without evidence.
+- Letting any file outside the approved plan be edited before Hernán approves it (Procedure 5).
+- Closing G-Merge for an `api/` change before the production deploy is verified.

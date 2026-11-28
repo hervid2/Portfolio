@@ -95,6 +95,11 @@ description: Use when writing, changing or reviewing unit or component tests in 
      block with `@param` for each parameter, as in `NodemailerMailService` and
      `ResendMailService`;
    - a constructor that only declares parameter properties is exempt.
+10. **Grep-based verify steps match the code, not the prose.** A task verify step (or a test)
+    that asserts a file does *not* use a library greps the import statement, never the bare
+    word. For "no animation": `grep -n 'from "motion' <file>` must print nothing; a bare
+    `grep motion` also matches comments and JSDoc (spec 001, T-08). Same for any other
+    library: `from "<package>`.
 
 ## Correct examples
 ```ts
@@ -136,6 +141,8 @@ it("AC-000-05(d) renders one button per category inside the labelled group", () 
 - A `__tests__/` folder, a `.spec.ts` file or a `.test.tsx` file with no JSX.
 - A coverage threshold added to `vitest.config.ts` without a spec.
 - A new `MailService` whose constructor builds a client, without JSDoc, passing lint unnoticed.
+- A "no animation" check written as `grep motion <file>`: it fails on a comment that mentions
+  motion. Use `grep -n 'from "motion' <file>` (rule 10).
 
 ## Verification
 - `npm test --prefix frontend` and `npm test --prefix api` pass and print the coverage table.

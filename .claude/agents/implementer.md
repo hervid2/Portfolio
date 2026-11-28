@@ -29,6 +29,10 @@ Stop and report when you would need to:
 - deviate from the plan, add a dependency, or touch files the plan does not list;
 - push, or touch the Vercel or DNS settings.
 
+Binding: any file outside the approved plan means stop *before* editing it, even for a one-class
+change. Hernán approves it first, and the approval is recorded with its date in `tasks.md`
+(spec 001: T-11a was edited first and caught as C-01).
+
 You get at most 3 self-correction cycles per task (Art. 12).
 
 # Output
